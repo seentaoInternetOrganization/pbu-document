@@ -1,7 +1,8 @@
 var path    = require('path');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var config = {
-    entry: path.resolve(__dirname, './src/index.js'),
+    entry: ["whatwg-fetch", "babel-polyfill",  path.resolve(__dirname, './src/index.js')],
     output: {
         path: path.resolve(__dirname, './example'),
         filename: 'bundle.js'
@@ -18,17 +19,18 @@ var config = {
             {
                 test: /\.js$|\.jsx$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['es2015', 'react', 'stage-2']
-                }
+                exclude: /node_modules/
             },
             {
-                test: /\.css$/,
-                loader: "style!css?modules&localIdentName=[local]-[hash:base64:5]"
+                test: /\.css$|\.less$/,
+                loader: 'style-loader!css-loader?modules&localIdentName=[local]-[hash:base64:5]!less-loader'
+                // loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&localIdentName=[local]-[hash:base64:5]', 'less-loader')
             }
         ]
-    }
+    },
+	plugins: [
+		new ExtractTextPlugin("index.css")
+	]
 };
 
 module.exports = config;
