@@ -1,5 +1,6 @@
 .wrap *{margin:0;padding:0;list-style: none;outline: none;}
 .sub_nav{background: #FFFFFF;box-shadow: 0 1px 2px 0 rgba(0,0,0,0.10);width: 100%;height: 60px;}
+.sub_nav *{margin:0;padding:0;list-style: none;outline: none;}
 .sub_nav h2{font-size: 16px;line-height:60px;color: #313131;width: 180px;margin-left: 20px;_display:inline;float: left;}
 .menus{width: 750px;float: left;position: relative;padding:0 42px;box-sizing: border-box;-webkit-box-sizing: border-box;}
 .menus .pre,.menus .next{display: inline-block;width: 22px;height: 32px;background: #EBEBEB;border-radius: 2px;cursor: pointer;position: absolute;left: 0;top:14px;line-height: 30px;text-align: center;color:#C1C1C1;}
@@ -11,15 +12,23 @@
 .menus ul{width: 1000px;}
 .menus li{padding:0 14px;height:32px;line-height:32px;display: inline-block;border: 1px solid #C1C1C1;border-radius: 2px;position: relative;color:#919191;cursor: pointer;margin:0 5px;box-sizing: border-box;-webkit-box-sizing: border-box;}
 .menus li:hover{color:#3DCC61;border-color: #3DCC61;}
+.menus .tag{padding:0 14px;height:32px;line-height:32px;display: inline-block;border: 1px solid #C1C1C1;border-radius: 2px;position: relative;color:#919191;cursor: pointer;margin:0 5px;box-sizing: border-box;-webkit-box-sizing: border-box;}
+.menus .highlight{color:#3DCC61;border-color: #3DCC61;}
 .delete{width: 14px;height: 14px;background: #fff;display: block;position: absolute;right: -7px;top:-7px;overflow: hidden;line-height: 12px;}
 @font-face {
   font-family: 'iconfont';
   src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot');
-  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.woff') format('woff'), /* chrome、firefox */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.svg#iconfont') format('svg');
+  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot?#iefix') format('embedded-opentype'),
+  /* IE6-IE8 */
+  url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.woff') format('woff'),
+  /* chrome、firefox */
+  url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.ttf') format('truetype'),
+  /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.svg#iconfont') format('svg');
   /* IE9*/ /* iOS 4.1- */
 }
 .iconfont {font-family: "iconfont";font-style: normal;-webkit-font-smoothing: antialiased;-webkit-text-stroke-width: 0.2px;-moz-osx-font-smoothing: grayscale;
-}
+            }
 .delete i:before{content:"\e902";font-size: 14px;}
 .btn_group{float: right;margin-right: 30px;_display:inline;margin-top:10px;}
 .btn_group button{width: 140px;height: 40px;background: #3DCC61;border-radius: 2px;font-size: 14px;color:#fff;border:0;}
@@ -36,8 +45,20 @@
 .msg{background: #F4F4F4;border: 1px solid #EBEBEB;border-radius: 2px;width: 200px;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;font-size: 12px;padding:12px 20px 18px;margin-top:65px;}
 .msg p{margin-top:5px;line-height: 18px;color:#616161;}
 .msg p span{font-weight: 500!important;}
-/*明细账*/
+.detail {
+  border: 1px solid #E1E1E1;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+}
+.detail *{-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;font-size: 14px;}
+.left{
+  float: left;
+  box-sizing: border-box;
+}
+/*.detail div{position: absolute;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;border-radius: 2px;}*/
+.detail input{width: 100%;height: 100%;border:0;background: none;}
 .time{width: 30px;height: 26px;}
+.detail div i{position: absolute;right:0;top:4px;cursor: pointer;}
+.detail div i:before{content:"\e902";font-size: 12px;}
 .type{width: 21px;height: 26px;}
 .num{width: 51px;height: 26px;}
 .summary{width: 113px;height: 26px;}

@@ -12,6 +12,7 @@
 
 .left{
   float: left;
+  box-sizing: border-box;
 }
 
 .container span,.container input{

@@ -9421,7 +9421,7 @@
 
 	var _container2 = _interopRequireDefault(_container);
 
-	var _mockData = __webpack_require__(532);
+	var _mockData = __webpack_require__(536);
 
 	var _mockData2 = _interopRequireDefault(_mockData);
 
@@ -33241,7 +33241,7 @@
 
 	var _readonly2 = _interopRequireDefault(_readonly);
 
-	var _editWeight = __webpack_require__(533);
+	var _editWeight = __webpack_require__(532);
 
 	var _editWeight2 = _interopRequireDefault(_editWeight);
 
@@ -33337,6 +33337,7 @@
 	                return _react2.default.createElement(_editWeight2.default, { ratioWidth: ratioWidth,
 	                    ratioHeight: ratioHeight,
 	                    config: docConfig[0]
+	                    // data={docData}
 	                });
 	            };
 
@@ -33486,6 +33487,13 @@
 	  MULTI_ELM: '#A28DDD',
 	  MULTI_LINE: '#95DF7D',
 	  SETTLEMENT: '#FAA755'
+	};
+
+	exports.EXAMINE_NAME = {
+	  SINGLE: '单编辑框',
+	  MULTI_ELM: '多编辑框',
+	  MULTI_LINE: '多行集合',
+	  SETTLEMENT: '合计栏'
 	};
 
 	exports.indexElementsByName = function (elements) {};
@@ -33726,10 +33734,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import classnames from 'classnames';
-	// import { MODE } from '../utils';
-
-
 	var DocBG = function DocBG(_ref) {
 	    var config = _ref.config,
 	        ratioWidth = _ref.ratioWidth,
@@ -33737,16 +33741,6 @@
 	        children = _ref.children,
 	        className = _ref.className;
 
-	    // let className = styles.container;
-	    //
-	    // switch (mode) {
-	    //     case MODE.PREVIEW:
-	    //         className = styles.container;
-	    //         break;
-	    //     case MODE.EXAMINE_SET:
-	    //         className = classnames(styles.container, styles.left);
-	    //         break;
-	    // }
 
 	    return _react2.default.createElement(
 	        'div',
@@ -33831,7 +33825,7 @@
 
 
 	// module
-	exports.push([module.id, ".container-10moE * {\n  margin: 0;\n  padding: 0;\n  font-family: 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft Yahei', Arial, sans-serif;\n  color: #313131;\n}\n.container-10moE {\n  border: 1px solid #E1E1E1;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);\n}\n.left-2RZRO {\n  float: left;\n}\n.container-10moE span,\n.container-10moE input {\n  position: absolute;\n  font-size: 14px;\n  background: none;\n  outline: none;\n  display: inline-block;\n  line-height: 33px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  padding: 0 10px;\n}\n.container-10moE div {\n  position: absolute;\n  border-radius: 2px;\n}\n", ""]);
+	exports.push([module.id, ".container-10moE * {\n  margin: 0;\n  padding: 0;\n  font-family: 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft Yahei', Arial, sans-serif;\n  color: #313131;\n}\n.container-10moE {\n  border: 1px solid #E1E1E1;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);\n}\n.left-2RZRO {\n  float: left;\n  box-sizing: border-box;\n}\n.container-10moE span,\n.container-10moE input {\n  position: absolute;\n  font-size: 14px;\n  background: none;\n  outline: none;\n  display: inline-block;\n  line-height: 33px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  padding: 0 10px;\n}\n.container-10moE div {\n  position: absolute;\n  border-radius: 2px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -33841,111 +33835,6 @@
 
 /***/ }),
 /* 532 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-	    code: 200,
-	    docData: {
-	        "all": {
-	            "year": {
-	                "weight": 1,
-	                "examineType": "MULTI_ELM",
-	                "examineId": "me_111",
-	                "examineName": "日期"
-	            },
-	            "month": {
-	                "weight": 1,
-	                "examineType": "MULTI_ELM",
-	                "examineId": "me_111",
-	                "examineName": "日期"
-	            },
-	            "day": {
-	                "weight": 1,
-	                "examineType": "MULTI_ELM",
-	                "examineId": "me_111",
-	                "examineName": "日期"
-	            },
-	            "docNumber": {
-	                "weight": 1,
-	                "examineType": "SINGLE",
-	                "examineId": "s_222",
-	                "examineName": "编号"
-	            },
-	            "summary_1_1": {
-	                "weight": 1,
-	                "examineType": "MULTI_LINE",
-	                "examineId": "ml_333",
-	                "examineName": "多行甄别"
-	            },
-	            "summary_2_1": {
-	                "weight": 1,
-	                "examineType": "MULTI_LINE",
-	                "examineId": "ml_333",
-	                "examineName": "多行甄别"
-	            },
-	            "summary_3_1": {
-	                "weight": 1,
-	                "examineType": "MULTI_LINE",
-	                "examineId": "ml_333",
-	                "examineName": "多行甄别"
-	            },
-	            "summary_4_1": {
-	                "weight": 1,
-	                "examineType": "MULTI_LINE",
-	                "examineId": "ml_333",
-	                "examineName": "多行甄别"
-	            },
-	            "summary_5_1": {
-	                "weight": 1,
-	                "examineType": "MULTI_LINE",
-	                "examineId": "ml_333",
-	                "examineName": "多行甄别"
-	            },
-	            "summary_6_1": {
-	                "weight": 1,
-	                "examineType": "MULTI_LINE",
-	                "examineId": "ml_333",
-	                "examineName": "多行甄别"
-	            },
-	            "account_1_2": {
-	                "weight": 2,
-	                "examineType": "MULTI_LINE",
-	                "examineId": "ml_333",
-	                "examineName": "多行甄别"
-	            }
-	        },
-	        "answer": [{
-	            "summary_1_1": "乱七八糟的东西"
-	        }, {
-	            "year": 2017
-	        }],
-	        "examines": [{
-	            "year": 1,
-	            "examineType": "MULTI_ELM"
-	        }, {
-	            "summary_1_1": 1,
-	            "account_1_2": 1,
-	            "detail_1_3": 1,
-	            "examineType": "MULTI_LINE",
-	            "examineId": "abc"
-	        }, {
-	            "summary_2_1": 1,
-	            "account_2_2": 1,
-	            "detail_2_3": 1,
-	            "examineType": "MULTI_LINE",
-	            "examineId": "abc"
-	        }]
-	    }
-
-	};
-
-/***/ }),
-/* 533 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33970,13 +33859,31 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _selectable = __webpack_require__(534);
-
-	var _selectable2 = _interopRequireDefault(_selectable);
-
-	var _editWeight = __webpack_require__(535);
+	var _editWeight = __webpack_require__(534);
 
 	var _editWeight2 = _interopRequireDefault(_editWeight);
+
+	var _utils = __webpack_require__(525);
+
+	var _background = __webpack_require__(530);
+
+	var _background2 = _interopRequireDefault(_background);
+
+	var _isEmpty = __webpack_require__(537);
+
+	var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
+	var _isInt = __webpack_require__(539);
+
+	var _isInt2 = _interopRequireDefault(_isInt);
+
+	var _blueimpMd = __webpack_require__(523);
+
+	var _blueimpMd2 = _interopRequireDefault(_blueimpMd);
+
+	var _selectedRectangle = __webpack_require__(540);
+
+	var _selectedRectangle2 = _interopRequireDefault(_selectedRectangle);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34003,23 +33910,306 @@
 	            args[_key] = arguments[_key];
 	        }
 
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EditWeight.__proto__ || Object.getPrototypeOf(EditWeight)).call.apply(_ref, [this].concat(args))), _this), _this.state = {}, _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EditWeight.__proto__ || Object.getPrototypeOf(EditWeight)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	            currentExamineType: '',
+	            //是否显示选择框
+	            showSelectRect: false,
+	            //选择框信息
+	            selectRect: (0, _selectedRectangle.zeroRect)(),
+	            //当前选中的元素们
+	            selectedElement: {},
+	            //编辑完成的元素们
+	            completedElement: {},
+	            //用于生成tag
+	            examineTypeIndex: {},
+	            selectedTag: '',
+	            tags: []
+	        }, _this.groupTags = function (props) {}, _this.combineDataIntoCompleted = function (props) {
+	            var data = props.data,
+	                config = props.config;
+
+
+	            if (!data) {
+	                return;
+	            }
+
+	            var newCompletedElement = _extends({}, data.all);
+
+	            Object.keys(newCompletedElement).forEach(function (name, index) {
+	                newCompletedElement[name]['element'] = config.elements[name];
+	            });
+
+	            _this.setState({
+	                completedElement: newCompletedElement
+	            });
+	        }, _this.onExamineTypeChange = function (type) {
+	            _this.setState({
+	                currentExamineType: type
+	            });
+	        }, _this.onMouseDown = function (e) {
+	            var xInContainer = e.clientX - _this.refs.docContainer.getBoundingClientRect().left + _this.refs.docContainer.scrollLeft;
+	            var yInContainer = e.clientY - _this.refs.docContainer.getBoundingClientRect().top + _this.refs.docContainer.scrollTop;
+
+	            _this.setState({
+	                showSelectRect: true,
+	                selectRect: (0, _selectedRectangle.makeRect)(xInContainer, yInContainer, xInContainer, yInContainer, 0, 0)
+	            });
+	        }, _this.onMouseUp = function (e) {
+	            //只有当鼠标抬起时才会有下列操作
+	            //声明糖
+	            var _this$state = _this.state,
+	                currentExamineType = _this$state.currentExamineType,
+	                selectedElement = _this$state.selectedElement,
+	                completedElement = _this$state.completedElement,
+	                examineTypeIndex = _this$state.examineTypeIndex;
+	            //首先计算examineId
+
+	            var examineId = currentExamineType + '_' + (0, _blueimpMd2.default)(Date.now());
+	            //然后将selectedElement移到completedElement区
+	            var newCompletedElement = _extends({}, completedElement);
+
+	            var exIndex = _extends({}, examineTypeIndex);
+
+	            var examineName = _utils.EXAMINE_NAME[currentExamineType];
+	            //生成标签
+	            if (exIndex.hasOwnProperty(currentExamineType)) {
+	                exIndex[currentExamineType].push({
+	                    examineId: examineId,
+	                    index: exIndex[currentExamineType].length,
+	                    examineName: '' + _utils.EXAMINE_NAME[currentExamineType] + (exIndex[currentExamineType].length + 1)
+	                });
+	                examineName = '' + _utils.EXAMINE_NAME[currentExamineType] + (exIndex[currentExamineType].length + 1);
+	            } else {
+	                exIndex[currentExamineType] = [{
+	                    examineId: examineId,
+	                    index: 0,
+	                    examineName: '' + _utils.EXAMINE_NAME[currentExamineType]
+	                }];
+	            }
+
+	            Object.values(selectedElement).forEach(function (item, index) {
+	                if (currentExamineType === _utils.EXAMINE.MULTI_LINE && item.elmtype !== 'TABLE') {
+	                    return;
+	                }
+	                //去掉checkbox
+	                if (item.type === _utils.ELEMENT_TYPE.CHECK_BOX) {
+	                    return;
+	                }
+
+	                newCompletedElement[item.name] = {
+	                    weight: 1,
+	                    examineType: currentExamineType,
+	                    examineId: examineId,
+	                    examineName: examineName,
+	                    element: item
+	                };
+	            });
+
+	            _this.setState({
+	                examineTypeIndex: exIndex,
+	                completedElement: newCompletedElement,
+	                selectedElement: {},
+	                currentExamineType: '',
+	                showSelectRect: false,
+	                selectRect: (0, _selectedRectangle.zeroRect)()
+	            });
+	        }, _this.onMouseLeave = function (e) {
+	            _this.setState({
+	                showSelectRect: false,
+	                selectedElement: {},
+	                currentExamineType: '',
+	                selectRect: (0, _selectedRectangle.zeroRect)()
+	            });
+	        }, _this.onMouseMove = function (e) {
+	            var xInContainer = e.clientX - _this.refs.docContainer.getBoundingClientRect().left + _this.refs.docContainer.scrollLeft;
+	            var yInContainer = e.clientY - _this.refs.docContainer.getBoundingClientRect().top + _this.refs.docContainer.scrollTop;
+	            //声明糖
+	            var _this$state2 = _this.state,
+	                currentExamineType = _this$state2.currentExamineType,
+	                selectedElement = _this$state2.selectedElement,
+	                completedElement = _this$state2.completedElement,
+	                selectRect = _this$state2.selectRect;
+	            //当鼠标反向选取时的计算
+
+	            var newLeft = xInContainer < selectRect.startLeft ? xInContainer : selectRect.startLeft;
+	            var newTop = yInContainer < selectRect.startTop ? yInContainer : selectRect.startTop;
+
+	            if (_this.state.showSelectRect) {
+	                var elements = _this.props.config.elements;
+	                var newSelectedElement = _extends({}, selectedElement);
+
+	                Object.values(elements).forEach(function (item, index) {
+	                    if ((0, _utils.intersectRect)(item.pos, selectRect) && !completedElement.hasOwnProperty(item.name)) {
+	                        newSelectedElement[item.name] = item;
+	                    } else {
+	                        delete newSelectedElement[item.name];
+	                    }
+	                });
+
+	                _this.setState({
+	                    selectRect: (0, _selectedRectangle.makeRect)(newLeft, newTop, selectRect.startLeft, selectRect.startTop, Math.abs(xInContainer - selectRect.startLeft), Math.abs(yInContainer - selectRect.startTop)),
+	                    selectedElement: newSelectedElement
+	                });
+	            }
+	        }, _this.onWeightChange = function (name, value) {
+
+	            if (value.length > 0 && !(0, _isInt2.default)(value, { min: 0, max: 99 })) {
+	                return;
+	            }
+
+	            var _this$state3 = _this.state,
+	                currentExamineType = _this$state3.currentExamineType,
+	                completedElement = _this$state3.completedElement;
+
+
+	            var newCompletedElement = _extends({}, completedElement);
+
+	            newCompletedElement[name].weight = value;
+
+	            _this.setState({
+	                completedElement: newCompletedElement
+	            });
+	        }, _this.onRemoveCompleted = function (name) {
+	            var _this$state4 = _this.state,
+	                currentExamineType = _this$state4.currentExamineType,
+	                completedElement = _this$state4.completedElement;
+
+
+	            var newCompletedElement = _extends({}, completedElement);
+	            //如果是多行编辑则删除时要删除掉整列
+	            if (newCompletedElement[name].examineType === _utils.EXAMINE.MULTI_LINE) {
+	                var tempObj = _extends({}, newCompletedElement);
+
+	                //多行编辑情况下一定存在table.col
+	                Object.values(newCompletedElement).forEach(function (item, index) {
+	                    if (item.examineType === newCompletedElement[name].examineType && item.element.table.col === newCompletedElement[name].element.table.col) {
+	                        delete tempObj[item.element.name];
+	                    }
+	                });
+
+	                newCompletedElement = _extends({}, tempObj);
+	            } else {
+	                delete newCompletedElement[name];
+	            }
+	            _this.setState({
+	                completedElement: newCompletedElement
+	            });
+	        }, _this.onClearAll = function () {
+	            _this.setState({
+	                selectedElement: {},
+	                completedElement: {},
+	                examineTypeIndex: {}
+	            });
+	        }, _this.onRemoveByTagId = function (examineId) {
+	            var _this$state5 = _this.state,
+	                currentExamineType = _this$state5.currentExamineType,
+	                completedElement = _this$state5.completedElement;
+
+
+	            var newCompletedElement = _extends({}, completedElement);
+
+	            Object.values(completedElement).forEach(function (item, index) {
+	                if (item.examineId === examineId) {
+	                    delete newCompletedElement[item.element.name];
+	                }
+	            });
+
+	            _this.setState({
+	                completedElement: newCompletedElement
+	            });
+	        }, _this.onSelectTags = function (examineId) {
+	            _this.setState({
+	                selectedTag: examineId === _this.state.selectedTag ? '' : examineId
+	            });
+	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 
 	    _createClass(EditWeight, [{
 	        key: 'componentDidMount',
-	        value: function componentDidMount() {}
+	        value: function componentDidMount() {
+	            this.combineDataIntoCompleted(this.props);
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.combineDataIntoCompleted(nextProps);
+	        }
+
+	        //权重修改监听
+
+
+	        //删除选中的元素
+
+
+	        //清除操作
+
+
+	        //根据标签名删除
+
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            var _props = this.props,
 	                config = _props.config,
 	                ratioWidth = _props.ratioWidth,
 	                ratioHeight = _props.ratioHeight,
 	                data = _props.data;
+	            var _state = this.state,
+	                selectedElement = _state.selectedElement,
+	                currentExamineType = _state.currentExamineType,
+	                completedElement = _state.completedElement,
+	                showSelectRect = _state.showSelectRect,
+	                selectRect = _state.selectRect,
+	                selectedTag = _state.selectedTag,
+	                examineTypeIndex = _state.examineTypeIndex;
 
+
+	            var renderTags = function renderTags() {
+	                var temp = [];
+	                Object.values(completedElement).forEach(function (item, index) {
+	                    if (temp.findIndex(function (o) {
+	                        return o.examineId === item.examineId;
+	                    }) !== -1) {
+	                        return;
+	                    }
+
+	                    temp.push(item);
+	                });
+
+	                var tagNodes = temp.map(function (item, index) {
+	                    var className = item.examineId === selectedTag ? _editWeight2.default.highlight : _editWeight2.default.tag;
+
+	                    return _react2.default.createElement(
+	                        'li',
+	                        { key: item.examineId + '_' + index,
+	                            onClick: function onClick() {
+	                                _this2.onSelectTags(item.examineId);
+	                            },
+	                            className: className },
+	                        item.examineName,
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: _editWeight2.default.delete, onClick: function onClick() {
+	                                    _this2.onRemoveByTagId(item.examineId);
+	                                } },
+	                            _react2.default.createElement('i', { className: _editWeight2.default.iconfont })
+	                        )
+	                    );
+	                });
+
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'ul',
+	                        null,
+	                        tagNodes
+	                    )
+	                );
+	            };
 	            //顶部操作渲染
-
 	            var renderTopHeader = function renderTopHeader() {
 	                return _react2.default.createElement(
 	                    'div',
@@ -34032,133 +34222,24 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: _editWeight2.default.menus },
-	                        _react2.default.createElement('span', { className: _editWeight2.default.pre }),
 	                        _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement(
-	                                'ul',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    '\u65E5\u671F ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { className: _editWeight2.default.delete },
-	                                        '2'
-	                                    )
-	                                )
-	                            )
+	                            'span',
+	                            { className: _editWeight2.default.pre },
+	                            _react2.default.createElement('i', { className: _editWeight2.default.iconfont })
 	                        ),
-	                        _react2.default.createElement('span', { className: _editWeight2.default.next })
+	                        renderTags(),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: _editWeight2.default.next },
+	                            _react2.default.createElement('i', { className: _editWeight2.default.iconfont })
+	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: _editWeight2.default.btn_group },
 	                        _react2.default.createElement(
 	                            'button',
-	                            { className: _editWeight2.default.clear },
+	                            { className: _editWeight2.default.clear, onClick: _this2.onClearAll },
 	                            '\u6E05\u9664'
 	                        ),
 	                        _react2.default.createElement(
@@ -34170,53 +34251,45 @@
 	                );
 	            };
 
+	            //渲染右侧设置项
 	            var renderRightContainer = function renderRightContainer() {
+	                //渲染甄别方式选择radio
+	                var renderRadioButtons = function renderRadioButtons() {
+	                    var radioNodes = Object.keys(_utils.EXAMINE_NAME).map(function (item, index) {
+	                        var checkedOpt = {
+	                            checked: false
+	                        };
+
+	                        if (currentExamineType === item) {
+	                            checkedOpt = {
+	                                checked: 'checked'
+	                            };
+	                        }
+
+	                        return _react2.default.createElement(
+	                            'label',
+	                            { key: item + '_' + index, htmlFor: item, onClick: function onClick() {
+	                                    _this2.onExamineTypeChange(item);
+	                                } },
+	                            _react2.default.createElement('input', _extends({ type: 'radio', name: 'radio', id: item }, checkedOpt)),
+	                            _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                _utils.EXAMINE_NAME[item]
+	                            )
+	                        );
+	                    });
+
+	                    return radioNodes;
+	                };
+
 	                return _react2.default.createElement(
 	                    'div',
 	                    { className: _editWeight2.default.right_container },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'a' },
-	                            _react2.default.createElement('input', { type: 'radio', name: 'radio', id: 'a' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                null,
-	                                '\u5355\u7F16\u8F91\u6846'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'b' },
-	                            _react2.default.createElement('input', { type: 'radio', name: 'radio', id: 'b' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                null,
-	                                '\u591A\u7F16\u8F91\u6846'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'c' },
-	                            _react2.default.createElement('input', { type: 'radio', name: 'radio', id: 'c' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                null,
-	                                '\u591A\u884C\u96C6\u5408'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'd' },
-	                            _react2.default.createElement('input', { type: 'radio', name: 'radio', id: 'd' }),
-	                            _react2.default.createElement(
-	                                'span',
-	                                null,
-	                                '\u5408\u8BA1\u680F'
-	                            )
-	                        )
+	                        renderRadioButtons()
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -34265,6 +34338,119 @@
 	                );
 	            };
 
+	            //渲染选择完成区
+	            var renderCompletedZone = function renderCompletedZone() {
+	                var elementNodes = Object.values(completedElement).map(function (item, index) {
+	                    var pos = item.element.pos;
+
+
+	                    if (!(0, _isEmpty2.default)(selectedTag) && selectedTag !== item.examineId) {
+	                        return null;
+	                    }
+
+	                    if (item.element.type === _utils.ELEMENT_TYPE.CHECK_BOX) {
+	                        return null;
+	                    }
+
+	                    var selected = {
+	                        border: '1px solid ' + _utils.EXAMINE_COLOR[item.examineType],
+	                        borderRadius: 2
+	                    };
+
+	                    return _react2.default.createElement(
+	                        'div',
+	                        { key: item.element.name + '_' + index,
+	                            style: _extends({
+	                                position: "absolute",
+	                                left: pos.left * ratioWidth,
+	                                top: pos.top * ratioHeight,
+	                                width: pos.width * ratioWidth,
+	                                height: pos.height * ratioHeight,
+	                                overflow: 'hidden',
+	                                textOverflow: 'ellipsis',
+	                                whiteSpace: 'nowrap'
+	                            }, selected) },
+	                        _react2.default.createElement('input', { id: item.element.name,
+	                            style: {
+	                                background: '#fff',
+	                                padding: '0 10px'
+	                            },
+	                            name: item.element.name,
+	                            value: item.weight,
+	                            onChange: function onChange(e) {
+	                                _this2.onWeightChange(item.element.name, e.target.value);
+	                            }
+	                        }),
+	                        _react2.default.createElement('i', { className: _editWeight2.default.iconfont,
+	                            onClick: function onClick() {
+	                                _this2.onRemoveCompleted(item.element.name);
+	                            },
+	                            style: {
+	                                color: _utils.EXAMINE_COLOR[item.examineType]
+	                            } })
+	                    );
+	                });
+
+	                return elementNodes;
+	            };
+
+	            //渲染选中的元素，并且待编辑状态
+	            var renderSelectedZone = function renderSelectedZone() {
+	                var elementNodes = Object.values(selectedElement).map(function (item, index) {
+	                    var selected = {
+	                        border: '1px solid ' + _utils.EXAMINE_COLOR[currentExamineType],
+	                        borderRadius: 2
+	                    };
+
+	                    var pos = item.pos;
+
+
+	                    return _react2.default.createElement('input', { key: item.name + '_' + index,
+	                        id: item.name,
+	                        name: item.name,
+	                        style: _extends({
+	                            position: "absolute",
+	                            left: pos.left * ratioWidth,
+	                            top: pos.top * ratioHeight,
+	                            width: pos.width * ratioWidth,
+	                            height: pos.height * ratioHeight
+	                        }, item.style, selected)
+	                    });
+	                });
+
+	                return elementNodes;
+	            };
+
+	            //渲染单据
+	            var renderDoc = function renderDoc() {
+
+	                var mouseEventOpt = {};
+	                //只有选择了甄别方式才添加鼠标事件
+	                if (!(0, _isEmpty2.default)(currentExamineType)) {
+	                    mouseEventOpt = {
+	                        onMouseDown: _this2.onMouseDown,
+	                        onMouseMove: _this2.onMouseMove,
+	                        onMouseLeave: _this2.onMouseLeave,
+	                        onMouseUp: _this2.onMouseUp
+	                    };
+	                }
+
+	                return _react2.default.createElement(
+	                    'div',
+	                    _extends({ ref: 'docContainer',
+	                        className: (0, _classnames2.default)(_editWeight2.default.detail, _editWeight2.default.left),
+	                        style: _extends({
+	                            background: '#FFFFFF url(' + config.backgroundImage + ') no-repeat center center',
+	                            width: config.width * ratioWidth,
+	                            height: config.height * ratioHeight
+	                        }, config.style)
+	                    }, mouseEventOpt),
+	                    renderSelectedZone(),
+	                    renderCompletedZone(),
+	                    showSelectRect && _react2.default.createElement(_selectedRectangle2.default, { rect: selectRect })
+	                );
+	            };
+
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -34272,9 +34458,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: _editWeight2.default.content },
-	                    _react2.default.createElement(_selectable2.default, _extends({}, this.props, {
-	                        selectedElement: {}
-	                    })),
+	                    renderDoc(),
 	                    renderRightContainer()
 	                )
 	            );
@@ -34313,138 +34497,14 @@
 	};
 
 /***/ }),
+/* 533 */,
 /* 534 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
-	                                                                                                                                                                                                                                                                   * @author AngusC
-	                                                                                                                                                                                                                                                                   * @description 设置权重及甄别方式
-	                                                                                                                                                                                                                                                                   */
-
-	var _react = __webpack_require__(331);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(515);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _propTypes = __webpack_require__(516);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _background = __webpack_require__(529);
-
-	var _background2 = _interopRequireDefault(_background);
-
-	var _background3 = __webpack_require__(530);
-
-	var _background4 = _interopRequireDefault(_background3);
-
-	var _utils = __webpack_require__(525);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Selectable = function Selectable(_ref) {
-	    var config = _ref.config,
-	        selectedElement = _ref.selectedElement,
-	        examineType = _ref.examineType,
-	        ratioWidth = _ref.ratioWidth,
-	        ratioHeight = _ref.ratioHeight;
-
-	    var renderElements = function renderElements() {
-	        var elementNodes = Object.values(config.elements).map(function (item, index) {
-	            var pos = item.pos;
-	            /**
-	             * 忽略checkbox
-	             */
-
-	            if (item.type === _utils.ELEMENT.CHECK_BOX) {
-	                return _react2.default.createElement('input', { key: item.name + '_' + index,
-	                    type: 'checkbox',
-	                    style: _extends({
-	                        left: pos.left * ratioWidth,
-	                        top: pos.top * ratioHeight,
-	                        width: pos.width * ratioWidth,
-	                        height: pos.height * ratioHeight
-	                    }, item.style)
-	                });
-	            }
-
-	            var selected = {};
-
-	            if (selectedElement[item.name]) {
-	                var _selectedElement = _selectedElement[item.name];
-
-	                selected = {
-	                    border: '1px solid ' + _utils.EXAMINE_COLOR[_selectedElement.examineType],
-	                    borderRadius: 2
-	                };
-	            }
-
-	            return _react2.default.createElement('input', { key: item.name + '_' + index,
-	                id: item.name,
-	                name: item.name,
-	                style: _extends({
-	                    position: "absolute",
-	                    left: pos.left * ratioWidth,
-	                    top: pos.top * ratioHeight,
-	                    width: pos.width * ratioWidth,
-	                    height: pos.height * ratioHeight
-	                }, item.style, selected)
-	            });
-	        });
-
-	        return elementNodes;
-	    };
-
-	    return _react2.default.createElement(
-	        _background2.default,
-	        { className: (0, _classnames2.default)(_background4.default.container, _background4.default.left),
-	            ratioWidth: ratioWidth,
-	            ratioHeight: ratioHeight,
-	            config: config },
-	        renderElements()
-	    );
-	};
-
-	Selectable.propTypes = {
-	    /**
-	     * 当前联配置
-	     */
-	    config: _propTypes2.default.object.isRequired,
-	    /**
-	     * 选中的元素集合
-	     */
-	    selectedElement: _propTypes2.default.object.isRequired,
-	    /**
-	     * 横向缩放比例，默认1
-	     */
-	    ratioWidth: _propTypes2.default.number,
-	    /**
-	     * 纵向缩放比例，默认1
-	     */
-	    ratioHeight: _propTypes2.default.number
-	};
-
-	Selectable.defaultProps = {};
-
-	exports.default = Selectable;
-
-/***/ }),
-/* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(536);
+	var content = __webpack_require__(535);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// Prepare cssTransformation
 	var transform;
@@ -34469,7 +34529,7 @@
 	}
 
 /***/ }),
-/* 536 */
+/* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(520)(undefined);
@@ -34477,7 +34537,7 @@
 
 
 	// module
-	exports.push([module.id, ".wrap-2Q-Bq * {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  outline: none;\n}\n.sub_nav-1zfhT {\n  background: #FFFFFF;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);\n  width: 100%;\n  height: 60px;\n}\n.sub_nav-1zfhT h2 {\n  font-size: 16px;\n  line-height: 60px;\n  color: #313131;\n  width: 180px;\n  margin-left: 20px;\n  _display: inline;\n  float: left;\n}\n.menus-22z7s {\n  width: 750px;\n  float: left;\n  position: relative;\n  padding: 0 42px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n}\n.menus-22z7s .pre-27VVX,\n.menus-22z7s .next-j0yT2 {\n  display: inline-block;\n  width: 22px;\n  height: 32px;\n  background: #EBEBEB;\n  border-radius: 2px;\n  cursor: pointer;\n  position: absolute;\n  left: 0;\n  top: 14px;\n  line-height: 30px;\n  text-align: center;\n  color: #C1C1C1;\n}\n.menus-22z7s .next-j0yT2 {\n  left: auto;\n  right: 0;\n}\n.menus-22z7s .pre-27VVX:hover,\n.menus-22z7s .next-j0yT2:hover {\n  background: #D1D1D1;\n  color: #A8A8A8;\n}\n.menus-22z7s .pre-27VVX i:before {\n  content: \"\\E900\";\n  font-size: 12px;\n}\n.menus-22z7s .next-j0yT2 i:before {\n  content: \"\\E901\";\n  font-size: 12px;\n}\n.menus-22z7s div {\n  display: inline-block;\n  overflow: hidden;\n  line-height: 60px;\n  width: 100%;\n}\n.menus-22z7s ul {\n  width: 1000px;\n}\n.menus-22z7s li {\n  padding: 0 14px;\n  height: 32px;\n  line-height: 32px;\n  display: inline-block;\n  border: 1px solid #C1C1C1;\n  border-radius: 2px;\n  position: relative;\n  color: #919191;\n  cursor: pointer;\n  margin: 0 5px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n}\n.menus-22z7s li:hover {\n  color: #3DCC61;\n  border-color: #3DCC61;\n}\n.delete-1hqVr {\n  width: 14px;\n  height: 14px;\n  background: #fff;\n  display: block;\n  position: absolute;\n  right: -7px;\n  top: -7px;\n  overflow: hidden;\n  line-height: 12px;\n}\n@font-face {\n  font-family: 'iconfont';\n  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot');\n  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.woff') format('woff'), /* chrome、firefox */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.svg#iconfont') format('svg');\n  \n  /* IE9*/\n  /* iOS 4.1- */\n}\n.iconfont-3oeiU {\n  font-family: \"iconfont\";\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -webkit-text-stroke-width: 0.2px;\n  -moz-osx-font-smoothing: grayscale;\n}\n.delete-1hqVr i:before {\n  content: \"\\E902\";\n  font-size: 14px;\n}\n.btn_group-3V2KL {\n  float: right;\n  margin-right: 30px;\n  _display: inline;\n  margin-top: 10px;\n}\n.btn_group-3V2KL button {\n  width: 140px;\n  height: 40px;\n  background: #3DCC61;\n  border-radius: 2px;\n  font-size: 14px;\n  color: #fff;\n  border: 0;\n}\n.btn_group-3V2KL button:hover {\n  background: #35B355;\n  cursor: pointer;\n}\n.btn_group-3V2KL .clear-3rhqR {\n  background: #fff;\n  color: #3DCC61;\n  border: 1px solid #3DCC61;\n  margin-right: 10px;\n}\n.btn_group-3V2KL .clear-3rhqR:hover {\n  color: #35B355;\n  border-color: #35B355;\n  background: #fff;\n}\n.content-2OaaB {\n  width: 1220px;\n  margin: 30px auto;\n  overflow: hidden;\n}\n.right_container-dcdZD {\n  float: left;\n  margin-left: 20px;\n  _display: inline;\n}\n.right_container-dcdZD label {\n  display: block;\n  margin-bottom: 10px;\n  cursor: pointer;\n}\n.right_container-dcdZD label span {\n  display: inline-block;\n  width: 120px;\n  height: 32px;\n  background: #E66963;\n  color: #fff;\n  font-size: 14px;\n  line-height: 32px;\n  text-align: center;\n  margin-left: 10px;\n  border: 1px solid #E66963;\n}\n.right_container-dcdZD label:nth-child(2) span {\n  background: #A28DDD;\n  border: 1px solid #917EC4;\n}\n.right_container-dcdZD label:nth-child(3) span {\n  background: #95DF7D;\n  border: 1px solid #84C46E;\n}\n.right_container-dcdZD label:nth-child(4) span {\n  background: #FAA755;\n  border: 1px solid #E0964C;\n}\n.msg-kI0ht {\n  background: #F4F4F4;\n  border: 1px solid #EBEBEB;\n  border-radius: 2px;\n  width: 200px;\n  box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  font-size: 12px;\n  padding: 12px 20px 18px;\n  margin-top: 65px;\n}\n.msg-kI0ht p {\n  margin-top: 5px;\n  line-height: 18px;\n  color: #616161;\n}\n.msg-kI0ht p span {\n  font-weight: 500!important;\n}\n/*明细账*/\n.time-1pAKe {\n  width: 30px;\n  height: 26px;\n}\n.type-1evRY {\n  width: 21px;\n  height: 26px;\n}\n.num-2-6Ez {\n  width: 51px;\n  height: 26px;\n}\n.summary-262gv {\n  width: 113px;\n  height: 26px;\n}\n.subject-OF6Za {\n  width: 89px;\n  height: 26px;\n}\n.debtor-2_mfF {\n  width: 173px;\n  height: 26px;\n}\n.debtor-2_mfF input,\n.lender-2aq7f input,\n.balance-2Rdvs input {\n  text-align: right;\n  letter-spacing: 5px;\n}\n.lender-2aq7f {\n  width: 178px;\n  height: 26px;\n}\n.sign-3zPNm {\n  width: 38px;\n  height: 26px;\n}\n.balance-2Rdvs {\n  width: 172px;\n  height: 26px;\n}\n.check-3weTC {\n  width: 16px;\n  height: 26px;\n}\n", ""]);
+	exports.push([module.id, ".wrap-2Q-Bq * {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  outline: none;\n}\n.sub_nav-1zfhT {\n  background: #FFFFFF;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);\n  width: 100%;\n  height: 60px;\n}\n.sub_nav-1zfhT * {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  outline: none;\n}\n.sub_nav-1zfhT h2 {\n  font-size: 16px;\n  line-height: 60px;\n  color: #313131;\n  width: 180px;\n  margin-left: 20px;\n  _display: inline;\n  float: left;\n}\n.menus-22z7s {\n  width: 750px;\n  float: left;\n  position: relative;\n  padding: 0 42px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n}\n.menus-22z7s .pre-27VVX,\n.menus-22z7s .next-j0yT2 {\n  display: inline-block;\n  width: 22px;\n  height: 32px;\n  background: #EBEBEB;\n  border-radius: 2px;\n  cursor: pointer;\n  position: absolute;\n  left: 0;\n  top: 14px;\n  line-height: 30px;\n  text-align: center;\n  color: #C1C1C1;\n}\n.menus-22z7s .next-j0yT2 {\n  left: auto;\n  right: 0;\n}\n.menus-22z7s .pre-27VVX:hover,\n.menus-22z7s .next-j0yT2:hover {\n  background: #D1D1D1;\n  color: #A8A8A8;\n}\n.menus-22z7s .pre-27VVX i:before {\n  content: \"\\E900\";\n  font-size: 12px;\n}\n.menus-22z7s .next-j0yT2 i:before {\n  content: \"\\E901\";\n  font-size: 12px;\n}\n.menus-22z7s div {\n  display: inline-block;\n  overflow: hidden;\n  line-height: 60px;\n  width: 100%;\n}\n.menus-22z7s ul {\n  width: 1000px;\n}\n.menus-22z7s li {\n  padding: 0 14px;\n  height: 32px;\n  line-height: 32px;\n  display: inline-block;\n  border: 1px solid #C1C1C1;\n  border-radius: 2px;\n  position: relative;\n  color: #919191;\n  cursor: pointer;\n  margin: 0 5px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n}\n.menus-22z7s li:hover {\n  color: #3DCC61;\n  border-color: #3DCC61;\n}\n.menus-22z7s .tag-2RW7E {\n  padding: 0 14px;\n  height: 32px;\n  line-height: 32px;\n  display: inline-block;\n  border: 1px solid #C1C1C1;\n  border-radius: 2px;\n  position: relative;\n  color: #919191;\n  cursor: pointer;\n  margin: 0 5px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n}\n.menus-22z7s .highlight-1398Y {\n  color: #3DCC61;\n  border-color: #3DCC61;\n}\n.delete-1hqVr {\n  width: 14px;\n  height: 14px;\n  background: #fff;\n  display: block;\n  position: absolute;\n  right: -7px;\n  top: -7px;\n  overflow: hidden;\n  line-height: 12px;\n}\n@font-face {\n  font-family: 'iconfont';\n  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot');\n  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.woff') format('woff'), /* chrome、firefox */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.svg#iconfont') format('svg');\n  \n  /* IE9*/\n  /* iOS 4.1- */\n}\n.iconfont-3oeiU {\n  font-family: \"iconfont\";\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -webkit-text-stroke-width: 0.2px;\n  -moz-osx-font-smoothing: grayscale;\n}\n.delete-1hqVr i:before {\n  content: \"\\E902\";\n  font-size: 14px;\n}\n.btn_group-3V2KL {\n  float: right;\n  margin-right: 30px;\n  _display: inline;\n  margin-top: 10px;\n}\n.btn_group-3V2KL button {\n  width: 140px;\n  height: 40px;\n  background: #3DCC61;\n  border-radius: 2px;\n  font-size: 14px;\n  color: #fff;\n  border: 0;\n}\n.btn_group-3V2KL button:hover {\n  background: #35B355;\n  cursor: pointer;\n}\n.btn_group-3V2KL .clear-3rhqR {\n  background: #fff;\n  color: #3DCC61;\n  border: 1px solid #3DCC61;\n  margin-right: 10px;\n}\n.btn_group-3V2KL .clear-3rhqR:hover {\n  color: #35B355;\n  border-color: #35B355;\n  background: #fff;\n}\n.content-2OaaB {\n  width: 1220px;\n  margin: 30px auto;\n  overflow: hidden;\n}\n.right_container-dcdZD {\n  float: left;\n  margin-left: 20px;\n  _display: inline;\n}\n.right_container-dcdZD label {\n  display: block;\n  margin-bottom: 10px;\n  cursor: pointer;\n}\n.right_container-dcdZD label span {\n  display: inline-block;\n  width: 120px;\n  height: 32px;\n  background: #E66963;\n  color: #fff;\n  font-size: 14px;\n  line-height: 32px;\n  text-align: center;\n  margin-left: 10px;\n  border: 1px solid #E66963;\n}\n.right_container-dcdZD label:nth-child(2) span {\n  background: #A28DDD;\n  border: 1px solid #917EC4;\n}\n.right_container-dcdZD label:nth-child(3) span {\n  background: #95DF7D;\n  border: 1px solid #84C46E;\n}\n.right_container-dcdZD label:nth-child(4) span {\n  background: #FAA755;\n  border: 1px solid #E0964C;\n}\n.msg-kI0ht {\n  background: #F4F4F4;\n  border: 1px solid #EBEBEB;\n  border-radius: 2px;\n  width: 200px;\n  box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  font-size: 12px;\n  padding: 12px 20px 18px;\n  margin-top: 65px;\n}\n.msg-kI0ht p {\n  margin-top: 5px;\n  line-height: 18px;\n  color: #616161;\n}\n.msg-kI0ht p span {\n  font-weight: 500!important;\n}\n.detail-V7dDU {\n  border: 1px solid #E1E1E1;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);\n}\n.detail-V7dDU * {\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  box-sizing: border-box;\n  font-size: 14px;\n}\n.left-25p_A {\n  float: left;\n  box-sizing: border-box;\n}\n/*.detail div{position: absolute;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;border-radius: 2px;}*/\n.detail-V7dDU input {\n  width: 100%;\n  height: 100%;\n  border: 0;\n  background: none;\n}\n.time-1pAKe {\n  width: 30px;\n  height: 26px;\n}\n.detail-V7dDU div i {\n  position: absolute;\n  right: 0;\n  top: 4px;\n  cursor: pointer;\n}\n.detail-V7dDU div i:before {\n  content: \"\\E902\";\n  font-size: 12px;\n}\n.type-1evRY {\n  width: 21px;\n  height: 26px;\n}\n.num-2-6Ez {\n  width: 51px;\n  height: 26px;\n}\n.summary-262gv {\n  width: 113px;\n  height: 26px;\n}\n.subject-OF6Za {\n  width: 89px;\n  height: 26px;\n}\n.debtor-2_mfF {\n  width: 173px;\n  height: 26px;\n}\n.debtor-2_mfF input,\n.lender-2aq7f input,\n.balance-2Rdvs input {\n  text-align: right;\n  letter-spacing: 5px;\n}\n.lender-2aq7f {\n  width: 178px;\n  height: 26px;\n}\n.sign-3zPNm {\n  width: 38px;\n  height: 26px;\n}\n.balance-2Rdvs {\n  width: 172px;\n  height: 26px;\n}\n.check-3weTC {\n  width: 16px;\n  height: 26px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -34486,6 +34546,8 @@
 		"menus": "menus-22z7s",
 		"pre": "pre-27VVX",
 		"next": "next-j0yT2",
+		"tag": "tag-2RW7E",
+		"highlight": "highlight-1398Y",
 		"delete": "delete-1hqVr",
 		"iconfont": "iconfont-3oeiU",
 		"btn_group": "btn_group-3V2KL",
@@ -34493,6 +34555,8 @@
 		"content": "content-2OaaB",
 		"right_container": "right_container-dcdZD",
 		"msg": "msg-kI0ht",
+		"detail": "detail-V7dDU",
+		"left": "left-25p_A",
 		"time": "time-1pAKe",
 		"type": "type-1evRY",
 		"num": "num-2-6Ez",
@@ -34503,6 +34567,215 @@
 		"balance": "balance-2Rdvs",
 		"sign": "sign-3zPNm",
 		"check": "check-3weTC"
+	};
+
+/***/ }),
+/* 536 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+	    code: 200,
+	    docData: {
+	        "all": { "docNumber": { "weight": 1, "examineType": "SINGLE", "examineId": "SINGLE_4035798dbc9c209bf49aeba5486ac086", "examineName": "单编辑框" }, "year": { "weight": 1, "examineType": "MULTI_ELM", "examineId": "MULTI_ELM_682923be681aa680a9323818f9695516", "examineName": "多编辑框" }, "month": { "weight": 1, "examineType": "MULTI_ELM", "examineId": "MULTI_ELM_682923be681aa680a9323818f9695516", "examineName": "多编辑框" }, "day": { "weight": 1, "examineType": "MULTI_ELM", "examineId": "MULTI_ELM_682923be681aa680a9323818f9695516", "examineName": "多编辑框" }, "summary_1_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_2_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_1_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_2_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_1_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_2_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_3_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_3_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_3_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_4_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_4_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_4_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_1_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_2_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_3_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_4_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_1_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_2_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_3_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_4_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_5_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_5_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_5_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_5_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_5_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_6_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_6_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_6_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_6_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_6_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" } },
+	        "answer": [{
+	            "summary_1_1": "乱七八糟的东西"
+	        }, {
+	            "year": 2017
+	        }],
+	        "examines": [{
+	            "year": 1,
+	            "examineType": "MULTI_ELM"
+	        }, {
+	            "summary_1_1": 1,
+	            "account_1_2": 1,
+	            "detail_1_3": 1,
+	            "examineType": "MULTI_LINE",
+	            "examineId": "abc"
+	        }, {
+	            "summary_2_1": 1,
+	            "account_2_2": 1,
+	            "detail_2_3": 1,
+	            "examineType": "MULTI_LINE",
+	            "examineId": "abc"
+	        }]
+	    }
+
+	};
+
+/***/ }),
+/* 537 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = isEmpty;
+
+	var _assertString = __webpack_require__(538);
+
+	var _assertString2 = _interopRequireDefault(_assertString);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function isEmpty(str) {
+	  (0, _assertString2.default)(str);
+	  return str.length === 0;
+	}
+	module.exports = exports['default'];
+
+/***/ }),
+/* 538 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = assertString;
+	function assertString(input) {
+	  var isString = typeof input === 'string' || input instanceof String;
+
+	  if (!isString) {
+	    throw new TypeError('This library (validator.js) validates strings only');
+	  }
+	}
+	module.exports = exports['default'];
+
+/***/ }),
+/* 539 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = isInt;
+
+	var _assertString = __webpack_require__(538);
+
+	var _assertString2 = _interopRequireDefault(_assertString);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var int = /^(?:[-+]?(?:0|[1-9][0-9]*))$/;
+	var intLeadingZeroes = /^[-+]?[0-9]+$/;
+
+	function isInt(str, options) {
+	  (0, _assertString2.default)(str);
+	  options = options || {};
+
+	  // Get the regex to use for testing, based on whether
+	  // leading zeroes are allowed or not.
+	  var regex = options.hasOwnProperty('allow_leading_zeroes') && !options.allow_leading_zeroes ? int : intLeadingZeroes;
+
+	  // Check min/max/lt/gt
+	  var minCheckPassed = !options.hasOwnProperty('min') || str >= options.min;
+	  var maxCheckPassed = !options.hasOwnProperty('max') || str <= options.max;
+	  var ltCheckPassed = !options.hasOwnProperty('lt') || str < options.lt;
+	  var gtCheckPassed = !options.hasOwnProperty('gt') || str > options.gt;
+
+	  return regex.test(str) && minCheckPassed && maxCheckPassed && ltCheckPassed && gtCheckPassed;
+	}
+	module.exports = exports['default'];
+
+/***/ }),
+/* 540 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.zeroRect = zeroRect;
+	exports.makeRect = makeRect;
+
+	var _react = __webpack_require__(331);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(515);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _propTypes = __webpack_require__(516);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 0单位矩形对象
+	 * @return {Object} [description]
+	 */
+	function zeroRect() {
+	    return {
+	        left: 0,
+	        top: 0,
+	        startLeft: 0,
+	        startTop: 0,
+	        width: 0,
+	        height: 0
+	    };
+	}
+
+	/**
+	 * 生成矩形对象
+	 * @param  {Number} left      [description]
+	 * @param  {Number} top       [description]
+	 * @param  {Number} startLeft [description]
+	 * @param  {Number} startTop  [description]
+	 * @param  {Number} width     [description]
+	 * @param  {Number} height    [description]
+	 * @return {Object}           [description]
+	 */
+	/**
+	 * @author AngusC
+	 * @description 选择框组件
+	 */
+	function makeRect(left, top, startLeft, startTop, width, height) {
+	    return {
+	        left: left,
+	        top: top,
+	        startLeft: startLeft,
+	        startTop: startTop,
+	        width: width,
+	        height: height
+	    };
+	}
+
+	var Rectangle = function Rectangle(_ref) {
+	    var rect = _ref.rect;
+
+
+	    return _react2.default.createElement('div', { style: {
+	            position: "absolute",
+	            backgroundColor: 'rgba(0,0,0,0.1)',
+	            zIndex: 0,
+	            left: rect.left,
+	            top: rect.top,
+	            width: rect.width,
+	            height: rect.height
+	        } });
+	};
+
+	exports.default = Rectangle;
+
+
+	Rectangle.propTypes = {
+	    /**
+	     * 矩形对象，包括left, top, width, height
+	     */
+	    rect: _propTypes2.default.object.isRequired
 	};
 
 /***/ })

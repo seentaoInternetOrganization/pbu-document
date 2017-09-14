@@ -62,6 +62,7 @@ export default class PBUDocument extends Component {
             return <EditWeight ratioWidth={ratioWidth}
                                 ratioHeight={ratioHeight}
                                 config={docConfig[0]}
+                                // data={docData}
                             />
         }
 

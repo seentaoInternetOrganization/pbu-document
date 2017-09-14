@@ -4,21 +4,8 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import classnames from 'classnames';
-// import { MODE } from '../utils';
-
 
 const DocBG = ({ config, ratioWidth, ratioHeight, children, className }) => {
-    // let className = styles.container;
-    //
-    // switch (mode) {
-    //     case MODE.PREVIEW:
-    //         className = styles.container;
-    //         break;
-    //     case MODE.EXAMINE_SET:
-    //         className = classnames(styles.container, styles.left);
-    //         break;
-    // }
 
     return (
         <div className={className}

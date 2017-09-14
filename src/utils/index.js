@@ -88,6 +88,13 @@ exports.EXAMINE_COLOR = {
     SETTLEMENT: '#FAA755'
 }
 
+exports.EXAMINE_NAME = {
+    SINGLE: '单编辑框',
+    MULTI_ELM: '多编辑框',
+    MULTI_LINE: '多行集合',
+    SETTLEMENT: '合计栏'
+}
+
 exports.indexElementsByName = function (elements) {
 
 };

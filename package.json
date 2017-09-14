@@ -25,6 +25,7 @@
     "fetch-jsonp": "^1.1.2",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "validator": "^8.2.0",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
@@ -41,10 +42,12 @@
     "classnames": "^2.2.5",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.11.2",
     "less": "^2.3.1",
     "less-loader": "^2.2.3",
     "prop-types": "^15.5.10",
     "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
   }
