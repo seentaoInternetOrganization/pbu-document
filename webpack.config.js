@@ -2,6 +2,7 @@ var path    = require('path');
 
 var config = {
     entry: ["whatwg-fetch", "babel-polyfill",  path.resolve(__dirname, './src/index.js')],
+    devtool: "sourceMap",
     output: {
         path: path.resolve(__dirname, './example'),
         filename: 'bundle.js'
@@ -26,7 +27,7 @@ var config = {
             },
             {
                 test: /\.css$|\.less$/,
-                loader: 'style-loader!css-loader?modules&localIdentName=[local]-[hash:base64:5]!less-loader'
+                loader: 'style-loader!css-loader?modules&sourceMap&localIdentName=[local]__[hash:base64:5]!less-loader'
             },
             {
                 test: /\.json$/,

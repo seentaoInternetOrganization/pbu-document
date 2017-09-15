@@ -8,7 +8,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './editWeight.css';
 import { intersectRect } from '../utils';
-import { EXAMINE, ELEMENT, ELEMENT_TYPE, EXAMINE_NAME, EXAMINE_COLOR, EXAMIME_TEXT } from '../constants';
+import { EXAMINE, ELEMENT, ELEMENT_TYPE, EXAMINE_NAME, EXAMINE_COLOR, EXAMINE_TEXT } from '../constants';
 import stylesBG from './background.css';
 import isEmpty from 'validator/lib/isEmpty';
 import isInt from 'validator/lib/isInt';
@@ -387,10 +387,16 @@ class EditWeight extends Component {
                         {renderRadioButtons()}
                     </div>
                     <div className={styles.msg}>
-                        <p><span>单编辑框：</span>本空填写的数据与此空的正确答案对比一致，本甄别框判对。</p>
-                        <p><span>多编辑框：</span>甄别框中所有空填写的数据与正确答案对比，全部一致，本甄别框判对。</p>
-                        <p><span>多行集合：</span>填写的数据没有固定顺序，行数据与正确答案行数据循环比对，本行数据一致，本行判对。</p>
-                        <p><span>合计栏：</span>单页时同单编辑框，续页时，相加后甄别</p>
+                        {
+                            Object.keys(EXAMINE).map(key => {
+                                return (
+                                    <p key={key}>
+                                        <span>{EXAMINE_NAME[key]}：</span>
+                                        {EXAMINE_TEXT[key]}
+                                    </p>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             )
@@ -439,6 +445,7 @@ class EditWeight extends Component {
                                         this.onRemoveCompleted(item.element.name)
                                     }}
                                     style={{
+                                        top: (pos.height * ratioHeight - 14)/2-2,
                                         color: EXAMINE_COLOR[item.examineType]
                                 }}/>
                         </div>
