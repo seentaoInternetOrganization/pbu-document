@@ -27,6 +27,10 @@ var config = {
             {
                 test: /\.css$|\.less$/,
                 loader: 'style-loader!css-loader?modules&localIdentName=[local]-[hash:base64:5]!less-loader'
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
             }
         ]
     }

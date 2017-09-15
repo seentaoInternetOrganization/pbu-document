@@ -9413,7 +9413,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _PBUDocumentDemo = __webpack_require__(514);
+	var _PBUDocumentDemo = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./PBUDocumentDemo\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _PBUDocumentDemo2 = _interopRequireDefault(_PBUDocumentDemo);
 
@@ -9421,7 +9421,7 @@
 
 	var _container2 = _interopRequireDefault(_container);
 
-	var _mockData = __webpack_require__(536);
+	var _mockData = __webpack_require__(549);
 
 	var _mockData2 = _interopRequireDefault(_mockData);
 
@@ -9432,8 +9432,6 @@
 	_reactDom2.default.render(_react2.default.createElement(_container2.default, { configUrl: docConfigUrl,
 	                                mode: 'EXAMINE_SET',
 	                                docCode: 'DJY0066',
-	                                docWidth: 1000,
-	                                docHeight: 500,
 	                                docData: _mockData2.default.docData
 	}), document.getElementById('app'));
 
@@ -31562,629 +31560,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(333)))
 
 /***/ }),
-/* 514 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(331);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(515);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _propTypes = __webpack_require__(516);
-
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-
-	var _PBUDocument = __webpack_require__(518);
-
-	var _PBUDocument2 = _interopRequireDefault(_PBUDocument);
-
-	var _blueimpMd = __webpack_require__(523);
-
-	var _blueimpMd2 = _interopRequireDefault(_blueimpMd);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author Chenzhyc
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @description 仿真纸质单据
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-	function loadConfig(url, callback) {
-	    fetch(url).then(function (response) {
-	        return response.json();
-	    }).then(function (data) {
-	        callback(data.docConfig);
-	    }).catch(function (err) {
-	        console.log('err = ', err);
-	        callback();
-	    });
-	}
-	/**
-	 * 矩形碰撞检测
-	 * @param  {Object} r1 [description]
-	 * @param  {Object} r2 [description]
-	 * @return {Boolean}    [description]
-	 */
-	function intersectRect(r1, r2) {
-	    return !(r2.left > r1.left + r1.width || r2.left + r2.width < r1.left || r2.top > r1.top + r1.height || r2.top + r2.height < r1.top);
-	}
-
-	var PBUDocumentDemo = function (_Component) {
-	    _inherits(PBUDocumentDemo, _Component);
-
-	    function PBUDocumentDemo(props) {
-	        _classCallCheck(this, PBUDocumentDemo);
-
-	        var _this = _possibleConstructorReturn(this, (PBUDocumentDemo.__proto__ || Object.getPrototypeOf(PBUDocumentDemo)).call(this, props));
-
-	        _this.onInputChange = function (e) {
-	            var newState = _extends({}, _this.state);
-
-	            newState.fields[e.target.name] = e.target.value;
-	            _this.setState(newState);
-	        };
-
-	        _this.onCheckboxChange = function (e) {};
-
-	        _this.onSelectChange = function (e) {};
-
-	        _this.onSubmit = function (e) {
-	            e.preventDefault();
-
-	            for (var i = 0; i < e.target.length; i++) {
-	                console.log(e.target[i].name, e.target[i].value);
-	            }
-	        };
-
-	        _this.onCopyChange = function (index) {
-	            _this.setState({
-	                copy: index
-	            });
-	        };
-
-	        _this.onMouseDown = function (e) {
-	            var xInContainer = e.clientX - _this.refs.docContainer.getBoundingClientRect().left + _this.refs.docContainer.scrollLeft;
-	            var yInContainer = e.clientY - _this.refs.docContainer.getBoundingClientRect().top + _this.refs.docContainer.scrollTop;
-
-	            _this.setState({
-	                showSelectRect: true,
-	                selectRect: {
-	                    left: xInContainer,
-	                    top: yInContainer,
-	                    startLeft: xInContainer,
-	                    startTop: yInContainer,
-	                    width: 0,
-	                    height: 0
-	                }
-	            });
-	        };
-
-	        _this.onMouseMove = function (e) {
-	            var selectRect = _this.state.selectRect;
-	            var xInContainer = e.clientX - _this.refs.docContainer.getBoundingClientRect().left + _this.refs.docContainer.scrollLeft;
-	            var yInContainer = e.clientY - _this.refs.docContainer.getBoundingClientRect().top + _this.refs.docContainer.scrollTop;
-
-	            var newLeft = selectRect.startLeft;
-
-	            if (xInContainer < selectRect.startLeft) {
-	                newLeft = xInContainer;
-	            }
-
-	            var newTop = selectRect.startTop;
-
-	            if (yInContainer < selectRect.startTop) {
-	                newTop = yInContainer;
-	            }
-
-	            if (_this.state.showSelectRect) {
-	                var elements = _this.state.docConfig[0].elements;
-	                var selectedElement = _extends({}, _this.state.selectedElement);
-
-	                elements.forEach(function (item, index) {
-	                    if (intersectRect(item.pos, _this.state.selectRect)) {
-	                        selectedElement[item.name] = item;
-	                    } else {
-	                        delete selectedElement[item.name];
-	                    }
-	                });
-
-	                _this.setState({
-	                    selectRect: {
-	                        left: newLeft,
-	                        top: newTop,
-	                        startLeft: selectRect.startLeft,
-	                        startTop: selectRect.startTop,
-	                        width: Math.abs(xInContainer - selectRect.startLeft),
-	                        height: Math.abs(yInContainer - selectRect.startTop)
-	                    },
-	                    selectedElement: selectedElement
-	                });
-	            }
-	        };
-
-	        _this.onMouseLeave = function (e) {
-	            _this.setState({
-	                showSelectRect: false,
-	                selectRect: {
-	                    left: 0,
-	                    top: 0,
-	                    startLeft: 0,
-	                    startTop: 0,
-	                    width: 0,
-	                    height: 0
-	                }
-	            });
-	        };
-
-	        _this.handleMultiLine = function () {
-	            var examineId = (0, _blueimpMd2.default)(Object.keys(_this.state.selectedElement).join());
-	            var examineElements = {
-	                examine: []
-	            };
-
-	            var rows = {};
-	            //先按行分组
-	            Object.values(_this.state.selectedElement).forEach(function (item, index) {
-
-	                if (item.elmtype === 'TABLE') {
-	                    if (!rows[item.table.row]) {
-	                        rows[item.table.row] = [];
-	                    }
-
-	                    rows[item.table.row].push(item.name);
-	                }
-	            });
-
-	            console.log('rows = ', rows);
-
-	            Object.values(rows).forEach(function (item, index) {
-	                var o = {};
-
-	                item.forEach(function (name, index) {
-	                    o[name] = document.getElementById(name).value;
-	                });
-
-	                o = _extends({}, o, {
-	                    examineType: 'MULTI_LINE',
-	                    examineId: examineId
-	                });
-
-	                examineElements.examine.push(o);
-	            });
-
-	            console.log('examineElements = ', JSON.stringify(examineElements));
-	        };
-
-	        _this.onMouseUp = function (e) {
-
-	            switch (_this.props.examineWay) {
-	                case 'EX_SINGLE':
-
-	                    break;
-
-	                case 'EX_MULTI_ELM':
-
-	                    break;
-
-	                case 'EX_MULTI_LINE':
-	                    _this.handleMultiLine();
-	                    break;
-
-	                case 'EX_SETTLEMENT':
-
-	                    break;
-	            }
-
-	            _this.setState({
-	                showSelectRect: false,
-	                selectRect: {
-	                    left: 0,
-	                    top: 0,
-	                    startLeft: 0,
-	                    startTop: 0,
-	                    width: 0,
-	                    height: 0
-	                }
-	            });
-	        };
-
-	        _this.onInputClick = function (item) {
-	            var selectedElement = _this.state.selectedElement;
-
-
-	            if (!selectedElement[item.name]) {
-	                selectedElement[item.name] = item;
-	            } else {
-	                delete selectedElement[item.name];
-	            }
-	        };
-
-	        _this.state = {
-	            fields: props.docData && props.docData.all ? props.docData.all : {},
-	            copy: 0,
-	            page: 0,
-	            docConfig: [],
-	            docData: props.docData,
-	            errMsg: '',
-	            showSelectRect: false,
-	            selectRect: {
-	                startLeft: 0,
-	                startTop: 0,
-	                left: 0,
-	                top: 0,
-	                width: 0,
-	                height: 0
-	            },
-	            selectedElement: {},
-	            examineElements: {}
-	        };
-	        return _this;
-	    }
-
-	    _createClass(PBUDocumentDemo, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
-
-	            loadConfig(this.props.docConfigUrl, function (docConfig) {
-
-	                if (!docConfig) {
-	                    _this2.setState({
-	                        errMsg: '加载失败'
-	                    });
-	                } else {
-	                    _this2.setState({
-	                        docConfig: docConfig
-	                    });
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                fields: nextProps.docData && nextProps.all ? nextProps.docData.all : {},
-	                docData: nextProps.docData
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this3 = this;
-
-	            //加载失败，请检查configUrl
-	            if (this.state.errMsg.length > 0) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    this.state.errMsg
-	                );
-	            }
-
-	            //加载中
-	            if (this.state.docConfig.length == 0) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    '\u52A0\u8F7D\u4E2D...'
-	                );
-	            }
-
-	            var config = this.state.docConfig[this.state.copy];
-	            var _state = this.state,
-	                docConfig = _state.docConfig,
-	                fields = _state.fields,
-	                selectRect = _state.selectRect;
-	            var _props = this.props,
-	                docData = _props.docData,
-	                docMode = _props.docMode;
-
-	            //展示预置数据或空白单据模式
-
-	            var renderElementAndValue = function renderElementAndValue(item, index) {
-	                var readOnly = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-
-	                var valueOpt = {};
-
-	                if (readOnly) {
-	                    valueOpt = {
-	                        readOnly: 'readonly'
-	                    };
-	                }
-
-	                if (_this3.state.fields.hasOwnProperty(item.name)) {
-	                    valueOpt = _extends({}, valueOpt, {
-	                        value: _this3.state.fields[item.name]
-	                    });
-	                }
-
-	                var highlightStyle = {};
-	                //答案高亮显示
-	                //TODO: style beautify
-	                if (readOnly && docData.answer) {
-	                    var answerFound = docData.answer.find(function (as, index) {
-	                        return as.hasOwnProperty(item.name);
-	                    });
-
-	                    if (answerFound) {
-	                        highlightStyle = {
-	                            color: '#ff0000'
-	                        };
-	                    }
-	                }
-
-	                switch (item.type) {
-	                    case 'INPUT':
-	                        return _react2.default.createElement('input', _extends({ key: item.name + '_' + index,
-	                            id: item.name,
-	                            name: item.name
-	                        }, valueOpt, {
-	                            onChange: _this3.onInputChange,
-	                            style: _extends({
-	                                position: "absolute"
-	                            }, item.pos, item.style, highlightStyle)
-	                        }));
-	                        break;
-	                    case 'CHECK_BOX':
-	                        valueOpt = _extends({}, valueOpt, {
-	                            checked: !!valueOpt.value
-	                        });
-
-	                        return _react2.default.createElement('input', _extends({ key: item.name + '_' + index,
-	                            type: 'checkbox',
-	                            id: item.name,
-	                            name: item.name
-	                        }, valueOpt, {
-	                            onChange: _this3.onCheckboxChange,
-	                            style: _extends({
-	                                position: "absolute"
-	                            }, item.pos, item.style)
-	                        }));
-	                        break;
-
-	                    case 'SELECT':
-	                        return _react2.default.createElement('input', _extends({ key: item.name + '_' + index,
-	                            id: item.name,
-	                            name: item.name
-	                        }, valueOpt, {
-	                            onChange: _this3.onSelectChange,
-	                            style: _extends({
-	                                position: "absolute"
-	                            }, item.pos, item.style, highlightStyle)
-	                        }));
-	                        break;
-	                }
-	            };
-
-	            //设置权重模式，全部元素都为input，
-	            var renderElementAlwaysInput = function renderElementAlwaysInput(item, index) {
-
-	                var value = {
-	                    value: 0
-	                };
-
-	                if (_this3.state.fields.hasOwnProperty(item.name)) {
-	                    value = {
-	                        value: _this3.state.fields[item.name]
-	                    };
-	                }
-
-	                var highlightStyle = {};
-
-	                if (_this3.state.selectedElement[item.name]) {
-	                    highlightStyle = {
-	                        color: '#ff0000'
-	                    };
-	                }
-
-	                return _react2.default.createElement('input', _extends({ key: item.name + '_' + index,
-	                    id: item.name,
-	                    name: item.name
-	                }, value, {
-	                    onClick: function onClick() {
-	                        _this3.onInputClick(item);
-	                    },
-	                    onChange: _this3.onInputChange,
-	                    style: _extends({
-	                        position: "absolute"
-	                    }, item.pos, item.style, highlightStyle)
-	                }));
-	            };
-
-	            /**
-	             * 根据不同模式渲染元素们
-	             * TODO: style beautify
-	             */
-	            var renderElements = function renderElements() {
-	                var elements = config.elements;
-
-	                if (!config.elements) {
-	                    elements = docConfig[0].elements;
-	                }
-
-	                var elementNodes = elements.map(function (item, index) {
-	                    //多联后面的联均为只读
-	                    if (_this3.state.copy !== 0) {
-	                        return renderElementAndValue(item, index);
-	                    }
-
-	                    switch (_this3.props.docMode) {
-	                        case 'READ_ONLY':
-	                            return renderElementAndValue(item, index);
-	                            break;
-
-	                        case 'EDIT_ANSWER':
-
-	                            break;
-
-	                        case 'EDIT_WEIGHT':
-	                            return renderElementAlwaysInput(item, index);
-	                            break;
-
-	                        case 'EDIT_DATA':
-	                            return renderElementAndValue(item, index, false);
-	                            break;
-	                        //no default
-	                    }
-	                });
-
-	                return elementNodes;
-	            };
-
-	            /**
-	             * 渲染分联器
-	             * TODO: style beautify
-	             */
-	            var renderCopy = function renderCopy() {
-	                //如果只有一联，则不显示分联
-	                if (_this3.state.docConfig.length == 1) {
-	                    return null;
-	                }
-
-	                var copyNodes = _this3.state.docConfig.map(function (item, index) {
-
-	                    return _react2.default.createElement(
-	                        'a',
-	                        { key: 'copy_' + index, href: '#', onClick: function onClick() {
-	                                _this3.onCopyChange(index);
-	                            } },
-	                        _react2.default.createElement('br', null),
-	                        index + 1
-	                    );
-	                });
-
-	                return _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    copyNodes
-	                );
-	            };
-
-	            //渲染矩形选择区域
-	            var renderRectangle = function renderRectangle() {
-	                if (_this3.state.showSelectRect) {
-	                    return _react2.default.createElement('div', { style: {
-	                            position: "absolute",
-	                            backgroundColor: 'rgba(0,0,0,0.1)',
-	                            zIndex: 0,
-	                            left: selectRect.left,
-	                            top: selectRect.top,
-	                            width: selectRect.width,
-	                            height: selectRect.height
-	                        } });
-	                }
-	            };
-
-	            var mouseEventOpt = {};
-
-	            if (docMode === 'EDIT_WEIGHT') {
-	                mouseEventOpt = {
-	                    onMouseDown: this.onMouseDown,
-	                    onMouseMove: this.onMouseMove,
-	                    onMouseUp: this.onMouseUp,
-	                    onMouseLeave: this.onMouseLeave
-	                };
-	            }
-
-	            return _react2.default.createElement(
-	                'div',
-	                _extends({ className: _PBUDocument2.default.title,
-	                    ref: 'docContainer'
-	                }, mouseEventOpt, {
-	                    style: _extends({
-	                        backgroundImage: 'url(' + config.backgroundImage + ')',
-	                        noRepeat: 'no-repeat',
-	                        width: config.width,
-	                        height: config.height,
-	                        backgroundSize: config.backgroundSize ? config.backgroundSize : 'cover'
-	                    }, config.style) }),
-	                _react2.default.createElement(
-	                    'form',
-	                    { onSubmit: this.onSubmit },
-	                    renderElements(),
-	                    renderCopy(),
-	                    _react2.default.createElement('input', { type: 'submit', value: 'submit' })
-	                ),
-	                renderRectangle()
-	            );
-	        }
-	    }]);
-
-	    return PBUDocumentDemo;
-	}(_react.Component);
-
-	PBUDocumentDemo.propTypes = {
-	    /**
-	     * 单据配置文件Url
-	     */
-	    docConfigUrl: _propTypes2.default.string.isRequired,
-	    /**
-	     * 单据数据属性
-	     */
-	    docData: _propTypes2.default.object,
-
-	    /**
-	     * 当前单据模式
-	     * @enum READ_ONLY 纯展示，如果存在docData，则展示docData
-	     * @enum EDIT_ANSWER 教师编辑答案模式
-	     * @enum EDIT_WEIGHT 编辑权重及考核项模式
-	     * @enum EDIT_DATA 预置数据模式
-	     * @enum
-	     */
-	    docMode: _propTypes2.default.oneOf(["READ_ONLY", "EDIT_ANSWER", "EDIT_WEIGHT", "EDIT_DATA", ""]).isRequired,
-
-	    /**
-	     * 保存回调
-	     * @param {Number} copy 当前保存的联序号
-	     */
-	    onSave: _propTypes2.default.func,
-	    /**
-	     * 续页回调，执行此操作时会调用onSave
-	     */
-	    onAddPage: _propTypes2.default.func,
-	    /**
-	     * 可见联次
-	     * 可见联序号，用「，」分割，如'0,1,2' 则显示前三联，如'0,2' 则只显示第一联和第三联
-	     */
-	    visibleCopys: _propTypes2.default.string,
-
-	    /**
-	     * 甄别方式
-	     * @enum EX_SINGLE 单空甄别
-	     * @enum EX_MULTI_ELM 多空甄别
-	     * @enum EX_MULTI_LINE 多行甄别
-	     * @enum EX_SETTLEMENT 结算甄别
-	     */
-	    examineWay: _propTypes2.default.oneOf(["EX_SINGLE", 'EX_MULTI_ELM', 'EX_MULTI_LINE', 'EX_SETTLEMENT'])
-	};
-
-	PBUDocumentDemo.defaultProps = {
-	    docConfigUrl: '',
-	    docData: {},
-	    docMode: ''
-	};
-
-	exports.default = PBUDocumentDemo;
-
-/***/ }),
+/* 514 */,
 /* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -32341,51 +31717,8 @@
 
 
 /***/ }),
-/* 518 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(519);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// Prepare cssTransformation
-	var transform;
-
-	var options = {}
-	options.transform = transform
-	// add the styles to the DOM
-	var update = __webpack_require__(521)(content, options);
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../node_modules/css-loader/index.js?modules&localIdentName=[local]-[hash:base64:5]!../node_modules/less-loader/index.js!./PBUDocument.less", function() {
-				var newContent = require("!!../node_modules/css-loader/index.js?modules&localIdentName=[local]-[hash:base64:5]!../node_modules/less-loader/index.js!./PBUDocument.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 519 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(520)(undefined);
-	// imports
-
-
-	// module
-	exports.push([module.id, "a:hover {\n  text-decoration: underline;\n}\n", ""]);
-
-	// exports
-
-
-/***/ }),
+/* 518 */,
+/* 519 */,
 /* 520 */
 /***/ (function(module, exports) {
 
@@ -33237,11 +32570,13 @@
 
 	var _utils = __webpack_require__(525);
 
-	var _readonly = __webpack_require__(528);
+	var _constants = __webpack_require__(526);
+
+	var _readonly = __webpack_require__(534);
 
 	var _readonly2 = _interopRequireDefault(_readonly);
 
-	var _editWeight = __webpack_require__(532);
+	var _editWeight = __webpack_require__(538);
 
 	var _editWeight2 = _interopRequireDefault(_editWeight);
 
@@ -33283,9 +32618,7 @@
 	        value: function loadDocConfig() {
 	            var _this2 = this;
 
-	            var _props = this.props,
-	                docWidth = _props.docWidth,
-	                docHeight = _props.docHeight;
+	            var docRatio = this.props.docRatio;
 
 	            (0, _utils.loadConfig)(this.props.configUrl, function (docConfig) {
 	                if (!docConfig || docConfig.length < 1) {
@@ -33294,8 +32627,8 @@
 	                    });
 	                } else {
 	                    var config = docConfig[0];
-	                    var ratioWidth = parseFloat(docWidth) / config.width;
-	                    var ratioHeight = parseFloat(docHeight) / config.height;
+	                    var ratioWidth = docRatio;
+	                    var ratioHeight = docRatio;
 
 	                    _this2.setState({
 	                        docConfig: docConfig,
@@ -33313,11 +32646,10 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _props2 = this.props,
-	                mode = _props2.mode,
-	                docWidth = _props2.docWidth,
-	                docHeight = _props2.docHeight,
-	                docData = _props2.docData;
+	            var _props = this.props,
+	                mode = _props.mode,
+	                docRatio = _props.docRatio,
+	                docData = _props.docData;
 	            var _state = this.state,
 	                docConfig = _state.docConfig,
 	                errMsg = _state.errMsg,
@@ -33334,19 +32666,19 @@
 	            };
 
 	            var renderExamineSet = function renderExamineSet() {
-	                return _react2.default.createElement(_editWeight2.default, { ratioWidth: ratioWidth,
-	                    ratioHeight: ratioHeight,
-	                    config: docConfig[0]
-	                    // data={docData}
+	                return _react2.default.createElement(_editWeight2.default, { ratioWidth: 1,
+	                    ratioHeight: 1,
+	                    config: docConfig[0],
+	                    data: docData
 	                });
 	            };
 
 	            var renderMode = function renderMode() {
 	                switch (mode) {
-	                    case _utils.MODE.PREVIEW:
+	                    case _constants.MODE.PREVIEW:
 	                        return renderPreview();
 	                        break;
-	                    case _utils.MODE.EXAMINE_SET:
+	                    case _constants.MODE.EXAMINE_SET:
 	                        return renderExamineSet();
 	                        break;
 	                }
@@ -33370,7 +32702,7 @@
 	    /**
 	     * 模式
 	     */
-	    mode: _propTypes2.default.oneOf(Object.keys(_utils.MODE)).isRequired,
+	    mode: _propTypes2.default.oneOf(Object.keys(_constants.MODE)).isRequired,
 	    /**
 	     * 单据配置文件地址
 	     */
@@ -33380,13 +32712,9 @@
 	     */
 	    docCode: _propTypes2.default.string.isRequired,
 	    /**
-	     * 单据宽度，默认跟随config
+	     * 单据缩放系数，默认1，mode为EXAMINE_SET时无效
 	     */
-	    docWidth: _propTypes2.default.number,
-	    /**
-	     * 单据高度，默认跟随config
-	     */
-	    docHeight: _propTypes2.default.number,
+	    docRatio: _propTypes2.default.number,
 	    /**
 	     * 单据数据集合
 	     */
@@ -33394,8 +32722,7 @@
 	};
 
 	PBUDocument.defaultProps = {
-	    docWidth: 1,
-	    docHeight: 1
+	    docRatio: 1
 	};
 
 /***/ }),
@@ -33416,7 +32743,7 @@
 	* @return {Boolean}    [description]
 	*/
 	exports.intersectRect = function (r1, r2) {
-	  return !(r2.left > r1.left + r1.width || r2.left + r2.width < r1.left || r2.top > r1.top + r1.height || r2.top + r2.height < r1.top);
+	    return !(r2.left > r1.left + r1.width || r2.left + r2.width < r1.left || r2.top > r1.top + r1.height || r2.top + r2.height < r1.top);
 	};
 
 	/**
@@ -33425,14 +32752,14 @@
 	 * @param  {Function} callback 加载后的回调
 	 */
 	exports.loadConfig = function (url, callback) {
-	  fetch(url).then(function (response) {
-	    return response.json();
-	  }).then(function (data) {
-	    callback(data.docConfig);
-	  }).catch(function (err) {
-	    console.log('err = ', err);
-	    callback();
-	  });
+	    fetch(url).then(function (response) {
+	        return response.json();
+	    }).then(function (data) {
+	        callback(data.docConfig);
+	    }).catch(function (err) {
+	        console.log('err = ', err);
+	        callback();
+	    });
 	};
 
 	/**
@@ -33440,99 +32767,56 @@
 	 * @type {String}
 	 */
 	exports.md5 = __webpack_require__(523);
-	exports.MODE = __webpack_require__(526).default;
-	exports.ELEMENT_TYPE = __webpack_require__(527).default;
-
-	/**
-	 * 元素类型
-	 */
-	exports.ELEMENT = {
-	  /**
-	   * 输入框
-	   */
-	  INPUT: 'INPUT',
-	  /**
-	   * 带搜索输入框
-	   */
-	  SELECT: 'SELECT',
-	  /**
-	   * checkbox
-	   */
-	  CHECK_BOX: 'CHECK_BOX'
-
-	  /**
-	   * 甄别方式
-	   */
-	};exports.EXAMINE = {
-	  /**
-	   * 单编辑框
-	   */
-	  SINGLE: 'SINGLE',
-	  /**
-	   * 多编辑框
-	   */
-	  MULTI_ELM: 'MULTI_ELM',
-	  /**
-	   * 多行集合
-	   */
-	  MULTI_LINE: 'MULTI_LINE',
-	  /**
-	   * 合计栏
-	   */
-	  SETTLEMENT: 'SETTLEMENT'
-	};
-
-	exports.EXAMINE_COLOR = {
-	  SINGLE: '#FF756E',
-	  MULTI_ELM: '#A28DDD',
-	  MULTI_LINE: '#95DF7D',
-	  SETTLEMENT: '#FAA755'
-	};
-
-	exports.EXAMINE_NAME = {
-	  SINGLE: '单编辑框',
-	  MULTI_ELM: '多编辑框',
-	  MULTI_LINE: '多行集合',
-	  SETTLEMENT: '合计栏'
-	};
-
 	exports.indexElementsByName = function (elements) {};
 
 /***/ }),
 /* 526 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
-	/**
-	 * 单据模式
-	 */
-	exports.default = {
-	  /**
-	   * 设置答案
-	   */
-	  ANSWER_SET: 'ANSWER_SET',
-	  /**
-	   * 预置数据
-	   */
-	  DATA_INIT: 'DATA_INIT',
-	  /**
-	   * 设置甄别方式及权重
-	   * 对应selectable
-	   */
-	  EXAMINE_SET: 'EXAMINE_SET',
-	  /**
-	   * 预览，包括权重及甄别方式
-	   * 对应readonly
-	   */
-	  PREVIEW: 'PREVIEW'
-	  /**
-	   * TODO: 添加课运端模式
-	   */
-	};
+	exports.MODE = exports.EXAMINE_NAME = exports.EXAMINE_TEXT = exports.EXAMINE_COLOR = exports.EXAMINE = exports.ELEMENT_TYPE = exports.ELEMENT = undefined;
+
+	var _element = __webpack_require__(527);
+
+	var _element2 = _interopRequireDefault(_element);
+
+	var _elementType = __webpack_require__(528);
+
+	var _elementType2 = _interopRequireDefault(_elementType);
+
+	var _examine = __webpack_require__(529);
+
+	var _examine2 = _interopRequireDefault(_examine);
+
+	var _examineColor = __webpack_require__(530);
+
+	var _examineColor2 = _interopRequireDefault(_examineColor);
+
+	var _examineText = __webpack_require__(531);
+
+	var _examineText2 = _interopRequireDefault(_examineText);
+
+	var _examineTitle = __webpack_require__(532);
+
+	var _examineTitle2 = _interopRequireDefault(_examineTitle);
+
+	var _mode = __webpack_require__(533);
+
+	var _mode2 = _interopRequireDefault(_mode);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.ELEMENT = _element2.default;
+	exports.ELEMENT_TYPE = _elementType2.default;
+	exports.EXAMINE = _examine2.default;
+	exports.EXAMINE_COLOR = _examineColor2.default;
+	exports.EXAMINE_TEXT = _examineText2.default;
+	exports.EXAMINE_NAME = _examineTitle2.default;
+	exports.MODE = _mode2.default;
 
 /***/ }),
 /* 527 */
@@ -33543,6 +32827,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	/**
+	 * 元素类型枚举
+	 */
 	exports.default = {
 	  /**
 	   * 单行文本型
@@ -33580,6 +32867,157 @@
 
 /***/ }),
 /* 528 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * 元素所属类型枚举
+	 */
+	exports.default = {
+	  /**
+	   * 普通类型元素
+	   */
+	  NORMAL: 'NORMAL',
+	  /**
+	   * 属于表格型元素
+	   * 此元素的元素配置中必包含table属性
+	   */
+	  TABLE: 'TABLE'
+	  /**
+	   * TODO: 添加其他类型
+	   */
+	};
+
+/***/ }),
+/* 529 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * 甄别方式枚举
+	 */
+	exports.default = {
+	  /**
+	   * 单编辑框
+	   */
+	  SINGLE: 'SINGLE',
+	  /**
+	   * 多编辑框
+	   */
+	  MULTI_ELM: 'MULTI_ELM',
+	  /**
+	   * 多行集合
+	   */
+	  MULTI_LINE: 'MULTI_LINE',
+	  /**
+	   * 合计栏
+	   */
+	  SETTLEMENT: 'SETTLEMENT'
+	};
+
+/***/ }),
+/* 530 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * 甄别方式对应的颜色值枚举
+	 */
+	exports.default = {
+	    SINGLE: '#FF756E',
+	    MULTI_ELM: '#A28DDD',
+	    MULTI_LINE: '#95DF7D',
+	    SETTLEMENT: '#FAA755'
+	};
+
+/***/ }),
+/* 531 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * 甄别方式介绍文本枚举
+	 */
+	exports.default = {
+	    SINGLE: '本空填写的数据与此空的正确答案对比一致，本甄别框判对。',
+	    MULTI_ELM: '甄别框中所有空填写的数据与正确答案对比，全部一致，本甄别框判对。',
+	    MULTI_LINE: '填写的数据没有固定顺序，行数据与正确答案行数据循环比对，本行数据一致，本行判对。',
+	    SETTLEMENT: '单页时同单编辑框，续页时，相加后甄别'
+	};
+
+/***/ }),
+/* 532 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * 甄别方式对应中文名称枚举
+	 */
+	exports.default = {
+	    SINGLE: '单编辑框',
+	    MULTI_ELM: '多编辑框',
+	    MULTI_LINE: '多行集合',
+	    SETTLEMENT: '合计栏'
+	};
+
+/***/ }),
+/* 533 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * 单据模式
+	 */
+	exports.default = {
+	  /**
+	   * 设置答案
+	   */
+	  ANSWER_SET: 'ANSWER_SET',
+	  /**
+	   * 预置数据
+	   */
+	  DATA_INIT: 'DATA_INIT',
+	  /**
+	   * 设置甄别方式及权重
+	   * 对应selectable
+	   */
+	  EXAMINE_SET: 'EXAMINE_SET',
+	  /**
+	   * 预览，包括权重及甄别方式
+	   * 对应readonly
+	   */
+	  PREVIEW: 'PREVIEW'
+	  /**
+	   * TODO: 添加课运端模式
+	   */
+	};
+
+/***/ }),
+/* 534 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33605,11 +33043,11 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _background = __webpack_require__(529);
+	var _background = __webpack_require__(535);
 
 	var _background2 = _interopRequireDefault(_background);
 
-	var _background3 = __webpack_require__(530);
+	var _background3 = __webpack_require__(536);
 
 	var _background4 = _interopRequireDefault(_background3);
 
@@ -33709,7 +33147,7 @@
 	exports.default = DocReadOnly;
 
 /***/ }),
-/* 529 */
+/* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33786,13 +33224,13 @@
 	};
 
 /***/ }),
-/* 530 */
+/* 536 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(531);
+	var content = __webpack_require__(537);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// Prepare cssTransformation
 	var transform;
@@ -33817,7 +33255,7 @@
 	}
 
 /***/ }),
-/* 531 */
+/* 537 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(520)(undefined);
@@ -33834,7 +33272,7 @@
 	};
 
 /***/ }),
-/* 532 */
+/* 538 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33859,21 +33297,23 @@
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _editWeight = __webpack_require__(534);
+	var _editWeight = __webpack_require__(539);
 
 	var _editWeight2 = _interopRequireDefault(_editWeight);
 
 	var _utils = __webpack_require__(525);
 
-	var _background = __webpack_require__(530);
+	var _constants = __webpack_require__(526);
+
+	var _background = __webpack_require__(536);
 
 	var _background2 = _interopRequireDefault(_background);
 
-	var _isEmpty = __webpack_require__(537);
+	var _isEmpty = __webpack_require__(541);
 
 	var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
-	var _isInt = __webpack_require__(539);
+	var _isInt = __webpack_require__(543);
 
 	var _isInt2 = _interopRequireDefault(_isInt);
 
@@ -33881,9 +33321,17 @@
 
 	var _blueimpMd2 = _interopRequireDefault(_blueimpMd);
 
-	var _selectedRectangle = __webpack_require__(540);
+	var _selectedRectangle = __webpack_require__(544);
 
 	var _selectedRectangle2 = _interopRequireDefault(_selectedRectangle);
+
+	var _reactComposition = __webpack_require__(545);
+
+	var _reactComposition2 = _interopRequireDefault(_reactComposition);
+
+	var _weightHeader = __webpack_require__(548);
+
+	var _weightHeader2 = _interopRequireDefault(_weightHeader);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33923,8 +33371,10 @@
 	            //用于生成tag
 	            examineTypeIndex: {},
 	            selectedTag: '',
-	            tags: []
-	        }, _this.groupTags = function (props) {}, _this.combineDataIntoCompleted = function (props) {
+	            editTagId: '',
+	            editTagName: '',
+	            editTempValue: ''
+	        }, _this.combineDataIntoCompleted = function (props) {
 	            var data = props.data,
 	                config = props.config;
 
@@ -33970,29 +33420,29 @@
 
 	            var exIndex = _extends({}, examineTypeIndex);
 
-	            var examineName = _utils.EXAMINE_NAME[currentExamineType];
+	            var examineName = _constants.EXAMINE_NAME[currentExamineType];
 	            //生成标签
 	            if (exIndex.hasOwnProperty(currentExamineType)) {
 	                exIndex[currentExamineType].push({
 	                    examineId: examineId,
 	                    index: exIndex[currentExamineType].length,
-	                    examineName: '' + _utils.EXAMINE_NAME[currentExamineType] + (exIndex[currentExamineType].length + 1)
+	                    examineName: '' + _constants.EXAMINE_NAME[currentExamineType] + exIndex[currentExamineType].length
 	                });
-	                examineName = '' + _utils.EXAMINE_NAME[currentExamineType] + (exIndex[currentExamineType].length + 1);
+	                examineName = '' + _constants.EXAMINE_NAME[currentExamineType] + exIndex[currentExamineType].length;
 	            } else {
 	                exIndex[currentExamineType] = [{
 	                    examineId: examineId,
 	                    index: 0,
-	                    examineName: '' + _utils.EXAMINE_NAME[currentExamineType]
+	                    examineName: '' + _constants.EXAMINE_NAME[currentExamineType]
 	                }];
 	            }
 
 	            Object.values(selectedElement).forEach(function (item, index) {
-	                if (currentExamineType === _utils.EXAMINE.MULTI_LINE && item.elmtype !== 'TABLE') {
+	                if (currentExamineType === _constants.EXAMINE.MULTI_LINE && item.elmtype !== _constants.ELEMENT_TYPE.TABLE) {
 	                    return;
 	                }
 	                //去掉checkbox
-	                if (item.type === _utils.ELEMENT_TYPE.CHECK_BOX) {
+	                if (item.type === _constants.ELEMENT.CHECK_BOX) {
 	                    return;
 	                }
 
@@ -34009,7 +33459,6 @@
 	                examineTypeIndex: exIndex,
 	                completedElement: newCompletedElement,
 	                selectedElement: {},
-	                currentExamineType: '',
 	                showSelectRect: false,
 	                selectRect: (0, _selectedRectangle.zeroRect)()
 	            });
@@ -34017,7 +33466,6 @@
 	            _this.setState({
 	                showSelectRect: false,
 	                selectedElement: {},
-	                currentExamineType: '',
 	                selectRect: (0, _selectedRectangle.zeroRect)()
 	            });
 	        }, _this.onMouseMove = function (e) {
@@ -34077,7 +33525,7 @@
 
 	            var newCompletedElement = _extends({}, completedElement);
 	            //如果是多行编辑则删除时要删除掉整列
-	            if (newCompletedElement[name].examineType === _utils.EXAMINE.MULTI_LINE) {
+	            if (newCompletedElement[name].examineType === _constants.EXAMINE.MULTI_LINE) {
 	                var tempObj = _extends({}, newCompletedElement);
 
 	                //多行编辑情况下一定存在table.col
@@ -34098,7 +33546,8 @@
 	            _this.setState({
 	                selectedElement: {},
 	                completedElement: {},
-	                examineTypeIndex: {}
+	                examineTypeIndex: {},
+	                currentExamineType: ''
 	            });
 	        }, _this.onRemoveByTagId = function (examineId) {
 	            var _this$state5 = _this.state,
@@ -34115,13 +33564,49 @@
 	            });
 
 	            _this.setState({
-	                completedElement: newCompletedElement
+	                completedElement: newCompletedElement,
+	                selectedTag: ''
 	            });
 	        }, _this.onSelectTags = function (examineId) {
 	            _this.setState({
 	                selectedTag: examineId === _this.state.selectedTag ? '' : examineId
 	            });
-	        }, _temp), _possibleConstructorReturn(_this, _ret);
+	        }, _this.onEditTag = function (e) {
+	            var value = e.target.value;
+	            if (e.reactComposition.composition === false) {
+
+	                if (value.length > 5) {
+	                    value = value.slice(0, 5);
+	                }
+	                _this.setState({
+	                    editTagName: value
+	                });
+	            }
+	            _this.setState({
+	                editTempValue: value
+	            });
+	        }, _this.onTagDoubleClick = function (examineId, examineName) {
+	            _this.setState({
+	                editTagId: examineId,
+	                editTagName: examineName,
+	                editTempValue: examineName
+	            });
+	        }, _this.onTagBlur = function () {
+	            var newCompletedElement = _extends({}, _this.state.completedElement);
+
+	            if (!(0, _isEmpty2.default)(_this.state.editTagName)) {
+	                Object.values(newCompletedElement).forEach(function (item) {
+	                    if (item.examineId === _this.state.editTagId) {
+	                        item.examineName = _this.state.editTagName;
+	                    }
+	                });
+	            }
+
+	            _this.setState({
+	                editTagId: '',
+	                completedElement: newCompletedElement
+	            });
+	        }, _this.onSave = function () {}, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 
 	    _createClass(EditWeight, [{
@@ -34163,99 +33648,34 @@
 	                showSelectRect = _state.showSelectRect,
 	                selectRect = _state.selectRect,
 	                selectedTag = _state.selectedTag,
-	                examineTypeIndex = _state.examineTypeIndex;
+	                examineTypeIndex = _state.examineTypeIndex,
+	                editTagId = _state.editTagId,
+	                editTagName = _state.editTagName,
+	                editTempValue = _state.editTempValue;
 
-
-	            var renderTags = function renderTags() {
-	                var temp = [];
-	                Object.values(completedElement).forEach(function (item, index) {
-	                    if (temp.findIndex(function (o) {
-	                        return o.examineId === item.examineId;
-	                    }) !== -1) {
-	                        return;
-	                    }
-
-	                    temp.push(item);
-	                });
-
-	                var tagNodes = temp.map(function (item, index) {
-	                    var className = item.examineId === selectedTag ? _editWeight2.default.highlight : _editWeight2.default.tag;
-
-	                    return _react2.default.createElement(
-	                        'li',
-	                        { key: item.examineId + '_' + index,
-	                            onClick: function onClick() {
-	                                _this2.onSelectTags(item.examineId);
-	                            },
-	                            className: className },
-	                        item.examineName,
-	                        _react2.default.createElement(
-	                            'span',
-	                            { className: _editWeight2.default.delete, onClick: function onClick() {
-	                                    _this2.onRemoveByTagId(item.examineId);
-	                                } },
-	                            _react2.default.createElement('i', { className: _editWeight2.default.iconfont })
-	                        )
-	                    );
-	                });
-
-	                return _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'ul',
-	                        null,
-	                        tagNodes
-	                    )
-	                );
-	            };
 	            //顶部操作渲染
+
 	            var renderTopHeader = function renderTopHeader() {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { className: _editWeight2.default.sub_nav },
-	                    _react2.default.createElement(
-	                        'h2',
-	                        null,
-	                        config.title
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _editWeight2.default.menus },
-	                        _react2.default.createElement(
-	                            'span',
-	                            { className: _editWeight2.default.pre },
-	                            _react2.default.createElement('i', { className: _editWeight2.default.iconfont })
-	                        ),
-	                        renderTags(),
-	                        _react2.default.createElement(
-	                            'span',
-	                            { className: _editWeight2.default.next },
-	                            _react2.default.createElement('i', { className: _editWeight2.default.iconfont })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _editWeight2.default.btn_group },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: _editWeight2.default.clear, onClick: _this2.onClearAll },
-	                            '\u6E05\u9664'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            null,
-	                            '\u4FDD\u5B58'
-	                        )
-	                    )
-	                );
+	                return _react2.default.createElement(_weightHeader2.default, { config: config,
+	                    all: completedElement,
+	                    editTagId: editTagId,
+	                    selectedTag: selectedTag,
+	                    editTempValue: editTempValue,
+	                    onSave: _this2.onSave,
+	                    onClearAll: _this2.onClearAll,
+	                    onSelectTags: _this2.onSelectTags,
+	                    onTagDoubleClick: _this2.onTagDoubleClick,
+	                    onTagBlur: _this2.onTagBlur,
+	                    onRemoveByTagId: _this2.onRemoveByTagId,
+	                    onEditTag: _this2.onEditTag
+	                });
 	            };
 
 	            //渲染右侧设置项
 	            var renderRightContainer = function renderRightContainer() {
 	                //渲染甄别方式选择radio
 	                var renderRadioButtons = function renderRadioButtons() {
-	                    var radioNodes = Object.keys(_utils.EXAMINE_NAME).map(function (item, index) {
+	                    var radioNodes = Object.keys(_constants.EXAMINE_NAME).map(function (item, index) {
 	                        var checkedOpt = {
 	                            checked: false
 	                        };
@@ -34275,7 +33695,7 @@
 	                            _react2.default.createElement(
 	                                'span',
 	                                null,
-	                                _utils.EXAMINE_NAME[item]
+	                                _constants.EXAMINE_NAME[item]
 	                            )
 	                        );
 	                    });
@@ -34348,12 +33768,12 @@
 	                        return null;
 	                    }
 
-	                    if (item.element.type === _utils.ELEMENT_TYPE.CHECK_BOX) {
+	                    if (item.element.type === _constants.ELEMENT.CHECK_BOX) {
 	                        return null;
 	                    }
 
 	                    var selected = {
-	                        border: '1px solid ' + _utils.EXAMINE_COLOR[item.examineType],
+	                        border: '1px solid ' + _constants.EXAMINE_COLOR[item.examineType],
 	                        borderRadius: 2
 	                    };
 
@@ -34365,10 +33785,7 @@
 	                                left: pos.left * ratioWidth,
 	                                top: pos.top * ratioHeight,
 	                                width: pos.width * ratioWidth,
-	                                height: pos.height * ratioHeight,
-	                                overflow: 'hidden',
-	                                textOverflow: 'ellipsis',
-	                                whiteSpace: 'nowrap'
+	                                height: pos.height * ratioHeight
 	                            }, selected) },
 	                        _react2.default.createElement('input', { id: item.element.name,
 	                            style: {
@@ -34386,7 +33803,7 @@
 	                                _this2.onRemoveCompleted(item.element.name);
 	                            },
 	                            style: {
-	                                color: _utils.EXAMINE_COLOR[item.examineType]
+	                                color: _constants.EXAMINE_COLOR[item.examineType]
 	                            } })
 	                    );
 	                });
@@ -34398,7 +33815,7 @@
 	            var renderSelectedZone = function renderSelectedZone() {
 	                var elementNodes = Object.values(selectedElement).map(function (item, index) {
 	                    var selected = {
-	                        border: '1px solid ' + _utils.EXAMINE_COLOR[currentExamineType],
+	                        border: '1px solid ' + _constants.EXAMINE_COLOR[currentExamineType],
 	                        borderRadius: 2
 	                    };
 
@@ -34487,24 +33904,31 @@
 	    /**
 	     * 需要展示的数据，权重和甄别方式相关
 	     */
-	    data: _propTypes2.default.object
+	    data: _propTypes2.default.object,
+	    /**
+	     * 保存回调
+	     * @param {Object} data
+	     */
+	    onSave: _propTypes2.default.func
 	};
 
 	EditWeight.defaultProps = {
 	    ratioWidth: 1,
 	    ratioHeight: 1,
-	    data: null
+	    data: null,
+	    onSave: function onSave(data) {
+	        console.log('data = ', data);
+	    }
 	};
 
 /***/ }),
-/* 533 */,
-/* 534 */
+/* 539 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(535);
+	var content = __webpack_require__(540);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// Prepare cssTransformation
 	var transform;
@@ -34529,7 +33953,7 @@
 	}
 
 /***/ }),
-/* 535 */
+/* 540 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(520)(undefined);
@@ -34537,7 +33961,7 @@
 
 
 	// module
-	exports.push([module.id, ".wrap-2Q-Bq * {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  outline: none;\n}\n.sub_nav-1zfhT {\n  background: #FFFFFF;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);\n  width: 100%;\n  height: 60px;\n}\n.sub_nav-1zfhT * {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  outline: none;\n}\n.sub_nav-1zfhT h2 {\n  font-size: 16px;\n  line-height: 60px;\n  color: #313131;\n  width: 180px;\n  margin-left: 20px;\n  _display: inline;\n  float: left;\n}\n.menus-22z7s {\n  width: 750px;\n  float: left;\n  position: relative;\n  padding: 0 42px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n}\n.menus-22z7s .pre-27VVX,\n.menus-22z7s .next-j0yT2 {\n  display: inline-block;\n  width: 22px;\n  height: 32px;\n  background: #EBEBEB;\n  border-radius: 2px;\n  cursor: pointer;\n  position: absolute;\n  left: 0;\n  top: 14px;\n  line-height: 30px;\n  text-align: center;\n  color: #C1C1C1;\n}\n.menus-22z7s .next-j0yT2 {\n  left: auto;\n  right: 0;\n}\n.menus-22z7s .pre-27VVX:hover,\n.menus-22z7s .next-j0yT2:hover {\n  background: #D1D1D1;\n  color: #A8A8A8;\n}\n.menus-22z7s .pre-27VVX i:before {\n  content: \"\\E900\";\n  font-size: 12px;\n}\n.menus-22z7s .next-j0yT2 i:before {\n  content: \"\\E901\";\n  font-size: 12px;\n}\n.menus-22z7s div {\n  display: inline-block;\n  overflow: hidden;\n  line-height: 60px;\n  width: 100%;\n}\n.menus-22z7s ul {\n  width: 1000px;\n}\n.menus-22z7s li {\n  padding: 0 14px;\n  height: 32px;\n  line-height: 32px;\n  display: inline-block;\n  border: 1px solid #C1C1C1;\n  border-radius: 2px;\n  position: relative;\n  color: #919191;\n  cursor: pointer;\n  margin: 0 5px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n}\n.menus-22z7s li:hover {\n  color: #3DCC61;\n  border-color: #3DCC61;\n}\n.menus-22z7s .tag-2RW7E {\n  padding: 0 14px;\n  height: 32px;\n  line-height: 32px;\n  display: inline-block;\n  border: 1px solid #C1C1C1;\n  border-radius: 2px;\n  position: relative;\n  color: #919191;\n  cursor: pointer;\n  margin: 0 5px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n}\n.menus-22z7s .highlight-1398Y {\n  color: #3DCC61;\n  border-color: #3DCC61;\n}\n.delete-1hqVr {\n  width: 14px;\n  height: 14px;\n  background: #fff;\n  display: block;\n  position: absolute;\n  right: -7px;\n  top: -7px;\n  overflow: hidden;\n  line-height: 12px;\n}\n@font-face {\n  font-family: 'iconfont';\n  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot');\n  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.woff') format('woff'), /* chrome、firefox */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.svg#iconfont') format('svg');\n  \n  /* IE9*/\n  /* iOS 4.1- */\n}\n.iconfont-3oeiU {\n  font-family: \"iconfont\";\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -webkit-text-stroke-width: 0.2px;\n  -moz-osx-font-smoothing: grayscale;\n}\n.delete-1hqVr i:before {\n  content: \"\\E902\";\n  font-size: 14px;\n}\n.btn_group-3V2KL {\n  float: right;\n  margin-right: 30px;\n  _display: inline;\n  margin-top: 10px;\n}\n.btn_group-3V2KL button {\n  width: 140px;\n  height: 40px;\n  background: #3DCC61;\n  border-radius: 2px;\n  font-size: 14px;\n  color: #fff;\n  border: 0;\n}\n.btn_group-3V2KL button:hover {\n  background: #35B355;\n  cursor: pointer;\n}\n.btn_group-3V2KL .clear-3rhqR {\n  background: #fff;\n  color: #3DCC61;\n  border: 1px solid #3DCC61;\n  margin-right: 10px;\n}\n.btn_group-3V2KL .clear-3rhqR:hover {\n  color: #35B355;\n  border-color: #35B355;\n  background: #fff;\n}\n.content-2OaaB {\n  width: 1220px;\n  margin: 30px auto;\n  overflow: hidden;\n}\n.right_container-dcdZD {\n  float: left;\n  margin-left: 20px;\n  _display: inline;\n}\n.right_container-dcdZD label {\n  display: block;\n  margin-bottom: 10px;\n  cursor: pointer;\n}\n.right_container-dcdZD label span {\n  display: inline-block;\n  width: 120px;\n  height: 32px;\n  background: #E66963;\n  color: #fff;\n  font-size: 14px;\n  line-height: 32px;\n  text-align: center;\n  margin-left: 10px;\n  border: 1px solid #E66963;\n}\n.right_container-dcdZD label:nth-child(2) span {\n  background: #A28DDD;\n  border: 1px solid #917EC4;\n}\n.right_container-dcdZD label:nth-child(3) span {\n  background: #95DF7D;\n  border: 1px solid #84C46E;\n}\n.right_container-dcdZD label:nth-child(4) span {\n  background: #FAA755;\n  border: 1px solid #E0964C;\n}\n.msg-kI0ht {\n  background: #F4F4F4;\n  border: 1px solid #EBEBEB;\n  border-radius: 2px;\n  width: 200px;\n  box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  font-size: 12px;\n  padding: 12px 20px 18px;\n  margin-top: 65px;\n}\n.msg-kI0ht p {\n  margin-top: 5px;\n  line-height: 18px;\n  color: #616161;\n}\n.msg-kI0ht p span {\n  font-weight: 500!important;\n}\n.detail-V7dDU {\n  border: 1px solid #E1E1E1;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);\n}\n.detail-V7dDU * {\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  box-sizing: border-box;\n  font-size: 14px;\n}\n.left-25p_A {\n  float: left;\n  box-sizing: border-box;\n}\n/*.detail div{position: absolute;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;border-radius: 2px;}*/\n.detail-V7dDU input {\n  width: 100%;\n  height: 100%;\n  border: 0;\n  background: none;\n}\n.time-1pAKe {\n  width: 30px;\n  height: 26px;\n}\n.detail-V7dDU div i {\n  position: absolute;\n  right: 0;\n  top: 4px;\n  cursor: pointer;\n}\n.detail-V7dDU div i:before {\n  content: \"\\E902\";\n  font-size: 12px;\n}\n.type-1evRY {\n  width: 21px;\n  height: 26px;\n}\n.num-2-6Ez {\n  width: 51px;\n  height: 26px;\n}\n.summary-262gv {\n  width: 113px;\n  height: 26px;\n}\n.subject-OF6Za {\n  width: 89px;\n  height: 26px;\n}\n.debtor-2_mfF {\n  width: 173px;\n  height: 26px;\n}\n.debtor-2_mfF input,\n.lender-2aq7f input,\n.balance-2Rdvs input {\n  text-align: right;\n  letter-spacing: 5px;\n}\n.lender-2aq7f {\n  width: 178px;\n  height: 26px;\n}\n.sign-3zPNm {\n  width: 38px;\n  height: 26px;\n}\n.balance-2Rdvs {\n  width: 172px;\n  height: 26px;\n}\n.check-3weTC {\n  width: 16px;\n  height: 26px;\n}\n", ""]);
+	exports.push([module.id, ".wrap-2Q-Bq * {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  outline: none;\n}\n.sub_nav-1zfhT {\n  background: #FFFFFF;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);\n  width: 100%;\n  height: 60px;\n}\n.sub_nav-1zfhT * {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  outline: none;\n}\n.sub_nav-1zfhT h2 {\n  font-size: 16px;\n  line-height: 60px;\n  color: #313131;\n  width: 180px;\n  margin-left: 20px;\n  _display: inline;\n  float: left;\n}\n.menus-22z7s {\n  width: 750px;\n  float: left;\n  position: relative;\n  padding: 0 42px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n}\n.menus-22z7s .pre-27VVX,\n.menus-22z7s .next-j0yT2 {\n  display: inline-block;\n  width: 22px;\n  height: 32px;\n  background: #EBEBEB;\n  border-radius: 2px;\n  cursor: pointer;\n  position: absolute;\n  left: 0;\n  top: 14px;\n  line-height: 30px;\n  text-align: center;\n  color: #C1C1C1;\n}\n.menus-22z7s .next-j0yT2 {\n  left: auto;\n  right: 0;\n}\n.menus-22z7s .pre-27VVX:hover,\n.menus-22z7s .next-j0yT2:hover {\n  background: #D1D1D1;\n  color: #A8A8A8;\n}\n.menus-22z7s .pre-27VVX i:before {\n  content: \"\\E900\";\n  font-size: 12px;\n}\n.menus-22z7s .next-j0yT2 i:before {\n  content: \"\\E901\";\n  font-size: 12px;\n}\n.menus-22z7s div {\n  display: inline-block;\n  overflow: hidden;\n  line-height: 60px;\n  width: 100%;\n}\n.menus-22z7s ul {\n  width: 1000px;\n}\n.menus-22z7s li {\n  height: 32px;\n  display: inline-block;\n  border: 1px solid #C1C1C1;\n  border-radius: 2px;\n  position: relative;\n  color: #919191;\n  cursor: pointer;\n  margin: 0 5px;\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  line-height: 32px!important;\n}\n.menus-22z7s li input {\n  width: calc(100% - 4px);\n  height: 26px;\n  display: block;\n}\n.menus-22z7s li b {\n  padding: 0 14px;\n  display: inline-block;\n  height: 32px;\n  line-height: 32px;\n  font-weight: normal;\n}\n.menus-22z7s li:hover {\n  color: #3DCC61;\n  border-color: #3DCC61;\n}\n/*.menus .tag{padding:0 14px;height:32px;line-height:32px;display: inline-block;border: 1px solid #C1C1C1;border-radius: 2px;position: relative;color:#919191;cursor: pointer;margin:0 5px;box-sizing: border-box;-webkit-box-sizing: border-box;}*/\n.menus-22z7s .highlight-1398Y {\n  color: #3DCC61;\n  border-color: #3DCC61;\n}\n.delete-1hqVr {\n  width: 14px;\n  height: 14px;\n  background: #fff;\n  display: block;\n  position: absolute;\n  right: -7px;\n  top: -7px;\n  overflow: hidden;\n  line-height: 12px;\n}\n@font-face {\n  font-family: 'iconfont';\n  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot');\n  src: url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.woff') format('woff'), /* chrome、firefox */ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/pbu_document/font/icomoon.svg#iconfont') format('svg');\n  \n  /* IE9*/\n  /* iOS 4.1- */\n}\n.iconfont-3oeiU {\n  font-family: \"iconfont\";\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -webkit-text-stroke-width: 0.2px;\n  -moz-osx-font-smoothing: grayscale;\n}\n.delete-1hqVr i:before {\n  content: \"\\E902\";\n  font-size: 14px;\n}\n.btn_group-3V2KL {\n  float: right;\n  margin-right: 30px;\n  _display: inline;\n  margin-top: 10px;\n}\n.btn_group-3V2KL button {\n  width: 140px;\n  height: 40px;\n  background: #3DCC61;\n  border-radius: 2px;\n  font-size: 14px;\n  color: #fff;\n  border: 0;\n}\n.btn_group-3V2KL button:hover {\n  background: #35B355;\n  cursor: pointer;\n}\n.btn_group-3V2KL .clear-3rhqR {\n  background: #fff;\n  color: #3DCC61;\n  border: 1px solid #3DCC61;\n  margin-right: 10px;\n}\n.btn_group-3V2KL .clear-3rhqR:hover {\n  color: #35B355;\n  border-color: #35B355;\n  background: #fff;\n}\n.content-2OaaB {\n  width: 1220px;\n  margin: 30px auto;\n  overflow: hidden;\n}\n.right_container-dcdZD {\n  float: left;\n  margin-left: 20px;\n  _display: inline;\n}\n.right_container-dcdZD label {\n  display: block;\n  margin-bottom: 10px;\n  cursor: pointer;\n}\n.right_container-dcdZD label span {\n  display: inline-block;\n  width: 120px;\n  height: 32px;\n  background: #E66963;\n  color: #fff;\n  font-size: 14px;\n  line-height: 32px;\n  text-align: center;\n  margin-left: 10px;\n  border: 1px solid #E66963;\n}\n.right_container-dcdZD label:nth-child(2) span {\n  background: #A28DDD;\n  border: 1px solid #917EC4;\n}\n.right_container-dcdZD label:nth-child(3) span {\n  background: #95DF7D;\n  border: 1px solid #84C46E;\n}\n.right_container-dcdZD label:nth-child(4) span {\n  background: #FAA755;\n  border: 1px solid #E0964C;\n}\n.msg-kI0ht {\n  background: #F4F4F4;\n  border: 1px solid #EBEBEB;\n  border-radius: 2px;\n  width: 200px;\n  box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  font-size: 12px;\n  padding: 12px 20px 18px;\n  margin-top: 65px;\n}\n.msg-kI0ht p {\n  margin-top: 5px;\n  line-height: 18px;\n  color: #616161;\n}\n.msg-kI0ht p span {\n  font-weight: 500!important;\n}\n.detail-V7dDU {\n  border: 1px solid #E1E1E1;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);\n}\n.detail-V7dDU * {\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  box-sizing: border-box;\n  font-size: 14px;\n}\n.left-25p_A {\n  float: left;\n  box-sizing: border-box;\n}\n/*.detail div{position: absolute;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;border-radius: 2px;}*/\n.detail-V7dDU input {\n  width: 100%;\n  height: 100%;\n  border: 0;\n  background: none;\n}\n.time-1pAKe {\n  width: 30px;\n  height: 26px;\n}\n.detail-V7dDU div i {\n  position: absolute;\n  right: 0;\n  top: 4px;\n  cursor: pointer;\n}\n.detail-V7dDU div i:before {\n  content: \"\\E902\";\n  font-size: 12px;\n}\n.type-1evRY {\n  width: 21px;\n  height: 26px;\n}\n.num-2-6Ez {\n  width: 51px;\n  height: 26px;\n}\n.summary-262gv {\n  width: 113px;\n  height: 26px;\n}\n.subject-OF6Za {\n  width: 89px;\n  height: 26px;\n}\n.debtor-2_mfF {\n  width: 173px;\n  height: 26px;\n}\n.debtor-2_mfF input,\n.lender-2aq7f input,\n.balance-2Rdvs input {\n  text-align: right;\n  letter-spacing: 5px;\n}\n.lender-2aq7f {\n  width: 178px;\n  height: 26px;\n}\n.sign-3zPNm {\n  width: 38px;\n  height: 26px;\n}\n.balance-2Rdvs {\n  width: 172px;\n  height: 26px;\n}\n.check-3weTC {\n  width: 16px;\n  height: 26px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -34546,7 +33970,6 @@
 		"menus": "menus-22z7s",
 		"pre": "pre-27VVX",
 		"next": "next-j0yT2",
-		"tag": "tag-2RW7E",
 		"highlight": "highlight-1398Y",
 		"delete": "delete-1hqVr",
 		"iconfont": "iconfont-3oeiU",
@@ -34570,45 +33993,7 @@
 	};
 
 /***/ }),
-/* 536 */
-/***/ (function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-	    code: 200,
-	    docData: {
-	        "all": { "docNumber": { "weight": 1, "examineType": "SINGLE", "examineId": "SINGLE_4035798dbc9c209bf49aeba5486ac086", "examineName": "单编辑框" }, "year": { "weight": 1, "examineType": "MULTI_ELM", "examineId": "MULTI_ELM_682923be681aa680a9323818f9695516", "examineName": "多编辑框" }, "month": { "weight": 1, "examineType": "MULTI_ELM", "examineId": "MULTI_ELM_682923be681aa680a9323818f9695516", "examineName": "多编辑框" }, "day": { "weight": 1, "examineType": "MULTI_ELM", "examineId": "MULTI_ELM_682923be681aa680a9323818f9695516", "examineName": "多编辑框" }, "summary_1_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_2_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_1_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_2_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_1_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_2_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_3_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_3_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_3_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_4_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_4_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_4_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_1_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_2_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_3_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_4_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_1_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_2_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_3_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_4_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_5_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_5_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_5_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_5_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_5_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "summary_6_1": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "account_6_2": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "detail_6_3": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "debit_6_4": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" }, "credit_6_5": { "weight": 1, "examineType": "MULTI_LINE", "examineId": "MULTI_LINE_b80c4c82a76d4239bf981a1736db79b4", "examineName": "多行集合" } },
-	        "answer": [{
-	            "summary_1_1": "乱七八糟的东西"
-	        }, {
-	            "year": 2017
-	        }],
-	        "examines": [{
-	            "year": 1,
-	            "examineType": "MULTI_ELM"
-	        }, {
-	            "summary_1_1": 1,
-	            "account_1_2": 1,
-	            "detail_1_3": 1,
-	            "examineType": "MULTI_LINE",
-	            "examineId": "abc"
-	        }, {
-	            "summary_2_1": 1,
-	            "account_2_2": 1,
-	            "detail_2_3": 1,
-	            "examineType": "MULTI_LINE",
-	            "examineId": "abc"
-	        }]
-	    }
-
-	};
-
-/***/ }),
-/* 537 */
+/* 541 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34618,7 +34003,7 @@
 	});
 	exports.default = isEmpty;
 
-	var _assertString = __webpack_require__(538);
+	var _assertString = __webpack_require__(542);
 
 	var _assertString2 = _interopRequireDefault(_assertString);
 
@@ -34631,7 +34016,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 538 */
+/* 542 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -34650,7 +34035,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 539 */
+/* 543 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34660,7 +34045,7 @@
 	});
 	exports.default = isInt;
 
-	var _assertString = __webpack_require__(538);
+	var _assertString = __webpack_require__(542);
 
 	var _assertString2 = _interopRequireDefault(_assertString);
 
@@ -34688,7 +34073,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 540 */
+/* 544 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34777,6 +34162,473 @@
 	     */
 	    rect: _propTypes2.default.object.isRequired
 	};
+
+/***/ }),
+/* 545 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = __webpack_require__(546);
+
+	module.exports = __webpack_require__(546);
+
+/***/ }),
+/* 546 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extend2 = __webpack_require__(547);
+
+	var _extend3 = _interopRequireDefault(_extend2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var reactComposition = function reactComposition(userSettings) {
+	    var returnProps = {};
+	    var defaultSettings = {
+	        onChange: null
+	    };
+	    var settings = (0, _extend3["default"])(true, defaultSettings, userSettings);
+	    var defaultReactCompositionStatus = function defaultReactCompositionStatus() {
+	        return {
+	            composition: false
+	        };
+	    };
+	    var data = {
+	        get: function get(event) {
+	            return event.target.__REACT_COMPOSITION_SECRET_DATA || defaultReactCompositionStatus();
+	        },
+	        set: function set(event, obj) {
+	            event.target.__REACT_COMPOSITION_SECRET_DATA = obj;
+	        },
+	        extend: function extend(event, obj) {
+	            event.target.__REACT_COMPOSITION_SECRET_DATA = (0, _extend3["default"])(true, event.target.__REACT_COMPOSITION_SECRET_DATA, obj);
+	        }
+	    };
+	    returnProps.onChange = function (event) {
+	        event.reactComposition = data.get(event);
+	        if (settings.onChange) {
+	            settings.onChange(event);
+	        }
+	    };
+	    returnProps.onCompositionStart = function (event) {
+	        if (settings.onCompositionStart) {
+	            settings.onCompositionStart(event);
+	        }
+	        data.extend(event, {
+	            composition: true
+	        });
+	    };
+	    returnProps.onCompositionUpdate = function (event) {
+	        if (settings.onCompositionUpdate) {
+	            settings.onCompositionUpdate(event);
+	        }
+	    };
+	    returnProps.onCompositionEnd = function (event) {
+	        if (settings.onCompositionEnd) {
+	            settings.onCompositionEnd(event);
+	        }
+	        data.extend(event, {
+	            composition: false
+	        });
+	        event.reactComposition = data.get(event);
+	        settings.onChange(event);
+	    };
+	    return returnProps;
+	};
+	exports["default"] = reactComposition;
+
+	module.exports = reactComposition;
+
+/***/ }),
+/* 547 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	var hasOwn = Object.prototype.hasOwnProperty;
+	var toStr = Object.prototype.toString;
+
+	var isArray = function isArray(arr) {
+		if (typeof Array.isArray === 'function') {
+			return Array.isArray(arr);
+		}
+
+		return toStr.call(arr) === '[object Array]';
+	};
+
+	var isPlainObject = function isPlainObject(obj) {
+		if (!obj || toStr.call(obj) !== '[object Object]') {
+			return false;
+		}
+
+		var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+		var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+		// Not own constructor property must be Object
+		if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+			return false;
+		}
+
+		// Own properties are enumerated firstly, so to speed up,
+		// if last one is own, then all properties are own.
+		var key;
+		for (key in obj) { /**/ }
+
+		return typeof key === 'undefined' || hasOwn.call(obj, key);
+	};
+
+	module.exports = function extend() {
+		var options, name, src, copy, copyIsArray, clone;
+		var target = arguments[0];
+		var i = 1;
+		var length = arguments.length;
+		var deep = false;
+
+		// Handle a deep copy situation
+		if (typeof target === 'boolean') {
+			deep = target;
+			target = arguments[1] || {};
+			// skip the boolean and the target
+			i = 2;
+		}
+		if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+			target = {};
+		}
+
+		for (; i < length; ++i) {
+			options = arguments[i];
+			// Only deal with non-null/undefined values
+			if (options != null) {
+				// Extend the base object
+				for (name in options) {
+					src = target[name];
+					copy = options[name];
+
+					// Prevent never-ending loop
+					if (target !== copy) {
+						// Recurse if we're merging plain objects or arrays
+						if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+							if (copyIsArray) {
+								copyIsArray = false;
+								clone = src && isArray(src) ? src : [];
+							} else {
+								clone = src && isPlainObject(src) ? src : {};
+							}
+
+							// Never move original objects, clone them
+							target[name] = extend(deep, clone, copy);
+
+						// Don't bring in undefined values
+						} else if (typeof copy !== 'undefined') {
+							target[name] = copy;
+						}
+					}
+				}
+			}
+		}
+
+		// Return the modified object
+		return target;
+	};
+
+
+/***/ }),
+/* 548 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
+	                                                                                                                                                                                                                                                                   * @author AngusC
+	                                                                                                                                                                                                                                                                   * @description 编辑权重头部
+	                                                                                                                                                                                                                                                                   */
+
+	var _react = __webpack_require__(331);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(515);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _propTypes = __webpack_require__(516);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _editWeight = __webpack_require__(539);
+
+	var _editWeight2 = _interopRequireDefault(_editWeight);
+
+	var _reactComposition = __webpack_require__(545);
+
+	var _reactComposition2 = _interopRequireDefault(_reactComposition);
+
+	var _constants = __webpack_require__(526);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * 对象转入examines中
+	 * @param  {[type]} groups   [description]
+	 * @param  {[type]} examines [description]
+	 * @return {[type]}          [description]
+	 */
+	function groupsToExamines(groups, examines) {
+	    if (!groups || !Array.isArray(examines)) {
+	        return;
+	    }
+
+	    Object.values(groups).forEach(function (item, index) {
+	        if (item.examineType) {
+	            examines.push(item);
+	        } else {
+	            groupsToExamines(item, examines);
+	        }
+	    });
+	}
+
+	/**
+	 * 对all分组
+	 * @param  {[type]} all    [description]
+	 * @param  {[type]} groups [description]
+	 * @return {[type]}        [description]
+	 */
+	function groupAll(all, groups) {
+	    if (!all || !groups) {
+	        return;
+	    }
+
+	    /**
+	     * 先根据examineId 进行分组，如果是examineType为MULTI_LINE的话，则同行为一组
+	     */
+	    Object.values(all).forEach(function (item, index) {
+	        switch (item.examineType) {
+	            case _constants.EXAMINE.MULTI_ELM:
+	                if (!groups.hasOwnProperty(item.examineId)) {
+	                    //去除不必要的item.element项
+	                    groups[item.examineId] = {
+	                        examineType: item.examineType,
+	                        examineId: item.examineId,
+	                        examineName: item.examineName
+	                    };
+	                }
+	                groups[item.examineId][item.element.name] = item.weight;
+	                break;
+
+	            case _constants.EXAMINE.MULTI_LINE:
+	                if (!(groups.hasOwnProperty(item.examineId) && groups[item.examineId].hasOwnProperty('row' + item.element.table.row))) {
+	                    groups[item.examineId] = _extends({}, groups[item.examineId]);
+	                    groups[item.examineId]['row' + item.element.table.row] = {
+	                        examineType: item.examineType,
+	                        examineId: item.examineId,
+	                        examineName: item.examineName
+	                    };
+	                }
+	                groups[item.examineId]['row' + item.element.table.row][item.element.name] = item.weight;
+	                break;
+
+	            case _constants.EXAMINE.SINGLE:
+	            case _constants.EXAMINE.SETTLEMENT:
+	                if (!groups.hasOwnProperty(item.examineId)) {
+	                    groups[item.examineId] = {};
+	                }
+
+	                if (!groups[item.examineId].hasOwnProperty(item.element.name)) {
+	                    groups[item.examineId][item.element.name] = {};
+	                }
+
+	                groups[item.examineId][item.element.name] = {
+	                    examineType: item.examineType,
+	                    examineId: item.examineId,
+	                    examineName: item.examineName
+	                };
+
+	                groups[item.examineId][item.element.name][item.element.name] = item.weight;
+	                break;
+
+	        }
+	    });
+	}
+
+	/**
+	 * 生成新的all，剔除element
+	 * @param  {[type]} all      [description]
+	 * @return {[type]}          [description]
+	 */
+	function examinesToAll(all) {
+	    if (!all) {
+	        return;
+	    }
+
+	    var newAll = {};
+	    Object.values(all).forEach(function (item) {
+	        newAll[item.element.name] = {
+	            examineType: item.examineType,
+	            examineId: item.examineId,
+	            examineName: item.examineName,
+	            weight: item.weight
+	        };
+	    });
+
+	    return newAll;
+	}
+
+	var EditWeightHeader = function EditWeightHeader(_ref) {
+	    var config = _ref.config,
+	        all = _ref.all,
+	        selectedTag = _ref.selectedTag,
+	        editTagId = _ref.editTagId,
+	        editTempValue = _ref.editTempValue,
+	        onSave = _ref.onSave,
+	        onClearAll = _ref.onClearAll,
+	        onSelectTags = _ref.onSelectTags,
+	        onTagDoubleClick = _ref.onTagDoubleClick,
+	        onTagBlur = _ref.onTagBlur,
+	        onRemoveByTagId = _ref.onRemoveByTagId,
+	        onEditTag = _ref.onEditTag;
+
+
+	    var onSaveClick = function onSaveClick() {
+	        var examines = [];
+	        var groups = {};
+
+	        groupAll(all, groups);
+	        groupsToExamines(groups, examines);
+	        var newAll = examinesToAll(all);
+	        var data = {
+	            all: newAll,
+	            examines: examines
+	        };
+	        console.log('data = ', JSON.stringify(data));
+
+	        onSave(data);
+	    };
+
+	    var renderTags = function renderTags() {
+	        var temp = [];
+	        Object.values(all).forEach(function (item, index) {
+	            if (temp.findIndex(function (o) {
+	                return o.examineId === item.examineId;
+	            }) !== -1) {
+	                return;
+	            }
+
+	            temp.push(item);
+	        });
+
+	        var tagLength = 0;
+	        var tagNodes = temp.map(function (item, index) {
+	            var className = item.examineId === selectedTag ? _editWeight2.default.highlight : _editWeight2.default.tag;
+	            tagLength = tagLength + item.examineName.length;
+
+	            return _react2.default.createElement(
+	                'li',
+	                { key: item.examineId + '_' + index,
+	                    className: className,
+	                    onClick: function onClick() {
+	                        onSelectTags(item.examineId);
+	                    },
+	                    onDoubleClick: function onDoubleClick() {
+	                        onTagDoubleClick(item.examineId, item.examineName);
+	                    }
+	                },
+	                editTagId === item.examineId ? _react2.default.createElement('input', _extends({
+	                    value: editTempValue,
+	                    onKeyPress: function onKeyPress(e) {
+	                        if (e.key === 'Enter') {
+	                            onTagBlur();
+	                        }
+	                    },
+	                    onBlur: onTagBlur
+	                }, (0, _reactComposition2.default)({
+	                    onChange: onEditTag
+	                }))) : _react2.default.createElement(
+	                    'b',
+	                    null,
+	                    item.examineName
+	                ),
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: _editWeight2.default.delete, onClick: function onClick(e) {
+	                            e.stopPropagation();
+	                            onRemoveByTagId(item.examineId);
+	                        } },
+	                    _react2.default.createElement('i', { className: _editWeight2.default.iconfont })
+	                )
+	            );
+	        });
+
+	        return _react2.default.createElement(
+	            'div',
+	            { className: _editWeight2.default.menus },
+	            tagLength > 30 && _react2.default.createElement(
+	                'span',
+	                { className: _editWeight2.default.pre },
+	                _react2.default.createElement('i', { className: _editWeight2.default.iconfont })
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'ul',
+	                    null,
+	                    tagNodes
+	                )
+	            ),
+	            tagLength > 30 && _react2.default.createElement(
+	                'span',
+	                { className: _editWeight2.default.next },
+	                _react2.default.createElement('i', { className: _editWeight2.default.iconfont })
+	            )
+	        );
+	    };
+
+	    return _react2.default.createElement(
+	        'div',
+	        { className: _editWeight2.default.sub_nav },
+	        _react2.default.createElement(
+	            'h2',
+	            null,
+	            config.title
+	        ),
+	        renderTags(),
+	        _react2.default.createElement(
+	            'div',
+	            { className: _editWeight2.default.btn_group },
+	            _react2.default.createElement(
+	                'button',
+	                { className: _editWeight2.default.clear, onClick: onClearAll },
+	                '\u6E05\u9664'
+	            ),
+	            _react2.default.createElement(
+	                'button',
+	                { onClick: onSaveClick },
+	                '\u4FDD\u5B58'
+	            )
+	        )
+	    );
+	};
+
+	exports.default = EditWeightHeader;
+
+/***/ }),
+/* 549 */
+/***/ (function(module, exports) {
+
+	module.exports = {"code":200,"docData":{"all":{"docNumber":{"examineType":"SINGLE","examineId":"SINGLE_d51be94f618725f83909aa1ab190dbc2","examineName":"单编辑框","weight":1},"year":{"examineType":"MULTI_ELM","examineId":"MULTI_ELM_bedf2d704ebf435ce0c724924de79b66","examineName":"多编辑框","weight":1},"month":{"examineType":"MULTI_ELM","examineId":"MULTI_ELM_bedf2d704ebf435ce0c724924de79b66","examineName":"多编辑框","weight":1},"day":{"examineType":"MULTI_ELM","examineId":"MULTI_ELM_bedf2d704ebf435ce0c724924de79b66","examineName":"多编辑框","weight":1},"summary_1_1":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"summary_2_1":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"account_1_2":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"account_2_2":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"detail_1_3":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"detail_2_3":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"summary_3_1":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"summary_4_1":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"account_3_2":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"account_4_2":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"detail_3_3":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"detail_4_3":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"debit_1_4":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"debit_2_4":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"debit_3_4":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"debit_4_4":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"credit_1_5":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"credit_2_5":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"credit_3_5":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"credit_4_5":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"summary_5_1":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"account_5_2":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"detail_5_3":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"debit_5_4":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"credit_5_5":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"summary_6_1":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"account_6_2":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"detail_6_3":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"debit_6_4":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"credit_6_5":{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","weight":1},"debit_total":{"examineType":"SETTLEMENT","examineId":"SETTLEMENT_3f1154094393eefbcbe80edff83200c6","examineName":"合计栏","weight":1},"credit_total":{"examineType":"SETTLEMENT","examineId":"SETTLEMENT_3f1154094393eefbcbe80edff83200c6","examineName":"合计栏","weight":1}},"examines":[{"examineType":"SINGLE","examineId":"SINGLE_d51be94f618725f83909aa1ab190dbc2","examineName":"单编辑框","docNumber":1},{"examineType":"MULTI_ELM","examineId":"MULTI_ELM_bedf2d704ebf435ce0c724924de79b66","examineName":"多编辑框","year":1,"month":1,"day":1},{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","summary_1_1":1,"account_1_2":1,"detail_1_3":1,"debit_1_4":1,"credit_1_5":1},{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","summary_2_1":1,"account_2_2":1,"detail_2_3":1,"debit_2_4":1,"credit_2_5":1},{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","summary_3_1":1,"account_3_2":1,"detail_3_3":1,"debit_3_4":1,"credit_3_5":1},{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","summary_4_1":1,"account_4_2":1,"detail_4_3":1,"debit_4_4":1,"credit_4_5":1,"detail_5_3":1,"detail_6_3":1},{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","summary_5_1":1,"account_5_2":1,"debit_5_4":1,"credit_5_5":1},{"examineType":"MULTI_LINE","examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a","examineName":"多行集合","summary_6_1":1,"account_6_2":1,"debit_6_4":1,"credit_6_5":1},{"examineType":"SETTLEMENT","examineId":"SETTLEMENT_3f1154094393eefbcbe80edff83200c6","examineName":"合计栏","debit_total":1},{"examineType":"SETTLEMENT","examineId":"SETTLEMENT_3f1154094393eefbcbe80edff83200c6","examineName":"合计栏","credit_total":1}]}}
 
 /***/ })
 /******/ ]);

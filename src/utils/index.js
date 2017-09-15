@@ -38,63 +38,6 @@ exports.loadConfig = function(url, callback) {
  * @type {String}
  */
 exports.md5 = require('blueimp-md5');
-exports.MODE = require('./mode').default;
-exports.ELEMENT_TYPE = require('./elementType').default;
-
-/**
- * 元素类型
- */
-exports.ELEMENT = {
-    /**
-     * 输入框
-     */
-    INPUT: 'INPUT',
-    /**
-     * 带搜索输入框
-     */
-    SELECT: 'SELECT',
-    /**
-     * checkbox
-     */
-    CHECK_BOX: 'CHECK_BOX',
-}
-
-/**
- * 甄别方式
- */
-exports.EXAMINE = {
-    /**
-     * 单编辑框
-     */
-    SINGLE: 'SINGLE',
-    /**
-     * 多编辑框
-     */
-    MULTI_ELM: 'MULTI_ELM',
-    /**
-     * 多行集合
-     */
-    MULTI_LINE: 'MULTI_LINE',
-    /**
-     * 合计栏
-     */
-    SETTLEMENT: 'SETTLEMENT'
-}
-
-exports.EXAMINE_COLOR = {
-    SINGLE: '#FF756E',
-    MULTI_ELM: '#A28DDD',
-    MULTI_LINE: '#95DF7D',
-    SETTLEMENT: '#FAA755'
-}
-
-exports.EXAMINE_NAME = {
-    SINGLE: '单编辑框',
-    MULTI_ELM: '多编辑框',
-    MULTI_LINE: '多行集合',
-    SETTLEMENT: '合计栏'
-}
-
 exports.indexElementsByName = function (elements) {
 
 };

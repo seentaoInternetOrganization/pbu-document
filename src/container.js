@@ -7,7 +7,8 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import md5 from 'blueimp-md5';
-import { MODE, loadConfig } from './utils';
+import { loadConfig } from './utils';
+import { MODE } from './constants';
 import DocReadOnly from './components/readonly';
 import EditWeight from './components/editWeight';
 
@@ -20,7 +21,7 @@ export default class PBUDocument extends Component {
     }
 
     loadDocConfig() {
-        const { docWidth, docHeight } = this.props;
+        const { docRatio } = this.props;
         loadConfig(this.props.configUrl, docConfig => {
             if (!docConfig || docConfig.length < 1) {
                 this.setState({
@@ -28,8 +29,8 @@ export default class PBUDocument extends Component {
                 })
             }else {
                 const config = docConfig[0];
-                const ratioWidth = parseFloat(docWidth)/config.width;
-                const ratioHeight = parseFloat(docHeight)/config.height;
+                const ratioWidth = docRatio;
+                const ratioHeight = docRatio;
 
                 this.setState({
                     docConfig: docConfig,
@@ -45,7 +46,7 @@ export default class PBUDocument extends Component {
     }
 
     render() {
-        const { mode, docWidth, docHeight, docData } = this.props;
+        const { mode, docRatio, docData } = this.props;
         const { docConfig, errMsg, ratioWidth, ratioHeight } = this.state;
 
         const renderPreview = () => {
@@ -59,10 +60,10 @@ export default class PBUDocument extends Component {
         }
 
         const renderExamineSet = () => {
-            return <EditWeight ratioWidth={ratioWidth}
-                                ratioHeight={ratioHeight}
+            return <EditWeight ratioWidth={1}
+                                ratioHeight={1}
                                 config={docConfig[0]}
-                                // data={docData}
+                                data={docData}
                             />
         }
 
@@ -104,13 +105,9 @@ PBUDocument.propTypes = {
      */
     docCode: PropTypes.string.isRequired,
     /**
-     * 单据宽度，默认跟随config
+     * 单据缩放系数，默认1，mode为EXAMINE_SET时无效
      */
-    docWidth: PropTypes.number,
-    /**
-     * 单据高度，默认跟随config
-     */
-    docHeight: PropTypes.number,
+    docRatio: PropTypes.number,
     /**
      * 单据数据集合
      */
@@ -118,6 +115,5 @@ PBUDocument.propTypes = {
 }
 
 PBUDocument.defaultProps = {
-    docWidth: 1,
-    docHeight: 1
+    docRatio: 1
 }

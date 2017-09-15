@@ -7,12 +7,15 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './editWeight.css';
-import { EXAMINE, intersectRect, ELEMENT_TYPE, EXAMINE_NAME, EXAMINE_COLOR } from '../utils';
+import { intersectRect } from '../utils';
+import { EXAMINE, ELEMENT, ELEMENT_TYPE, EXAMINE_NAME, EXAMINE_COLOR, EXAMIME_TEXT } from '../constants';
 import stylesBG from './background.css';
 import isEmpty from 'validator/lib/isEmpty';
 import isInt from 'validator/lib/isInt';
 import md5 from 'blueimp-md5';
 import Rectangle, { zeroRect, makeRect } from './selectedRectangle';
+import reactComposition from 'react-composition';
+import EditWeightHeader from './weightHeader';
 
 class EditWeight extends Component {
     state = {
@@ -28,7 +31,9 @@ class EditWeight extends Component {
         //用于生成tag
         examineTypeIndex: {},
         selectedTag: '',
-        tags: [],
+        editTagId: '',
+        editTagName: '',
+        editTempValue: '',
     }
 
     componentDidMount() {
@@ -37,10 +42,6 @@ class EditWeight extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.combineDataIntoCompleted(nextProps);
-    }
-
-    groupTags = (props) => {
-
     }
 
     combineDataIntoCompleted = (props) => {
@@ -100,9 +101,9 @@ class EditWeight extends Component {
             exIndex[currentExamineType].push({
                 examineId,
                 index: exIndex[currentExamineType].length,
-                examineName: `${EXAMINE_NAME[currentExamineType]}${exIndex[currentExamineType].length+1}`
+                examineName: `${EXAMINE_NAME[currentExamineType]}${exIndex[currentExamineType].length}`
             });
-            examineName = `${EXAMINE_NAME[currentExamineType]}${exIndex[currentExamineType].length+1}`;
+            examineName = `${EXAMINE_NAME[currentExamineType]}${exIndex[currentExamineType].length}`;
         }else {
             exIndex[currentExamineType] = [{
                 examineId,
@@ -113,11 +114,11 @@ class EditWeight extends Component {
 
         Object.values(selectedElement).forEach((item, index) => {
             if (currentExamineType === EXAMINE.MULTI_LINE
-                && item.elmtype !== 'TABLE') {
+                && item.elmtype !== ELEMENT_TYPE.TABLE) {
                 return;
             }
             //去掉checkbox
-            if (item.type === ELEMENT_TYPE.CHECK_BOX) {
+            if (item.type === ELEMENT.CHECK_BOX) {
                 return;
             }
 
@@ -134,7 +135,6 @@ class EditWeight extends Component {
             examineTypeIndex: exIndex,
             completedElement: newCompletedElement,
             selectedElement: {},
-            currentExamineType: '',
             showSelectRect: false,
             selectRect: zeroRect()
         })
@@ -144,7 +144,6 @@ class EditWeight extends Component {
         this.setState({
             showSelectRect: false,
             selectedElement: {},
-            currentExamineType: '',
             selectRect: zeroRect()
         })
     }
@@ -242,7 +241,8 @@ class EditWeight extends Component {
         this.setState({
             selectedElement: {},
             completedElement: {},
-            examineTypeIndex: {}
+            examineTypeIndex: {},
+            currentExamineType: ''
         })
     }
 
@@ -261,7 +261,8 @@ class EditWeight extends Component {
         });
 
         this.setState({
-            completedElement: newCompletedElement
+            completedElement: newCompletedElement,
+            selectedTag: ''
         })
     }
 
@@ -269,6 +270,53 @@ class EditWeight extends Component {
         this.setState({
             selectedTag: examineId === this.state.selectedTag ? '' : examineId
         })
+    }
+
+    onEditTag = (e) => {
+        let value = e.target.value;
+        if (e.reactComposition.composition === false) {
+
+            if (value.length > 5) {
+                value = value.slice(0, 5)
+            }
+            this.setState({
+                editTagName: value
+            })
+        }
+        this.setState({
+            editTempValue: value
+        })
+    }
+
+    onTagDoubleClick = (examineId, examineName) => {
+        this.setState({
+            editTagId: examineId,
+            editTagName: examineName,
+            editTempValue: examineName
+        })
+    }
+
+    onTagBlur = () => {
+        const newCompletedElement = {
+            ...this.state.completedElement
+        }
+
+        if (!isEmpty(this.state.editTagName)) {
+            Object.values(newCompletedElement).forEach(item => {
+                if (item.examineId === this.state.editTagId) {
+                    item.examineName = this.state.editTagName
+                }
+            });
+        }
+
+        this.setState({
+            editTagId: '',
+            completedElement: newCompletedElement
+        })
+    }
+
+    onSave = () => {
+
     }
 
     render() {
@@ -281,62 +329,27 @@ class EditWeight extends Component {
             selectRect,
             selectedTag,
             examineTypeIndex,
+            editTagId,
+            editTagName,
+            editTempValue,
          } = this.state;
 
-        const renderTags = () => {
-            const temp = [];
-            Object.values(completedElement).forEach((item, index) => {
-                if (temp.findIndex(o => {
-                    return o.examineId === item.examineId;
-                }) !== -1) {
-                    return;
-                }
-
-                temp.push(item);
-            })
-
-            const tagNodes = temp.map((item, index) => {
-                let className = item.examineId === selectedTag ? styles.highlight : styles.tag;
-
-                return (
-                    <li key={`${item.examineId}_${index}`}
-                        onClick={() => {
-                            this.onSelectTags(item.examineId)
-                        }}
-                        className={className}>
-                        {item.examineName}
-                        <span className={styles.delete} onClick={() => {
-                            this.onRemoveByTagId(item.examineId)
-                        }}>
-                            <i className={styles.iconfont}/>
-                        </span>
-                    </li>
-                )
-            })
-
-            return (
-                <div>
-                    <ul>
-                        {tagNodes}
-                    </ul>
-                </div>
-            )
-        }
         //顶部操作渲染
         const renderTopHeader = () => {
             return (
-                <div className={styles.sub_nav}>
-                    <h2>{config.title}</h2>
-                    <div className={styles.menus}>
-                        <span className={styles.pre}><i className={styles.iconfont}/></span>
-                        {renderTags()}
-                        <span className={styles.next}><i className={styles.iconfont}/></span>
-                    </div>
-                    <div className={styles.btn_group}>
-                        <button className={styles.clear} onClick={this.onClearAll}>清除</button>
-                        <button>保存</button>
-                    </div>
-                </div>
+                <EditWeightHeader config={config}
+                                all={completedElement}
+                                editTagId={editTagId}
+                                selectedTag={selectedTag}
+                                editTempValue={editTempValue}
+                                onSave={this.onSave}
+                                onClearAll={this.onClearAll}
+                                onSelectTags={this.onSelectTags}
+                                onTagDoubleClick={this.onTagDoubleClick}
+                                onTagBlur={this.onTagBlur}
+                                onRemoveByTagId={this.onRemoveByTagId}
+                                onEditTag={this.onEditTag}
+                />
             )
         }
 
@@ -394,7 +407,7 @@ class EditWeight extends Component {
                     return null;
                 }
 
-                if (item.element.type === ELEMENT_TYPE.CHECK_BOX) {
+                if (item.element.type === ELEMENT.CHECK_BOX) {
                     return null;
                 }
 
@@ -410,9 +423,6 @@ class EditWeight extends Component {
                                 top: pos.top * ratioHeight,
                                 width: pos.width * ratioWidth,
                                 height: pos.height * ratioHeight,
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
                                 ...selected
                             }}>
                             <input id={item.element.name}
@@ -527,11 +537,19 @@ EditWeight.propTypes =  {
     /**
      * 需要展示的数据，权重和甄别方式相关
      */
-    data: PropTypes.object
+    data: PropTypes.object,
+    /**
+     * 保存回调
+     * @param {Object} data
+     */
+    onSave: PropTypes.func
 }
 
 EditWeight.defaultProps = {
     ratioWidth: 1,
     ratioHeight: 1,
-    data: null
+    data: null,
+    onSave: data => {
+        console.log('data = ', data);
+    }
 }

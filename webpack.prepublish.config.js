@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 var config = {
-    entry: path.resolve(__dirname, './src/PBUDocument.js'),
+    entry: path.resolve(__dirname, './src/container.js'),
     output: {
         path: path.resolve(__dirname, './lib'),
         library: 'pbu-document',
@@ -40,8 +40,16 @@ var config = {
                 }
             },
             {
-                test: /\.css$/,
-                loader: "style!css?modules&localIdentName=[local]-[hash:base64:5]"
+                test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'url-loader'
+            },
+            {
+                test: /\.css$|\.less$/,
+                loader: 'style-loader!css-loader?modules&localIdentName=[local]-[hash:base64:5]!less-loader'
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
             }
         ]
     },
