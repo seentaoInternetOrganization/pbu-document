@@ -14,7 +14,7 @@
             "examineName":"多编辑框",
             "weight":1
          },
-         "month":{
+         "month":{  
             "examineType":"MULTI_ELM",
             "examineId":"MULTI_ELM_bedf2d704ebf435ce0c724924de79b66",
             "examineName":"多编辑框",
@@ -238,6 +238,13 @@
             "examineType":"MULTI_LINE",
             "examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a",
             "examineName":"多行集合",
+            "sort":[
+               "summary_1_1",
+               "account_1_2",
+               "detail_1_3",
+               "debit_1_4",
+               "credit_1_5"
+            ],
             "summary_1_1":1,
             "account_1_2":1,
             "detail_1_3":1,
@@ -248,6 +255,13 @@
             "examineType":"MULTI_LINE",
             "examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a",
             "examineName":"多行集合",
+            "sort":[
+               "summary_2_1",
+               "account_2_2",
+               "detail_2_3",
+               "debit_2_4",
+               "credit_2_5"
+            ],
             "summary_2_1":1,
             "account_2_2":1,
             "detail_2_3":1,
@@ -258,6 +272,13 @@
             "examineType":"MULTI_LINE",
             "examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a",
             "examineName":"多行集合",
+            "sort":[
+               "summary_3_1",
+               "account_3_2",
+               "detail_3_3",
+               "debit_3_4",
+               "credit_3_5"
+            ],
             "summary_3_1":1,
             "account_3_2":1,
             "detail_3_3":1,
@@ -268,20 +289,33 @@
             "examineType":"MULTI_LINE",
             "examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a",
             "examineName":"多行集合",
+            "sort":[
+               "summary_4_1",
+               "account_4_2",
+               "detail_4_3",
+               "debit_4_4",
+               "credit_4_5"
+            ],
             "summary_4_1":1,
             "account_4_2":1,
             "detail_4_3":1,
             "debit_4_4":1,
-            "credit_4_5":1,
-            "detail_5_3":1,
-            "detail_6_3":1
+            "credit_4_5":1
          },
          {
             "examineType":"MULTI_LINE",
             "examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a",
             "examineName":"多行集合",
+            "sort":[
+               "summary_5_1",
+               "account_5_2",
+               "detail_5_3",
+               "debit_5_4",
+               "credit_5_5"
+            ],
             "summary_5_1":1,
             "account_5_2":1,
+            "detail_5_3":1,
             "debit_5_4":1,
             "credit_5_5":1
          },
@@ -289,8 +323,16 @@
             "examineType":"MULTI_LINE",
             "examineId":"MULTI_LINE_5578f58dee12464c3249f126a05b035a",
             "examineName":"多行集合",
+            "sort":[
+               "summary_6_1",
+               "account_6_2",
+               "detail_6_3",
+               "debit_6_4",
+               "credit_6_5"
+            ],
             "summary_6_1":1,
             "account_6_2":1,
+            "detail_6_3":1,
             "debit_6_4":1,
             "credit_6_5":1
          },

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PBUDocumentDemo from './PBUDocumentDemo';
 import PBUDocument from './container';
 import mockData from './mock/mockData.json';
 
