@@ -8,7 +8,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import DocBG from './background';
 import bgStyles from './background.css';
-import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../utils';
+import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 
 const DocReadOnly = ({ config, ratioWidth, ratioHeight, data }) => {
 

@@ -45,7 +45,13 @@ var config = {
             },
             {
                 test: /\.css$|\.less$/,
-                loader: 'style-loader!css-loader?modules&localIdentName=[local]-[hash:base64:5]!less-loader'
+                exclude: /node_modules/,
+                loader: 'style-loader!css-loader?modules&sourceMap&localIdentName=[local]__[hash:base64:5]!less-loader'
+            },
+            {
+                test: /\.css$|\.less$/,
+                include: /node_modules/,
+                loader: 'style-loader!css-loader!less-loader'
             },
             {
                 test: /\.json$/,
