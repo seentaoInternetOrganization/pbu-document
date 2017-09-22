@@ -1,9 +1,11 @@
-var path    = require('path');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path    = require('path');
+// const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-var config = {
+const theme = require('./src/theme');
+
+const config = {
     entry: ["whatwg-fetch", "babel-polyfill",  path.resolve(__dirname, './src/index.js')],
-    devtool: "sourceMap",
+    devtool: "source-map",
     output: {
         path: path.resolve(__dirname, './example'),
         filename: 'bundle.js'
@@ -37,13 +39,14 @@ var config = {
             {
                 test: /\.css$|\.less$/,
                 exclude: /node_modules/,
-                loader: 'style-loader!css-loader?modules&sourceMap&localIdentName=[local]__[hash:base64:5]!less-loader'
+                loader: 'style-loader!css-loader?modules&sourceMap&localIdentName=[local]__[hash:base64:5]!postcss-loader!less-loader'
                 // loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&localIdentName=[local]-[hash:base64:5]!less-loader')
             },
             {
                 test: /\.css$|\.less$/,
                 include: /node_modules/,
-                loader: 'style-loader!css-loader!less-loader'
+                loader: 'style-loader!css-loader!'
+                        + `less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
                 // loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
             },
             {

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --content-base example --devtool eval",
+    "dev": "webpack-dev-server --content-base example",
     "build": "webpack --progress --colors --watch --config webpack.config.js",
     "prePublishs": "webpack --progress --colors --config webpack.prepublish.config.js"
   },
@@ -26,7 +26,8 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "antd": "^2.10.3",
+    "antd": "^2.10.4",
+    "autoprefixer": "^7.1.4",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
@@ -44,6 +45,7 @@
     "json-loader": "^0.5.7",
     "less": "^2.3.1",
     "less-loader": "^2.2.3",
+    "postcss-loader": "^2.0.6",
     "prop-types": "^15.5.10",
     "react": "^15.3.2",
     "react-composition": "^0.2.1",
@@ -52,5 +54,6 @@
     "url-loader": "^0.5.9",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
-  }
+  },
+  "theme": ".src/theme.js"
 }

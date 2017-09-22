@@ -11,6 +11,7 @@ import { loadConfig } from './utils';
 import { MODE } from './constants';
 import DocReadOnly from './components/readonly';
 import EditWeight from './components/editWeight';
+import DataInit from './components/dataInit';
 
 export default class PBUDocument extends Component {
     state = {
@@ -48,7 +49,7 @@ export default class PBUDocument extends Component {
     render() {
         const { mode, docRatio, docData } = this.props;
         const { docConfig, errMsg, ratioWidth, ratioHeight } = this.state;
-
+        //单据预览
         const renderPreview = () => {
             return (
                 <DocReadOnly ratioWidth={ratioWidth}
@@ -58,13 +59,30 @@ export default class PBUDocument extends Component {
                         />
             )
         }
-
+        //权重设置
         const renderExamineSet = () => {
             return <EditWeight ratioWidth={1}
                                 ratioHeight={1}
                                 config={docConfig[0]}
                                 data={docData}
                             />
+        }
+        //预置数据
+        const renderDataInit = () => {
+            return <DataInit ratioHeight={1}
+                            ratioWidth={1}
+                            config={docConfig[0]}
+                            data={docData}
+                        />
+        }
+
+        //设置答案
+        const renderAnswerSet = () => {
+            return (
+                <div>
+                    设置答案
+                </div>
+            )
         }
 
         const renderMode = () => {
@@ -74,6 +92,12 @@ export default class PBUDocument extends Component {
                     break;
                 case MODE.EXAMINE_SET:
                     return renderExamineSet();
+                    break;
+                case MODE.DATA_INIT:
+                    return renderDataInit();
+                    break;
+                case MODE.ANSWER_SET:
+                    return renderAnswerSet();
                     break;
             }
         }

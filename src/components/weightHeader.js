@@ -70,11 +70,11 @@ function groupAll(all, groups) {
                         examineName:item.examineName
                     }
 
-                    if (!groups[item.examineId][`row${item.element.table.row}`].hasOwnProperty('sort')) {
-                        groups[item.examineId][`row${item.element.table.row}`]['sort'] = [];
+                    if (!groups[item.examineId][`row${item.element.table.row}`].hasOwnProperty('sortOrder')) {
+                        groups[item.examineId][`row${item.element.table.row}`]['sortOrder'] = [];
                     }
                 }
-                groups[item.examineId][`row${item.element.table.row}`]['sort'].push(item.element.name);
+                groups[item.examineId][`row${item.element.table.row}`]['sortOrder'].push(item.element.name);
                 groups[item.examineId][`row${item.element.table.row}`][item.element.name] = item.weight;
                 break;
 
@@ -138,7 +138,7 @@ const EditWeightHeader = ({ config, all, selectedTag, editTagId, editTempValue, 
             all: newAll,
             examines: examines
         };
-        // console.log('data = ', JSON.stringify(data));
+        console.log('data = ', JSON.stringify(data));
         onSave(data);
     }
 
