@@ -69,6 +69,7 @@ export default class PBUDocument extends Component {
         }
         //预置数据
         const renderDataInit = () => {
+
             return <DataInit ratioHeight={1}
                             ratioWidth={1}
                             config={docConfig[0]}

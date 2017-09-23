@@ -37,7 +37,24 @@
 .btn_group button:hover{background: #35B355;cursor: pointer;}
 .btn_group .clear{background: #fff;color:#3DCC61;border:1px solid #3DCC61;margin-right: 10px;}
 .btn_group .clear:hover{color:#35B355;border-color: #35B355;background: #fff;}
-.content{width: 1220px;margin:30px auto;overflow: hidden;}
+.content{
+  width: 1220px;
+  margin:30px auto;
+  overflow: hidden;
+}
+.content input, textarea {
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    border: 1px solid #DDDDDD;
+  }
+
+.content input:focus, textarea:focus {
+    box-shadow: 0 0 5px #3dcc61;
+    border: 1px solid #3dcc61;
+}
 .right_container{float: left;margin-left: 20px;_display:inline;}
 .right_container label{display: block;margin-bottom: 10px;cursor: pointer;}
 .right_container label span{display: inline-block;width: 120px;height: 32px;background: #E66963;color:#fff;font-size: 14px;line-height: 32px;text-align: center;margin-left: 10px;border: 1px solid #E66963;}

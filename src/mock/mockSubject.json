@@ -1,0 +1,40 @@
+{
+  "code": 200,
+  "accountingSubjects": [
+  {
+  "subjectId":"000001",
+  "subjectName":"001-科目1",
+  "code":"1"
+  },
+  {
+  "subjectId":"000002",
+  "subjectName":"002-科目2",
+  "code":"2"
+  },
+  {
+  "subjectId":"000003",
+  "subjectName":"003-科目3",
+  "code":"3"
+  },{
+  "subjectId":"000004",
+  "subjectName":"004-科目4",
+  "code":"4"
+  },{
+  "subjectId":"000005",
+  "subjectName":"005-科目5",
+  "code":"5"
+  },{
+  "subjectId":"000006",
+  "subjectName":"006-科目6",
+  "code":"6"
+  },{
+  "subjectId":"000007",
+  "subjectName":"007-科目7",
+  "code":"7"
+  },{
+  "subjectId":"000008",
+  "subjectName":"008-科目8",
+  "code":"8"
+  }
+  ]
+}

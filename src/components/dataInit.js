@@ -7,53 +7,18 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import DocBG from './background';
+import EditableDoc from './editable';
 import styles from './dataInit.less';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { Button , Select, Tag, AutoComplete } from 'antd';
 import isNumeric from 'validator/lib/isNumeric';
-
+import mockSubjects from '../mock/mockSubject.json';
 
 const Option = Select.Option;
 const tags=['1', '2', '3'];
 const { CheckableTag } = Tag;
 
-const mockSubject = [
-{
-"subjectId":"000001",
-"subjectName":"001-科目1",
-"code":"1"
-},
-{
-"subjectId":"000002",
-"subjectName":"002-科目2",
-"code":"2"
-},
-{
-"subjectId":"000003",
-"subjectName":"003-科目3",
-"code":"3"
-},{
-"subjectId":"000004",
-"subjectName":"004-科目4",
-"code":"4"
-},{
-"subjectId":"000005",
-"subjectName":"005-科目5",
-"code":"5"
-},{
-"subjectId":"000006",
-"subjectName":"006-科目6",
-"code":"6"
-},{
-"subjectId":"000007",
-"subjectName":"007-科目7",
-"code":"7"
-},{
-"subjectId":"000008",
-"subjectName":"008-科目8",
-"code":"8"
-}
-]
+const mockSubject = mockSubjects.accountingSubjects;
 
 class DataInit extends Component {
 
@@ -139,53 +104,10 @@ class DataInit extends Component {
             ...all
         };
 
-        if (item.constraint) {
-            //暂时先只考虑这几种情况
-            switch (item.type) {
-                case ELEMENT.INTEGER:
-                    if (item.constraint.maxValue
-                        && parseInt(value) > item.constraint.maxValue) {
-                        return;
-                    }
-
-                    if (item.constraint.minValue
-                        && parseInt(value) < item.constraint.minValue) {
-                        return;
-                    }
-                    newAll[item.name] = {
-                        ...all[item.name],
-                        data: parseInt(value)
-                    };
-                    break;
-                case ELEMENT.FLOAT:
-                    if (item.constraint.maxValue
-                        && parseFloat(value) > item.constraint.maxValue) {
-                        return;
-                    }
-
-                    if (item.constraint.minValue
-                        && parseFloat(value) < item.constraint.minValue) {
-                        return;
-                    }
-                    newAll[item.name] = {
-                        ...all[item.name],
-                        data: parseFloat(value)
-                    };
-
-                    break;
-                default:
-                    newAll[item.name] = {
-                        ...all[item.name],
-                        data: value
-                    };
-                    break;
-            }
-        }else {
-            newAll[item.name] = {
-                ...all[item.name],
-                data: value
-            };
-        }
+        newAll[item.name] = {
+            ...all[item.name],
+            data: value
+        };
 
         this.setState({
             all: newAll
@@ -283,139 +205,36 @@ class DataInit extends Component {
     }
 
     render() {
-        const { config, ratioHeight, ratioWidth } = this.props;
+        const { config, ratioHeight, ratioWidth, onRemovePage, totalPage, currentPage } = this.props;
         const { all, glas, sls } = this.state;
+        const docProps = {
+            config,
+            all,
+            glas,
+            sls,
+            ratioHeight,
+            ratioWidth,
+            bgClassName: styles.main_container,
+            onSubjectChange: this.onSubjectChange,
+            onSubjectBlur: this.onSubjectBlur,
+            onItemChange: this.onItemChange,
+        }
 
-        const renderElements = () => {
-            const elementNodes = Object.values(config.elements).map((item, index) => {
-                const { pos } = item;
+        const renderTags = () => {
+            const tagNodes = [];
 
-                let defaultValue = '';
-
-                switch (item.type) {
-                    case ELEMENT.INPUT:
-                        return (
-                            <input key={`${item.name}_${index}`}
-                                        name={item.name}
-                                        style={{
-                                            left: pos.left * ratioWidth,
-                                            top: pos.top * ratioHeight,
-                                            width: pos.width * ratioWidth,
-                                            height: pos.height * ratioHeight,
-                                            ...item.style
-                                        }}
-                                        value={all[item.name] && all[item.name].data ? all[item.name].data : defaultValue}
-                                        onChange={e => {
-                                            this.onItemChange(item, e.target.value)
-                                        }}
-                                    />
-                        )
-                        break;
-
-                    case ELEMENT.INTEGER:
-                        return (
-                            <input key={`${item.name}_${index}`}
-                                        name={item.name}
-                                        style={{
-                                            left: pos.left * ratioWidth,
-                                            top: pos.top * ratioHeight,
-                                            width: pos.width * ratioWidth,
-                                            height: pos.height * ratioHeight,
-                                            ...item.style
-                                        }}
-                                        value={all[item.name] && all[item.name].data ? all[item.name].data : defaultValue}
-                                        onChange={e => {
-                                            this.onItemChange(item, e.target.value)
-                                        }}
-                                    />
-                        )
-                        break;
-
-                    case ELEMENT.FLOAT:
-                        return (
-                            <input key={`${item.name}_${index}`}
-                                        name={item.name}
-                                        style={{
-                                            left: pos.left * ratioWidth,
-                                            top: pos.top * ratioHeight,
-                                            width: pos.width * ratioWidth,
-                                            height: pos.height * ratioHeight,
-                                            ...item.style
-                                        }}
-                                        value={all[item.name] && all[item.name].data ? all[item.name].data : defaultValue}
-                                        onChange={e => {
-                                            this.onItemChange(item, e.target.value)
-                                        }}
-                                    />
-                        )
-                        break;
-
-                    case ELEMENT.GLA:
-                        return (
-                            <AutoComplete key={`${item.name}_${index}`}
-                                name={item.name}
-                                dataSource={glas}
-                                value={all[item.name] && all[item.name].data ? all[item.name].data : defaultValue}
-                                style={{
-                                    left: pos.left * ratioWidth,
-                                    top: (pos.top - 4) * ratioHeight,
-                                    width: pos.width * ratioWidth,
-                                    height: pos.height * ratioHeight,
-                                    backgroundColor: 'none',
-                                    ...item.style
-                                }}
-                                onChange={value => this.onSubjectChange(item, value)}
-                                onBlur={value => this.onSubjectBlur(glas, item, value)}
-                            />
-                        )
-                        break;
-
-                    case ELEMENT.SL:
-                        return (
-                            <AutoComplete key={`${item.name}_${index}`}
-                                name={item.name}
-                                dataSource={sls}
-                                value={all[item.name] && all[item.name].data ? all[item.name].data : defaultValue}
-                                style={{
-                                    left: pos.left * ratioWidth,
-                                    top: (pos.top - 4) * ratioHeight,
-                                    width: pos.width * ratioWidth,
-                                    height: pos.height * ratioHeight,
-                                    backgroundColor: 'none',
-                                    ...item.style
-                                }}
-                                onChange={value => this.onSubjectChange(item, value, all[item.gla] && all[item.gla].data ? all[item.gla].data : '' )}
-                                onBlur={value => this.onSubjectBlur(sls, item, value)}
-                            />
-                        )
-                        break;
-
-                    case ELEMENT.CHECK_BOX:
-                        return (
-                            <input key={`${item.name}_${index}`}
-                                        type="checkbox"
-                                        style={{
-                                            left: pos.left * ratioWidth,
-                                            top: pos.top * ratioHeight,
-                                            width: pos.width * ratioWidth,
-                                            height: pos.height * ratioHeight,
-                                            ...item.style
-                                        }}
-                                    />
-                        )
-                        break;
-
-                    case ELEMENT.ACCOUNT:
-
-                        break;
-
-                    case ELEMENT.TEXT_AREA:
-
-                        break;
-                }
-            })
-
-            return elementNodes;
+            for (let i = 0; i < totalPage; i++) {
+                tagNodes.push({
+                    <Tag key={i}
+                        closable={index !== 0}
+                        onClose={e => {
+                            // e.preventDefault()
+                            onRemovePage(index + 1)
+                        }}>
+                        {i}
+                    </Tag>
+                })
+            }
         }
 
         return (
@@ -423,16 +242,16 @@ class DataInit extends Component {
 	            <div className={styles.sub_nav}>
                     <Button type="primary" onClick={this.onSave}>保存</Button>
                 </div>
-                <DocBG className={styles.main_container}
-                      ratioWidth={ratioWidth}
-                      ratioHeight={ratioHeight}
-                      config={config}>
-                    {renderElements()}
-                </DocBG>
+                <EditableDoc {...docProps} />
                 <div className={styles.tags}>
                     {tags.map((tag, index) => {
                         const tagElem = (
-                            <Tag key={tag}>
+                            <Tag key={tag}
+                                closable={index !== 0}
+                                onClose={e => {
+                                    // e.preventDefault()
+                                    onRemovePage(index + 1)
+                                }}>
                                 {tag}
                             </Tag>
                         );
@@ -464,10 +283,34 @@ DataInit.propTypes = {
      * 带过来的数据
      */
     data: PropTypes.object,
+    /**
+     * 总账科目
+     */
     subjectTotal: PropTypes.array,
+    /**
+     * 明细账科目
+     */
     subjectDetail: PropTypes.array,
+    /**
+     * 搜索总账科目时的回调
+     */
     onSearchTotalSubjects: PropTypes.func,
+    /**
+     * 搜索明细账时的回调
+     */
     onSearchDetailSubjects: PropTypes.func,
+    /**
+     * 删除页回调
+     */
+    onRemovePage: PropTypes.func,
+    /**
+     * 总页数
+     */
+    totalPage: PropTypes.number,
+    /**
+     * 当前页
+     */
+    currentPage: PropTypes.number,
 }
 
 
@@ -477,7 +320,12 @@ DataInit.defaultProps = {
     data: null,
     subjectTotal: mockSubject,
     subjectDetail: mockSubject,
+    totalPage: 1,
+    currentPage: 1,
     onSearchSubjects: (value, subjectId) => {
         console.log(`onSearchTotalSubjects ${value} subjectId ${subjectId}`);
     },
+    onRemovePage: page => {
+        console.log(`page ${page}`);
+    }
 }
