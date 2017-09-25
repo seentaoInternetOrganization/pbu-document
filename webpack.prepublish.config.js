@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const theme = require('./src/theme');
 
+const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+
 const config = {
     // entry: path.resolve(__dirname, './src/lib/index.js'),
     entry: {
@@ -28,6 +30,7 @@ const config = {
         //         warnings: false
         //     }
         // })
+
     ],
     resolve: {
         extensions: ['', '.js', '.jsx']
