@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import DocBG from './background';
-import EditableDoc from './editable';
+import DocEditable from './editable';
 import styles from './dataInit.less';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { Button , Select, Tag, AutoComplete } from 'antd';
@@ -224,17 +224,27 @@ class DataInit extends Component {
             const tagNodes = [];
 
             for (let i = 0; i < totalPage; i++) {
-                tagNodes.push({
+                let highlightOpt = {};
+
+                if (currentPage == i + 1) {
+                    highlightOpt = {
+                        color: '#3DCC61'
+                    }
+                }
+
+                tagNodes.push(
                     <Tag key={i}
-                        closable={index !== 0}
+                        {...highlightOpt}
+                        closable={i !== 0}
                         onClose={e => {
-                            // e.preventDefault()
-                            onRemovePage(index + 1)
+                            onRemovePage(i + 1)
                         }}>
-                        {i}
+                        {i+1}
                     </Tag>
-                })
+                )
             }
+
+            return tagNodes;
         }
 
         return (
@@ -242,21 +252,9 @@ class DataInit extends Component {
 	            <div className={styles.sub_nav}>
                     <Button type="primary" onClick={this.onSave}>保存</Button>
                 </div>
-                <EditableDoc {...docProps} />
+                <DocEditable {...docProps} />
                 <div className={styles.tags}>
-                    {tags.map((tag, index) => {
-                        const tagElem = (
-                            <Tag key={tag}
-                                closable={index !== 0}
-                                onClose={e => {
-                                    // e.preventDefault()
-                                    onRemovePage(index + 1)
-                                }}>
-                                {tag}
-                            </Tag>
-                        );
-                        return tagElem;
-                    })}
+                    {renderTags()}
                     <Button size="small" type="dashed">+ 续页</Button>
                 </div>
             </section>

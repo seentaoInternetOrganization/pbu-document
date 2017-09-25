@@ -10,7 +10,7 @@ import DocBG from './background';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { AutoComplete } from 'antd';
 
-const EditableDoc = ({
+const DocEditable = ({
     config,
     all,
     glas,
@@ -205,9 +205,9 @@ const EditableDoc = ({
     )
 }
 
-export default EditableDoc;
+export default DocEditable;
 
-EditableDoc.propTypes = {
+DocEditable.propTypes = {
     mode: PropTypes.oneOf([MODE.DATA_INIT, MODE.ANSWER_SET]),
     config: PropTypes.object.isRequired,
     all: PropTypes.object,
@@ -222,7 +222,7 @@ EditableDoc.propTypes = {
     activityId: PropTypes.string.isRequired,
 }
 
-EditableDoc.defaultProps = {
+DocEditable.defaultProps = {
     mode: MODE.DATA_INIT,
     all: {},
     glas: [],

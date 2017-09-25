@@ -21,15 +21,15 @@ export default class PBUDocument extends Component {
         ratioHeight: 1,
     }
 
-    loadDocConfig() {
-        const { docRatio } = this.props;
-        loadConfig(this.props.configUrl, docConfig => {
+    loadDocConfig(props) {
+        const { docRatio, currentCopy, docConfigUrl } = props;
+        loadConfig(docConfigUrl, docConfig => {
             if (!docConfig || docConfig.length < 1) {
                 this.setState({
                     errMsg: '加载失败'
                 })
             }else {
-                const config = docConfig[0];
+                const config = docConfig[currentCopy];
                 const ratioWidth = docRatio;
                 const ratioHeight = docRatio;
 
@@ -43,7 +43,11 @@ export default class PBUDocument extends Component {
     }
 
     componentDidMount() {
-        this.loadDocConfig();
+        this.loadDocConfig(this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.loadDocConfig(nextProps);
     }
 
     render() {
@@ -124,7 +128,7 @@ PBUDocument.propTypes = {
     /**
      * 单据配置文件地址
      */
-    configUrl: PropTypes.string.isRequired,
+    docConfigUrl: PropTypes.string.isRequired,
     /**
      * 单据编码
      */
@@ -136,9 +140,42 @@ PBUDocument.propTypes = {
     /**
      * 单据数据集合
      */
-    docData: PropTypes.object
+    docData: PropTypes.object,
+    /**
+     * 总账科目
+     */
+    subjectTotal: PropTypes.array,
+    /**
+     * 明细账科目
+     */
+    subjectDetail: PropTypes.array,
+    /**
+     * 搜索总账科目时的回调
+     */
+    onSearchTotalSubjects: PropTypes.func,
+    /**
+     * 搜索明细账时的回调
+     */
+    onSearchDetailSubjects: PropTypes.func,
+    /**
+     * 删除页回调
+     */
+    onRemovePage: PropTypes.func,
+    /**
+     * 总页数
+     */
+    totalPage: PropTypes.number,
+    /**
+     * 当前页
+     */
+    currentPage: PropTypes.number,
+    /**
+     * 当前联
+     */
+    currentCopy: PropTypes.number,
 }
 
 PBUDocument.defaultProps = {
-    docRatio: 1
+    docRatio: 1,
+    currentCopy: 0,
 }

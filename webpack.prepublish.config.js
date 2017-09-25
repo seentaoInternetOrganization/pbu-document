@@ -1,16 +1,20 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const theme = require('./src/theme');
 
-var config = {
-    entry: path.resolve(__dirname, './src/container.js'),
+const config = {
+    // entry: path.resolve(__dirname, './src/lib/index.js'),
+    entry: {
+        PBUDocumentPreview: './src/lib/PBUDocumentPreview.js',
+        PBUDocumentExamineSet: './src/lib/PBUDocumentExamineSet.js',
+        PBUDocumentDataInit: './src/lib/PBUDocumentDataInit.js',
+        PBUDocumentAnswerSet: './src/lib/PBUDocumentAnswerSet.js'
+    },
     output: {
         path: path.resolve(__dirname, './lib'),
         library: 'pbu-document',
         libraryTarget: 'umd',
-        filename: 'PBUDocument.js'
-    },
-    devServer: {
-        historyApiFallback: true
+        filename: '[name].js',
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -19,11 +23,11 @@ var config = {
                 NODE_ENV: JSON.stringify("production")
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ],
     resolve: {
         extensions: ['', '.js', '.jsx']
@@ -51,7 +55,8 @@ var config = {
             {
                 test: /\.css$|\.less$/,
                 include: /node_modules/,
-                loader: 'style-loader!css-loader!less-loader'
+                loader: 'style-loader!css-loader!'
+                        + `less-loader?{"modifyVars":${JSON.stringify(theme)}}`
             },
             {
                 test: /\.json$/,
@@ -61,7 +66,8 @@ var config = {
     },
     externals: {
         'react'       : 'umd react',
-        'react-dom'   : 'umd react-dom'
+        'react-dom'   : 'umd react-dom',
+        'antd'        : 'umd antd'
     }
 };
 
