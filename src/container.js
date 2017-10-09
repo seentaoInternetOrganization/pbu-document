@@ -2,7 +2,6 @@
  * @author AngusC
  * @description 单据
  */
-import 'babel-polyfill';
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
