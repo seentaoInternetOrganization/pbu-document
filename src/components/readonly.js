@@ -13,7 +13,7 @@ import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 const DocReadOnly = ({ config, ratioWidth, ratioHeight, data }) => {
 
     const renderElements = () => {
-        const elementNodes = Object.values(config.elements).map((item, index) => {
+        const elementNodes = Object.values(config[0].elements).map((item, index) => {
             const { pos } = item;
             /**
              * 忽略checkbox
@@ -77,7 +77,7 @@ DocReadOnly.propTypes =  {
     /**
      * 单据配置信息，当前联的
      */
-    config: PropTypes.object.isRequired,
+    config: PropTypes.array.isRequired,
     /**
      * 横向缩放比例，默认1
      */

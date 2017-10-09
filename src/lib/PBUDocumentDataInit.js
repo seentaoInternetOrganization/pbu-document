@@ -18,7 +18,8 @@ const PBUDocumentDataInit = ({
     onSearchDetailSubjects,
     onRemovePage,
     totalPage,
-    currentPage
+    currentPage,
+    activityId,
 }) => {
 
     const docProps = {
@@ -31,7 +32,8 @@ const PBUDocumentDataInit = ({
         onSearchDetailSubjects,
         onRemovePage,
         totalPage,
-        currentPage
+        currentPage,
+        activityId
     }
 
     return (
@@ -54,7 +56,7 @@ PBUDocumentDataInit.propTypes = {
     /**
      * 数据集合
      */
-    docData: PropTypes.object,
+    docData: PropTypes.object.isRequired,
     /**
      * 总账科目
      */
@@ -87,6 +89,10 @@ PBUDocumentDataInit.propTypes = {
      * 当前联
      */
     currentCopy: PropTypes.number,
+    /**
+     * 当前节点Id
+     */
+    activityId: PropTypes.string.isRequired,
 }
 
 PBUDocumentDataInit.defaultProps = {

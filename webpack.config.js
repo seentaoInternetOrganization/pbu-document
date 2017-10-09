@@ -4,7 +4,7 @@ const path    = require('path');
 const theme = require('./src/theme');
 
 const config = {
-    entry: ["whatwg-fetch", "babel-polyfill",  path.resolve(__dirname, './src/index.js')],
+    entry: path.resolve(__dirname, './src/index.js'),
     devtool: "source-map",
     output: {
         path: path.resolve(__dirname, './example'),
@@ -22,15 +22,7 @@ const config = {
             {
                 test: /\.js$|\.jsx$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/,
-                options: {
-                  "presets": [
-                    "es2015",
-                    "stage-2",
-                    "react"
-                  ],
-                  "plugins": [["import", { "libraryName": "antd", "style": true }]]
-                }
+                exclude: /node_modules/
             },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,

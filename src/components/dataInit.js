@@ -12,10 +12,10 @@ import styles from './dataInit.less';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { Button , Select, Tag, AutoComplete } from 'antd';
 import isNumeric from 'validator/lib/isNumeric';
+import isEmpty from 'validator/lib/isEmpty';
 import mockSubjects from '../mock/mockSubject.json';
 
 const Option = Select.Option;
-const tags=['1', '2', '3'];
 const { CheckableTag } = Tag;
 
 const mockSubject = mockSubjects.accountingSubjects;
@@ -65,7 +65,7 @@ class DataInit extends Component {
         })
     }
 
-    //处理总账科目
+    //处理总账科目和明细账科目
     combineSubjects(subjects) {
         const combined = subjects.map(subject => {
             return {
@@ -81,7 +81,7 @@ class DataInit extends Component {
         const { config } = this.props;
         const selectHeight = [];
 
-        Object.values(config.elements).forEach(item => {
+        Object.values(config[0].elements).forEach(item => {
             if (item.type === ELEMENT.GLA
                 || item.type === ELEMENT.SL) {
                 selectHeight.push(`${item.pos.height}px`);
@@ -99,14 +99,26 @@ class DataInit extends Component {
 
     onItemChange = (item, value) => {
         const { all } = this.state;
+        const { activityId } = this.props;
 
         const newAll = {
             ...all
         };
 
+        let activityOpt = {
+            activityId,
+        }
+
+        if (isEmpty(value)) {
+            activityOpt = {
+                activityId: ''
+            }
+        }
+
         newAll[item.name] = {
             ...all[item.name],
-            data: value
+            data: value,
+            ...activityOpt
         };
 
         this.setState({
@@ -116,6 +128,7 @@ class DataInit extends Component {
 
     onSubjectBlur = (subjects, item, value) => {
         const { all } = this.state;
+        const { activityId } = this.props;
 
         const selected = subjects.find(item => {
             return item.text === value
@@ -130,13 +143,15 @@ class DataInit extends Component {
             newAll[item.name] = {
                 ...all[item.name],
                 data: '',
-                subjectName: ''
+                subjectName: '',
+                activityId: ''
             };
         }else {
             newAll[item.name] ={
                 ...all[item.name],
                 data: selected.value,
-                subjectName: selected.text
+                subjectName: selected.text,
+                activityId,
             };
         }
 
@@ -146,20 +161,22 @@ class DataInit extends Component {
     }
 
     onSubjectChange = (item, value, totalSubjectId) => {
-
         const { all } = this.state;
+        const { activityId } = this.props;
+
         const newAll = {
             ...all
         };
         newAll[item.name] = {
             ...all[item.name],
-            data: value
+            data: value,
+            activityId,
         };
         this.setState({
             all: newAll
         })
 
-        this.props.onSearchSubjects(value, totalSubjectId ? totalSubjectId : '');
+        this.props.onSearchSubjects(item.name, value, totalSubjectId ? totalSubjectId : '');
     }
 
     onSave = () => {
@@ -201,11 +218,16 @@ class DataInit extends Component {
             data
         }
 
-        console.log('dataFinal = ', JSON.stringify(dataFinal));
+        this.props.onSave(dataFinal);
+    }
+
+    appendPage = () => {
+        this.onSave();
+        this.props.onAppendPage();
     }
 
     render() {
-        const { config, ratioHeight, ratioWidth, onRemovePage, totalPage, currentPage } = this.props;
+        const { config, ratioHeight, ratioWidth, onRemovePage, totalPage, currentPage, onPageChange, activityId } = this.props;
         const { all, glas, sls } = this.state;
         const docProps = {
             config,
@@ -218,6 +240,7 @@ class DataInit extends Component {
             onSubjectChange: this.onSubjectChange,
             onSubjectBlur: this.onSubjectBlur,
             onItemChange: this.onItemChange,
+            activityId,
         }
 
         const renderTags = () => {
@@ -236,6 +259,10 @@ class DataInit extends Component {
                     <Tag key={i}
                         {...highlightOpt}
                         closable={i !== 0}
+                        onClick={e => {
+                            this.onSave();
+                            onPageChange(i + 1);
+                        }}
                         onClose={e => {
                             onRemovePage(i + 1)
                         }}>
@@ -255,7 +282,7 @@ class DataInit extends Component {
                 <DocEditable {...docProps} />
                 <div className={styles.tags}>
                     {renderTags()}
-                    <Button size="small" type="dashed">+ 续页</Button>
+                    <Button size="small" type="dashed" onClick={this.appendPage}>+ 续页</Button>
                 </div>
             </section>
         )
@@ -268,7 +295,7 @@ DataInit.propTypes = {
     /**
      * 单据配置信息，当前联的
      */
-    config: PropTypes.object.isRequired,
+    config: PropTypes.array.isRequired,
     /**
      * 横向缩放比例，默认1
      */
@@ -280,7 +307,7 @@ DataInit.propTypes = {
     /**
      * 带过来的数据
      */
-    data: PropTypes.object,
+    data: PropTypes.object.isRequired,
     /**
      * 总账科目
      */
@@ -309,6 +336,24 @@ DataInit.propTypes = {
      * 当前页
      */
     currentPage: PropTypes.number,
+    /**
+     * 续页回调，会触发onSave
+     */
+    onAppendPage: PropTypes.func,
+    /**
+     * 切换页，会触发onSave
+     */
+    onPageChange: PropTypes.func,
+    /**
+     * 保存数据
+     * @param {Object} data
+     */
+    onSave: PropTypes.func,
+    /**
+     * 当前节点Id
+     * @type {String}
+     */
+    activityId: PropTypes.string.isRequired,
 }
 
 
@@ -325,5 +370,14 @@ DataInit.defaultProps = {
     },
     onRemovePage: page => {
         console.log(`page ${page}`);
+    },
+    onAppendPage: () => {
+
+    },
+    onPageChange: page => {
+        console.log(`page ${page}`);
+    },
+    onSave: data => {
+        console.log(`data = ${JSON.stringify(data)}`);
     }
 }

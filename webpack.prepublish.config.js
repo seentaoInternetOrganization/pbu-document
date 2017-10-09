@@ -1,17 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const theme = require('./src/theme');
+const getEntries = require('./build/getCommonConfig').getEntries;
 
 const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 const config = {
-    // entry: path.resolve(__dirname, './src/lib/index.js'),
-    entry: {
-        PBUDocumentPreview: './src/lib/PBUDocumentPreview.js',
-        PBUDocumentExamineSet: './src/lib/PBUDocumentExamineSet.js',
-        PBUDocumentDataInit: './src/lib/PBUDocumentDataInit.js',
-        PBUDocumentAnswerSet: './src/lib/PBUDocumentAnswerSet.js'
-    },
+    entry: getEntries('./src/lib'),
     output: {
         path: path.resolve(__dirname, './lib'),
         library: 'pbu-document',
@@ -41,10 +36,7 @@ const config = {
             {
                 test: /\.js$|\.jsx$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['es2015', 'react', 'stage-2']
-                }
+                exclude: /node_modules/
             },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,

@@ -3,6 +3,10 @@
  * @description 工具
  */
 
+// const fetch = require('whatwg-fetch');
+// console.log('fetch = ', fetch);
+
+import 'whatwg-fetch';
 /**
 * 矩形碰撞检测
 * @param  {Object} r1 [description]

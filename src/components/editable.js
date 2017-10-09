@@ -9,6 +9,7 @@ import classnames from 'classnames';
 import DocBG from './background';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { AutoComplete } from 'antd';
+import isEmpty from 'validator/lib/isEmpty';
 
 const DocEditable = ({
     config,
@@ -23,6 +24,7 @@ const DocEditable = ({
     onItemChange,
     mode,
     activityId,
+    currentCopy,
 }) => {
 
     const onElementChange = (item, value) => {
@@ -62,7 +64,7 @@ const DocEditable = ({
     }
 
     const renderElements = () => {
-        const elementNodes = Object.values(config.elements).map((item, index) => {
+        const elementNodes = Object.values(config[0].elements).map((item, index) => {
             const { pos } = item;
             let value = '';
 
@@ -78,26 +80,27 @@ const DocEditable = ({
             }
 
             let readonly = {};
-
-            if (mode === MODE.ANSWER_SET
-                && all[item.name]
-                && all[item.name].data) {
+            //存在activityId且不是当前节点，则不可修改
+            if ((all[item.name] && all[item.name].activityId
+                && all[item.name].activityId !== activityId)
+                || currentCopy > 0) {
                 readonly = {
                     readOnly: 'readonly',
                     disabled: true
                 }
             }
 
-            let highlightOpt = {
-                backgroundColor: 'none'
-            };
-
+            let highlightOpt = {};
+            //有本节点设置的预置数据或答案的话此元素高亮
             if (all[item.name]
-                && !all[item.name].data
-                && all[item.name].answer
+                && all[item.name].activityId
                 && all[item.name].activityId === activityId) {
                 highlightOpt = {
                     backgroundColor: '#3DCC61'
+                }
+            }else {
+                highlightOpt = {
+                    backgroundColor: 'unset'
                 }
             }
 
@@ -209,7 +212,7 @@ export default DocEditable;
 
 DocEditable.propTypes = {
     mode: PropTypes.oneOf([MODE.DATA_INIT, MODE.ANSWER_SET]),
-    config: PropTypes.object.isRequired,
+    config: PropTypes.array.isRequired,
     all: PropTypes.object,
     glas: PropTypes.array,
     sls: PropTypes.array,
@@ -220,6 +223,7 @@ DocEditable.propTypes = {
     onSubjectBlur: PropTypes.func,
     onItemChange: PropTypes.func,
     activityId: PropTypes.string.isRequired,
+    currentCopy: PropTypes.number,
 }
 
 DocEditable.defaultProps = {
@@ -233,4 +237,5 @@ DocEditable.defaultProps = {
     onSubjectBlur: () => {},
     onItemChange: () => {},
     activityId: 'ERR_ACTIVITY_ID',
+    currentCopy: 0
 }

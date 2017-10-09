@@ -2,7 +2,7 @@
  * @author AngusC
  * @description 单据
  */
-
+import 'babel-polyfill';
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -51,14 +51,14 @@ export default class PBUDocument extends Component {
     }
 
     render() {
-        const { mode, docRatio, docData } = this.props;
+        const { mode, docRatio, docData, activityId } = this.props;
         const { docConfig, errMsg, ratioWidth, ratioHeight } = this.state;
         //单据预览
         const renderPreview = () => {
             return (
                 <DocReadOnly ratioWidth={ratioWidth}
                             ratioHeight={ratioHeight}
-                            config={docConfig[0]}
+                            config={docConfig}
                             data={docData}
                         />
             )
@@ -76,8 +76,9 @@ export default class PBUDocument extends Component {
 
             return <DataInit ratioHeight={1}
                             ratioWidth={1}
-                            config={docConfig[0]}
+                            config={docConfig}
                             data={docData}
+                            activityId={activityId}
                         />
         }
 
@@ -173,6 +174,10 @@ PBUDocument.propTypes = {
      * 当前联
      */
     currentCopy: PropTypes.number,
+    /**
+     * 当前节点Id
+     */
+    activityId: PropTypes.string,
 }
 
 PBUDocument.defaultProps = {

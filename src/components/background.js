@@ -5,15 +5,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const DocBG = ({ config, ratioWidth, ratioHeight, children, className }) => {
+const DocBG = ({ config, ratioWidth, ratioHeight, children, className, copy }) => {
 
     return (
         <div className={className}
             style={{
-            background: `#FFFFFF url(${config.backgroundImage}) no-repeat center center`,
-            width: config.width * ratioWidth,
-            height: config.height * ratioHeight,
-            ...config.style
+            background: `#FFFFFF url(${config[copy].backgroundImage}) no-repeat center center`,
+            width: config[copy].width * ratioWidth,
+            height: config[copy].height * ratioHeight,
+            ...config[copy].style
         }}>
             {children}
         </div>
@@ -26,7 +26,7 @@ DocBG.propTypes = {
     /**
      * 单据当前联配置
      */
-    config: PropTypes.object.isRequired,
+    config: PropTypes.array.isRequired,
     /**
      * 宽度缩放比例，默认1
      */
@@ -38,14 +38,15 @@ DocBG.propTypes = {
     /**
      * className
      */
-    className: PropTypes.string
-    // /**
-    //  * 模式
-    //  */
-    // mode: PropTypes.oneOf(Object.keys(MODE)).isRequired,
+    className: PropTypes.string,
+    /**
+     * 当前联次
+     */
+    copy: PropTypes.number,
 }
 
 DocBG.defaultProps = {
     ratioWidth: 1,
-    ratioHeight: 1
+    ratioHeight: 1,
+    copy: 0,
 }
