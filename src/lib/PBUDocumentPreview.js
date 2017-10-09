@@ -11,7 +11,7 @@ import { MODE } from '../constants';
 const PBUDocumentPreview = ({ docConfigUrl, docData, docCode }) => {
 
     return (
-        <PBUDocument configUrl={docConfigUrl}
+        <PBUDocument docConfigUrl={docConfigUrl}
                     mode={MODE.PREVIEW}
                     docCode={docCode}
                     docData={docData}
