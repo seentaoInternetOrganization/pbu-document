@@ -25,6 +25,8 @@ const DocEditable = ({
     mode,
     activityId,
     currentCopy,
+    currentSubject,
+    isDataInit
 }) => {
 
     const onElementChange = (item, value) => {
@@ -77,6 +79,13 @@ const DocEditable = ({
                 if (all[item.name].data) {
                     value = all[item.name].data;
                 }
+
+                if (item.type === ELEMENT.GLA
+                    || item.type === ELEMENT.SL) {
+                    if (currentSubject !== item.name) {
+                        value = all[item.name].subjectName
+                    }
+                }
             }
 
             let readonly = {};
@@ -90,17 +99,36 @@ const DocEditable = ({
                 }
             }
 
-            let highlightOpt = {};
+            let highlightOpt = {
+                color: 'rgba(0, 0, 0, 0.25)'
+            };
             //有本节点设置的预置数据或答案的话此元素高亮
             if (all[item.name]
                 && all[item.name].activityId
                 && all[item.name].activityId === activityId) {
-                highlightOpt = {
-                    backgroundColor: '#3DCC61'
+
+                if (isDataInit
+                    && all[item.name].answer
+                    && !isEmpty(all[item.name].answer)) {
+                        readonly = {
+                            readOnly: 'readonly',
+                            disabled: true
+                        }
+                }else if (!isDataInit
+                            && all[item.name].data
+                            && !isEmpty(all[item.name].data)) {
+                            readonly = {
+                                readOnly: 'readonly',
+                                disabled: true
+                            }
+                }else {
+                    highlightOpt = {
+                        color: 'unset'
+                    }
                 }
             }else {
                 highlightOpt = {
-                    backgroundColor: 'unset'
+                    color: 'rgba(0, 0, 0, 0.25)'
                 }
             }
 

@@ -4,6 +4,7 @@ import PBUDocument from './container';
 import mockData from './mock/mockData.json';
 import PBUDocumentDataInit from './lib/PBUDocumentDataInit';
 import PBUDocumentExamineSet from './lib/PBUDocumentExamineSet';
+import PBUDocumentAnswerSet from './lib/PBUDocumentAnswerSet';
 
 const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089_1.json";
@@ -16,14 +17,18 @@ const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY006
 //                                 docData={mockData.docData}
 //                             />), document.getElementById('app'));
 
-ReactDOM.render((<PBUDocumentDataInit docConfigUrl={docConfigUrl}
-                                mode='DATA_INIT'
-                                // mode='EXAMINE_SET'
-                                docCode='DJY0066'
-                                docData={mockData.docData}
-                                activityId='18bcf3382fa8c93d'
-                            />), document.getElementById('app'));
+// ReactDOM.render((<PBUDocumentDataInit docConfigUrl={docConfigUrl}
+//                                 docCode='DJY0066'
+//                                 docData={mockData.docData}
+//                                 activityId='18bcf3382fa8c93d'
+//                             />), document.getElementById('app'));
 // ReactDOM.render((<PBUDocumentExamineSet docConfigUrl={docConfigUrl}
 //                                         mode='EXAMINE_SET'
 //                                         docCode='DJY0066'
 //                                     />), document.getElementById('app'))
+
+ReactDOM.render((<PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
+                                docCode='DJY0066'
+                                docData={mockData.docData}
+                                activityId='18bcf3382fa8c93d'
+                            />), document.getElementById('app'));

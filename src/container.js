@@ -51,8 +51,43 @@ export default class PBUDocument extends Component {
     }
 
     render() {
-        const { mode, docRatio, docData, activityId } = this.props;
+        const {
+            mode,
+            docRatio,
+            docData,
+            subjectTotals,
+            subjectDetails,
+            onSearchTotalSubjects,
+            onSearchDetailSubjects,
+            onRemovePage,
+            totalPage,
+            currentPage,
+            currentCopy,
+            activityId,
+            onSave,
+            subjectsTopLevel,
+            subjectsTree,
+            onSubjectSelected
+        } = this.props;
+
         const { docConfig, errMsg, ratioWidth, ratioHeight } = this.state;
+
+        const docEditProps = {
+            subjectTotals,
+            subjectDetails,
+            onSearchTotalSubjects,
+            onSearchDetailSubjects,
+            onRemovePage,
+            totalPage,
+            currentPage,
+            currentCopy,
+            activityId,
+            onSave,
+            subjectsTopLevel,
+            subjectsTree,
+            onSubjectSelected
+        }
+
         //单据预览
         const renderPreview = () => {
             return (
@@ -79,16 +114,20 @@ export default class PBUDocument extends Component {
                             config={docConfig}
                             data={docData}
                             activityId={activityId}
+                            {...docEditProps}
                         />
         }
 
         //设置答案
         const renderAnswerSet = () => {
-            return (
-                <div>
-                    设置答案
-                </div>
-            )
+            return <DataInit ratioHeight={1}
+                            ratioWidth={1}
+                            config={docConfig}
+                            data={docData}
+                            activityId={activityId}
+                            isDataInit={false}
+                            {...docEditProps}
+                        />
         }
 
         const renderMode = () => {
@@ -145,11 +184,11 @@ PBUDocument.propTypes = {
     /**
      * 总账科目
      */
-    subjectTotal: PropTypes.array,
+    subjectTotals: PropTypes.array,
     /**
      * 明细账科目
      */
-    subjectDetail: PropTypes.array,
+    subjectDetails: PropTypes.array,
     /**
      * 搜索总账科目时的回调
      */
@@ -178,6 +217,22 @@ PBUDocument.propTypes = {
      * 当前节点Id
      */
     activityId: PropTypes.string,
+    /**
+     * 保存
+     */
+    onSave: PropTypes.func,
+    /**
+     * 第0级科目分类
+     */
+    subjectsTopLevel: PropTypes.array,
+    /**
+     * 第0级科目分类对应的子分类
+     */
+    subjectsTree: PropTypes.array,
+    /**
+     * 会计科目分类被选中时的回调
+     */
+    onSubjectSelected: PropTypes.func,
 }
 
 PBUDocument.defaultProps = {

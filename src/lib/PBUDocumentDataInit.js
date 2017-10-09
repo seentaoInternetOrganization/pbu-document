@@ -12,28 +12,42 @@ const PBUDocumentDataInit = ({
     docConfigUrl,
     docCode,
     docData,
-    subjectTotal,
-    subjectDetail,
+    subjectTotals,
+    subjectDetails,
     onSearchTotalSubjects,
     onSearchDetailSubjects,
     onRemovePage,
+    onAppendPage,
+    onPageChange,
     totalPage,
     currentPage,
+    currentCopy,
     activityId,
+    onSave,
+    subjectsTopLevel,
+    subjectsTree,
+    onSubjectSelected
 }) => {
 
     const docProps = {
         docConfigUrl,
         docCode,
         docData,
-        subjectTotal,
-        subjectDetail,
+        subjectTotals,
+        subjectDetails,
         onSearchTotalSubjects,
         onSearchDetailSubjects,
         onRemovePage,
+        onAppendPage,
+        onPageChange,
         totalPage,
         currentPage,
-        activityId
+        currentCopy,
+        activityId,
+        onSave,
+        subjectsTopLevel,
+        subjectsTree,
+        onSubjectSelected,
     }
 
     return (
@@ -60,11 +74,11 @@ PBUDocumentDataInit.propTypes = {
     /**
      * 总账科目
      */
-    subjectTotal: PropTypes.array,
+    subjectTotals: PropTypes.array,
     /**
      * 明细账科目
      */
-    subjectDetail: PropTypes.array,
+    subjectDetails: PropTypes.array,
     /**
      * 搜索总账科目时的回调
      */
@@ -78,9 +92,18 @@ PBUDocumentDataInit.propTypes = {
      */
     onRemovePage: PropTypes.func,
     /**
+     * 续页回调，会触发onSave
+     */
+    onAppendPage: PropTypes.func,
+    /**
+     * 切换页，会触发onSave
+     */
+    onPageChange: PropTypes.func,
+    /**
      * 总页数
      */
     totalPage: PropTypes.number,
+
     /**
      * 当前页
      */
@@ -93,6 +116,22 @@ PBUDocumentDataInit.propTypes = {
      * 当前节点Id
      */
     activityId: PropTypes.string.isRequired,
+    /**
+     * 保存数据
+     */
+    onSave: PropTypes.func,
+    /**
+     * 第0级科目分类
+     */
+    subjectsTopLevel: PropTypes.array,
+    /**
+     * 第0级科目分类对应的子分类
+     */
+    subjectsTree: PropTypes.array,
+    /**
+     * 会计科目分类被选中时的回调
+     */
+    onSubjectSelected: PropTypes.func,
 }
 
 PBUDocumentDataInit.defaultProps = {
