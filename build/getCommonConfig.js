@@ -18,7 +18,7 @@ function getEntries(rootPath) {
     const entries = {};
 
     files.forEach(fileName => {
-        entries[getEntryKey(path.join(rootPath, fileName))] = path.resolve(rootPath, fileName);
+        entries[getEntryKey(path.join(rootPath, fileName))] = ['babel-polyfill', path.resolve(rootPath, fileName)];
     })
 
     return entries;
