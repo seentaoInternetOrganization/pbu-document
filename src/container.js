@@ -56,8 +56,7 @@ export default class PBUDocument extends Component {
             docData,
             subjectTotals,
             subjectDetails,
-            onSearchTotalSubjects,
-            onSearchDetailSubjects,
+            onSearchSubjects,
             onRemovePage,
             totalPage,
             currentPage,
@@ -74,8 +73,7 @@ export default class PBUDocument extends Component {
         const docEditProps = {
             subjectTotals,
             subjectDetails,
-            onSearchTotalSubjects,
-            onSearchDetailSubjects,
+            onSearchSubjects,
             onRemovePage,
             totalPage,
             currentPage,
@@ -189,13 +187,9 @@ PBUDocument.propTypes = {
      */
     subjectDetails: PropTypes.array,
     /**
-     * 搜索总账科目时的回调
+     * 搜索科目时的回调
      */
-    onSearchTotalSubjects: PropTypes.func,
-    /**
-     * 搜索明细账时的回调
-     */
-    onSearchDetailSubjects: PropTypes.func,
+    onSearchSubjects: PropTypes.func,
     /**
      * 删除页回调
      */

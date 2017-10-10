@@ -14,8 +14,7 @@ const PBUDocumentAnswerSet = ({
     docData,
     subjectTotals,
     subjectDetails,
-    onSearchTotalSubjects,
-    onSearchDetailSubjects,
+    onSearchSubjects,
     onRemovePage,
     onAppendPage,
     onPageChange,
@@ -35,8 +34,7 @@ const PBUDocumentAnswerSet = ({
         docData,
         subjectTotals,
         subjectDetails,
-        onSearchTotalSubjects,
-        onSearchDetailSubjects,
+        onSearchSubjects,
         onRemovePage,
         onAppendPage,
         onPageChange,
@@ -80,13 +78,9 @@ PBUDocumentAnswerSet.propTypes = {
      */
     subjectDetails: PropTypes.array,
     /**
-     * 搜索总账科目时的回调
+     * 搜索科目时的回调
      */
-    onSearchTotalSubjects: PropTypes.func,
-    /**
-     * 搜索明细账时的回调
-     */
-    onSearchDetailSubjects: PropTypes.func,
+    onSearchSubjects: PropTypes.func,
     /**
      * 删除页回调
      */

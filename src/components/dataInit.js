@@ -217,7 +217,7 @@ class DataInit extends Component {
             currentSubject: item.name
         })
 
-        this.props.onSearchSubjects(item.name, value, totalSubjectId ? totalSubjectId : '');
+        this.props.onSearchSubjects(value, totalSubjectId ? totalSubjectId : '');
     }
 
     onSave = () => {
@@ -560,13 +560,9 @@ DataInit.propTypes = {
      */
     subjectDetails: PropTypes.array,
     /**
-     * 搜索总账科目时的回调
+     * 搜索科目时的回调
      */
-    onSearchTotalSubjects: PropTypes.func,
-    /**
-     * 搜索明细账时的回调
-     */
-    onSearchDetailSubjects: PropTypes.func,
+    onSearchSubjects: PropTypes.func,
     /**
      * 删除页回调
      */
