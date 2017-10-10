@@ -20,11 +20,11 @@ const config = {
                 NODE_ENV: JSON.stringify("production")
             }
         }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // })
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
 
     ],
     resolve: {
