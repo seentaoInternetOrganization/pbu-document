@@ -83,9 +83,14 @@ class EditWeight extends Component {
     onMouseUp = (e) => {
         //只有当鼠标抬起时才会有下列操作
         //声明糖
-        const { currentExamineType, selectedElement, completedElement, examineTypeIndex } = this.state;
+        const { currentExamineType, selectedElement, completedElement, examineTypeIndex, selectedTag } = this.state;
         //首先计算examineId
-        const examineId = `${currentExamineType}_${md5(Date.now())}`;
+        let examineId = `${currentExamineType}_${md5(Date.now())}`;
+
+        if (!isEmpty(selectedTag)) {
+            examineId = selectedTag
+        }
+        
         //然后将selectedElement移到completedElement区
         const newCompletedElement = {
             ...completedElement
@@ -315,8 +320,8 @@ class EditWeight extends Component {
         })
     }
 
-    onSave = () => {
-
+    onSave = (data) => {
+        this.props.onSave(data);
     }
 
     render() {

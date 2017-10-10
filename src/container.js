@@ -101,6 +101,7 @@ export default class PBUDocument extends Component {
                                 ratioHeight={1}
                                 config={docConfig[0]}
                                 data={docData}
+                                onSave={onSave}
                             />
         }
         //预置数据
