@@ -4,6 +4,7 @@ const theme = require('./src/theme');
 const getEntries = require('./build/getCommonConfig').getEntries;
 
 const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = {
     entry: getEntries('./src/lib'),
@@ -24,8 +25,8 @@ const config = {
             compress: {
                 warnings: false
             }
-        })
-
+        }),
+        new BundleAnalyzerPlugin()
     ],
     resolve: {
         extensions: ['', '.js', '.jsx']
@@ -45,7 +46,7 @@ const config = {
             {
                 test: /\.css$|\.less$/,
                 exclude: /node_modules/,
-                loader: 'style-loader!css-loader?modules&sourceMap&localIdentName=[local]__[hash:base64:5]!less-loader'
+                loader: 'style-loader!css-loader?modules&minimize&localIdentName=[local]__[hash:base64:5]!less-loader'
             },
             {
                 test: /\.css$|\.less$/,

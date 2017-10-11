@@ -218,7 +218,25 @@ const DocEditable = ({
                     break;
 
                 case ELEMENT.TEXT_AREA:
-
+                    return (
+                        <textarea key={`${item.name}_${index}`}
+                                    name={item.name}
+                                    style={{
+                                        left: pos.left * ratioWidth,
+                                        top: pos.top * ratioHeight,
+                                        width: pos.width * ratioWidth,
+                                        height: pos.height * ratioHeight,
+                                        resize: 'none',
+                                        ...highlightOpt,
+                                        ...item.style
+                                    }}
+                                    {...readonly}
+                                    value={value}
+                                    onChange={e => {
+                                        onItemChange(item, e.target.value)
+                                    }}
+                                />
+                    )
                     break;
             }
         })

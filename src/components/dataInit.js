@@ -222,6 +222,11 @@ class DataInit extends Component {
 
     onSave = () => {
         const { all, answerArea } = this.state;
+        if (!this.props.data
+            || !this.props.data.examines) {
+            message.warning('无甄别信息，请检查参数!');
+            return;
+        }
         const { examines } = this.props.data;
         const { isDataInit } = this.props;
         const data = [];
@@ -382,6 +387,7 @@ class DataInit extends Component {
                             <h2>答案解析：</h2>
                             {/* <div className={styles.txt}>富文本</div> */}
                             <textarea className={styles.txt}
+                                    placeholder={'请输入答案解析'}
                                     onChange={e => this.onAnswerChange(e.target.value)}
                                     value={answerArea}/>
                         </div>
@@ -523,7 +529,7 @@ class DataInit extends Component {
                 </div>
                 {renderAnswerArea()}
                 {renderDoc()}
-                <div className={styles.tags}>
+                <div className={isDataInit ? classnames(styles.tags, styles.tags_mid) : styles.tags }>
                     {renderTags()}
                     <Button size="small" type="dashed" onClick={this.appendPage}>+ 续页</Button>
                 </div>
