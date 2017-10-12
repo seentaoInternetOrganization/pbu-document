@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import PBUDocument from '../container';
 import { MODE } from '../constants';
 
-const PBUDocumentExamineSet = ({ docConfigUrl, docCode, docData, onSave }) => {
+const PBUDocumentExamineSet = ({ docConfigUrl, docCode, docData, onSave, loading }) => {
 
     return (
         <PBUDocument docConfigUrl={docConfigUrl}
@@ -16,6 +16,7 @@ const PBUDocumentExamineSet = ({ docConfigUrl, docCode, docData, onSave }) => {
                     docCode={docCode}
                     docData={docData}
                     onSave={onSave}
+                    loading={loading}
                 />
     )
 }
@@ -39,6 +40,10 @@ PBUDocumentExamineSet.propTypes = {
      * @param {Object} data
      */
     onSave: PropTypes.func,
+    /**
+     * 加载中效果
+     */
+    loading: PropTypes.bool,
 }
 
 PBUDocumentExamineSet.defaultProps = {

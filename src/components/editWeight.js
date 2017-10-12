@@ -90,7 +90,7 @@ class EditWeight extends Component {
         if (!isEmpty(selectedTag)) {
             examineId = selectedTag
         }
-        
+
         //然后将selectedElement移到completedElement区
         const newCompletedElement = {
             ...completedElement
@@ -325,7 +325,7 @@ class EditWeight extends Component {
     }
 
     render() {
-        const { config, ratioWidth, ratioHeight, data } = this.props;
+        const { config, ratioWidth, ratioHeight, data, loading } = this.props;
         const {
             selectedElement,
             currentExamineType,
@@ -354,6 +354,7 @@ class EditWeight extends Component {
                                 onTagBlur={this.onTagBlur}
                                 onRemoveByTagId={this.onRemoveByTagId}
                                 onEditTag={this.onEditTag}
+                                loading={loading}
                 />
             )
         }
@@ -554,13 +555,18 @@ EditWeight.propTypes =  {
      * 保存回调
      * @param {Object} data
      */
-    onSave: PropTypes.func
+    onSave: PropTypes.func,
+    /**
+     * 加载中
+     */
+    loading: PropTypes.bool,
 }
 
 EditWeight.defaultProps = {
     ratioWidth: 1,
     ratioHeight: 1,
     data: null,
+    loading: false,
     onSave: data => {
         console.log('data = ', data);
     }

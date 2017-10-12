@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import styles from './editWeight.css';
 import reactComposition from 'react-composition';
 import { EXAMINE } from '../constants';
+import { Button } from 'antd';
 
 /**
  * 对象转入examines中
@@ -124,7 +125,21 @@ function examinesToAll(all) {
     return newAll;
 }
 
-const EditWeightHeader = ({ config, all, selectedTag, editTagId, editTempValue, onSave, onClearAll, onSelectTags, onTagDoubleClick, onTagBlur, onRemoveByTagId, onEditTag }) => {
+const EditWeightHeader = ({
+    config,
+    all,
+    selectedTag,
+    editTagId,
+    editTempValue,
+    onSave,
+    onClearAll,
+    onSelectTags,
+    onTagDoubleClick,
+    onTagBlur,
+    onRemoveByTagId,
+    onEditTag,
+    loading
+}) => {
 
     const onSaveClick = () => {
         const examines = [];
@@ -218,8 +233,8 @@ const EditWeightHeader = ({ config, all, selectedTag, editTagId, editTempValue, 
             <h2>{config.title}</h2>
                 {renderTags()}
             <div className={styles.btn_group}>
-                <button className={styles.clear} onClick={onClearAll}>清除</button>
-                <button onClick={onSaveClick}>保存</button>
+                <Button type='ghost' className={styles.clear} onClick={onClearAll}>清除</Button>
+                <Button type='primary' onClick={onSaveClick} loading={loading}>保存</Button>
             </div>
         </div>
     )

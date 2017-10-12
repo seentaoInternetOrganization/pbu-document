@@ -26,7 +26,9 @@ const PBUDocumentAnswerSet = ({
     uploadProps,
     subjectsTopLevel,
     subjectsTree,
-    onSubjectSelected
+    onSubjectSelected,
+    loading,
+    onCopyChange
 }) => {
     const docProps = {
         docConfigUrl,
@@ -46,7 +48,9 @@ const PBUDocumentAnswerSet = ({
         uploadProps,
         subjectsTopLevel,
         subjectsTree,
-        onSubjectSelected
+        onSubjectSelected,
+        loading,
+        onCopyChange
     }
 
     return (
@@ -130,6 +134,14 @@ PBUDocumentAnswerSet.propTypes = {
      * 会计科目分类被选中时的回调
      */
     onSubjectSelected: PropTypes.func,
+    /**
+     * 加载中效果
+     */
+    loading: PropTypes.bool,
+    /**
+     * 切换联次回调
+     */
+    onCopyChange: PropTypes.func,
 }
 
 PBUDocumentAnswerSet.defaultProps = {

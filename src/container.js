@@ -58,6 +58,8 @@ export default class PBUDocument extends Component {
             subjectDetails,
             onSearchSubjects,
             onRemovePage,
+            onAppendPage,
+            onPageChange,
             totalPage,
             currentPage,
             currentCopy,
@@ -65,7 +67,9 @@ export default class PBUDocument extends Component {
             onSave,
             subjectsTopLevel,
             subjectsTree,
-            onSubjectSelected
+            onSubjectSelected,
+            loading,
+            onCopyChange,
         } = this.props;
 
         const { docConfig, errMsg, ratioWidth, ratioHeight } = this.state;
@@ -75,6 +79,8 @@ export default class PBUDocument extends Component {
             subjectDetails,
             onSearchSubjects,
             onRemovePage,
+            onAppendPage,
+            onPageChange,
             totalPage,
             currentPage,
             currentCopy,
@@ -82,7 +88,8 @@ export default class PBUDocument extends Component {
             onSave,
             subjectsTopLevel,
             subjectsTree,
-            onSubjectSelected
+            onSubjectSelected,
+            onCopyChange,
         }
 
         //单据预览
@@ -91,6 +98,7 @@ export default class PBUDocument extends Component {
                 <DocReadOnly ratioWidth={ratioWidth}
                             ratioHeight={ratioHeight}
                             config={docConfig}
+                            loading={loading}
                             data={docData}
                         />
             )
@@ -101,6 +109,7 @@ export default class PBUDocument extends Component {
                                 ratioHeight={1}
                                 config={docConfig[0]}
                                 data={docData}
+                                loading={loading}
                                 onSave={onSave}
                             />
         }
@@ -111,7 +120,7 @@ export default class PBUDocument extends Component {
                             ratioWidth={1}
                             config={docConfig}
                             data={docData}
-                            activityId={activityId}
+                            loading={loading}
                             {...docEditProps}
                         />
         }
@@ -122,8 +131,8 @@ export default class PBUDocument extends Component {
                             ratioWidth={1}
                             config={docConfig}
                             data={docData}
-                            activityId={activityId}
                             isDataInit={false}
+                            loading={loading}
                             {...docEditProps}
                         />
         }
@@ -196,6 +205,14 @@ PBUDocument.propTypes = {
      */
     onRemovePage: PropTypes.func,
     /**
+     * 续页回调，会触发onSave
+     */
+    onAppendPage: PropTypes.func,
+    /**
+     * 切换页，会触发onSave
+     */
+    onPageChange: PropTypes.func,
+    /**
      * 总页数
      */
     totalPage: PropTypes.number,
@@ -227,6 +244,14 @@ PBUDocument.propTypes = {
      * 会计科目分类被选中时的回调
      */
     onSubjectSelected: PropTypes.func,
+    /**
+     * 加载中效果
+     */
+    loading: PropTypes.bool,
+    /**
+     * 切换联次回调
+     */
+    onCopyChange: PropTypes.func,
 }
 
 PBUDocument.defaultProps = {

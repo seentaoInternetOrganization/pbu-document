@@ -10,7 +10,7 @@ import DocBG from './background';
 import DocEditable from './editable';
 import styles from './dataInit.less';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
-import { Button , Select, Tag, AutoComplete, Icon, Upload, message, Popover, Table } from 'antd';
+import { Button , Select, Tag, AutoComplete, Icon, Upload, message, Popover, Table, Affix } from 'antd';
 import isNumeric from 'validator/lib/isNumeric';
 import isEmpty from 'validator/lib/isEmpty';
 import mockSubjects from '../mock/mockSubject.json';
@@ -320,6 +320,9 @@ class DataInit extends Component {
             subjectsTopLevel,
             subjectsTree,
             onSubjectSelected,
+            loading,
+            currentCopy,
+            onCopyChange,
         } = this.props;
 
         const { all, glas, sls, currentSubject, answerArea } = this.state;
@@ -336,7 +339,8 @@ class DataInit extends Component {
             onItemChange: this.onItemChange,
             activityId,
             currentSubject,
-            isDataInit
+            isDataInit,
+            currentCopy
         }
 
         const renderTags = () => {
@@ -354,7 +358,7 @@ class DataInit extends Component {
                 tagNodes.push(
                     <Tag key={i}
                         {...highlightOpt}
-                        closable={i !== 0}
+                        closable={totalPage > 1}
                         onClick={e => {
                             this.onSave();
                             onPageChange(i + 1);
@@ -521,19 +525,51 @@ class DataInit extends Component {
             }
         }
 
+        const renderCopies = () => {
+            if (config.length > 1) {
+                const copyNodes = [];
+
+                for (let i = 0; i < config.length; i++) {
+                    let className = '';
+                    let title = `${i+1}`;
+
+                    if (i === currentCopy) {
+                        className = styles.highlight
+                        title = `第${title}联`
+                    }
+
+                    copyNodes.push((
+                        <button key={i}
+                            className={className}
+                            type='ghost'
+                            onClick={e => onCopyChange(i)}>{title}</button>
+                    ))
+                }
+
+                return (
+                    <div className={styles.copy}>
+                        {copyNodes}
+                    </div>
+                )
+            }
+        }
+
         return (
-            <section className={styles.container} ref='docBG'>
-	            <div className={styles.sub_nav}>
-                    {renderSubjects()}
-                    <Button className={styles.btn_save} type="primary" onClick={this.onSave}>保存</Button>
-                </div>
-                {renderAnswerArea()}
-                {renderDoc()}
-                <div className={isDataInit ? classnames(styles.tags, styles.tags_mid) : styles.tags }>
-                    {renderTags()}
-                    <Button size="small" type="dashed" onClick={this.appendPage}>+ 续页</Button>
-                </div>
-            </section>
+            <div className={styles.outter_container}>
+                {renderCopies()}
+                <section className={styles.container} ref='docBG'>
+    	            <div className={styles.sub_nav}>
+                        {renderSubjects()}
+                        <Button className={styles.btn_save} type="primary" loading={loading} onClick={this.onSave}>保存</Button>
+                    </div>
+                    {renderAnswerArea()}
+                    {renderDoc()}
+                    <div className={isDataInit ? classnames(styles.tags, styles.tags_mid) : styles.tags }>
+                        {renderTags()}
+                        <Button size="small" type="dashed" onClick={this.appendPage}>+ 续页</Button>
+                    </div>
+                </section>
+            </div>
         )
     }
 }
@@ -582,6 +618,10 @@ DataInit.propTypes = {
      */
     currentPage: PropTypes.number,
     /**
+     * 当前联
+     */
+    currentCopy: PropTypes.number,
+    /**
      * 续页回调，会触发onSave
      */
     onAppendPage: PropTypes.func,
@@ -619,6 +659,14 @@ DataInit.propTypes = {
      * 会计科目分类被选中时的回调
      */
     onSubjectSelected: PropTypes.func,
+    /**
+     * 加载中
+     */
+    loading: PropTypes.bool,
+    /**
+     * 切换联次回调
+     */
+    onCopyChange: PropTypes.func,
 }
 
 
@@ -669,5 +717,8 @@ DataInit.defaultProps = {
                 message.error(`${info.file.name} file upload failed.`);
             }
         },
+    },
+    onCopyChange: copy => {
+        console.log(`copy = ${copy}`);
     }
 }

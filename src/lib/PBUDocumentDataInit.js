@@ -25,7 +25,9 @@ const PBUDocumentDataInit = ({
     onSave,
     subjectsTopLevel,
     subjectsTree,
-    onSubjectSelected
+    onSubjectSelected,
+    loading,
+    onCopyChange
 }) => {
 
     const docProps = {
@@ -46,6 +48,8 @@ const PBUDocumentDataInit = ({
         subjectsTopLevel,
         subjectsTree,
         onSubjectSelected,
+        loading,
+        onCopyChange
     }
 
     return (
@@ -126,6 +130,14 @@ PBUDocumentDataInit.propTypes = {
      * 会计科目分类被选中时的回调
      */
     onSubjectSelected: PropTypes.func,
+    /**
+     * 加载中效果
+     */
+    loading: PropTypes.bool,
+    /**
+     * 切换联次回调
+     */
+    onCopyChange: PropTypes.func,
 }
 
 PBUDocumentDataInit.defaultProps = {

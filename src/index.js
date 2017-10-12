@@ -6,8 +6,8 @@ import PBUDocumentDataInit from './lib/PBUDocumentDataInit';
 import PBUDocumentExamineSet from './lib/PBUDocumentExamineSet';
 import PBUDocumentAnswerSet from './lib/PBUDocumentAnswerSet';
 
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
@@ -28,10 +28,20 @@ const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY006
 //                             />), document.getElementById('app'));
 // ReactDOM.render((<PBUDocumentExamineSet docConfigUrl={docConfigUrl}
 //                                         docCode='DJY0066'
+//                                         loading={false}
 //                                     />), document.getElementById('app'))
+let currentCopy = 0;
+
+function onCopyChange(copy) {
+    console.log('copy = !!! ', copy);
+    currentCopy = copy;
+}
 
 ReactDOM.render((<PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
                                 docCode='DJY0066'
-                                docData={mockData.docData}
+                                // docData={mockData.docData}
                                 activityId='18bcf3382fa8c93d'
+                                currentCopy={currentCopy}
+                                onCopyChange={onCopyChange}
+                                // loading={true}
                             />), document.getElementById('app'));

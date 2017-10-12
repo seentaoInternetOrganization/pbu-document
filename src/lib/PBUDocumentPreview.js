@@ -8,13 +8,14 @@ import PropTypes from 'prop-types';
 import PBUDocument from '../container';
 import { MODE } from '../constants';
 
-const PBUDocumentPreview = ({ docConfigUrl, docData, docCode }) => {
+const PBUDocumentPreview = ({ docConfigUrl, docData, docCode, loading }) => {
 
     return (
         <PBUDocument docConfigUrl={docConfigUrl}
                     mode={MODE.PREVIEW}
                     docCode={docCode}
                     docData={docData}
+                    loading={loading}
                 />
     )
 }
@@ -32,6 +33,10 @@ PBUDocumentPreview.propTypes = {
      * 数据集合
      */
     docData: PropTypes.object,
+    /**
+     * 加载中效果
+     */
+    loading: PropTypes.bool,
 }
 
 PBUDocumentPreview.defaultProps = {

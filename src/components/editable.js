@@ -26,7 +26,7 @@ const DocEditable = ({
     activityId,
     currentCopy,
     currentSubject,
-    isDataInit
+    isDataInit,
 }) => {
 
     const onElementChange = (item, value) => {
@@ -248,6 +248,7 @@ const DocEditable = ({
         <DocBG className={bgClassName}
               ratioWidth={ratioWidth}
               ratioHeight={ratioHeight}
+              currentCopy={currentCopy}
               config={config}>
             {renderElements()}
         </DocBG>

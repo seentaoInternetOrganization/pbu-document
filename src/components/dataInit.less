@@ -222,3 +222,32 @@
 		}
 	}
 }
+
+.transition-transform(@transition) {
+  -webkit-transition: @transition;
+  -moz-transition: @transition;
+  -ms-transition: @transition;
+  -o-transition: @transition;
+  transition: @transition;
+}
+
+.outter_container{
+  width: 1440px;
+  .copy{
+    position: fixed;
+    top:200px;
+    left:0px;
+    width: 50px;
+    z-index: 10;
+    button{
+      .transition-transform(all 0.30s ease-in-out);
+      .wh(30px, 30px);
+    }
+    button:hover, button:focus{
+      .wh(50px, 30px)
+    }
+    .highlight{
+      .wh(50px, 30px)
+    }
+  }
+}
