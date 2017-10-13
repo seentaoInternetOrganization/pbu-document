@@ -70,6 +70,8 @@ export default class PBUDocument extends Component {
             onSubjectSelected,
             loading,
             onCopyChange,
+            onAccountTitleSubejctSelected,
+            onAccountDetailSubjectSelected,
         } = this.props;
 
         const { docConfig, errMsg, ratioWidth, ratioHeight } = this.state;
@@ -90,6 +92,8 @@ export default class PBUDocument extends Component {
             subjectsTree,
             onSubjectSelected,
             onCopyChange,
+            onAccountTitleSubejctSelected,
+            onAccountDetailSubjectSelected
         }
 
         //单据预览
@@ -242,6 +246,7 @@ PBUDocument.propTypes = {
     subjectsTree: PropTypes.array,
     /**
      * 会计科目分类被选中时的回调
+     * @deprecated
      */
     onSubjectSelected: PropTypes.func,
     /**
@@ -252,6 +257,14 @@ PBUDocument.propTypes = {
      * 切换联次回调
      */
     onCopyChange: PropTypes.func,
+    /**
+     * 账单所属会计科目即第0级被选中时的回调
+     */
+    onAccountTitleSubejctSelected: PropTypes.func,
+    /**
+     * 账单所属会计明细科目被选中时的回调
+     */
+    onAccountDetailSubjectSelected: PropTypes.func,
 }
 
 PBUDocument.defaultProps = {

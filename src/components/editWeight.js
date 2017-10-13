@@ -122,8 +122,9 @@ class EditWeight extends Component {
                 && item.elmtype !== ELEMENT_TYPE.TABLE) {
                 return;
             }
-            //去掉checkbox
-            if (item.type === ELEMENT.CHECK_BOX) {
+            //去掉checkbox和label
+            if (item.type === ELEMENT.CHECK_BOX
+                || item.type === ELEMENT.LABEL) {
                 return;
             }
 
@@ -419,7 +420,8 @@ class EditWeight extends Component {
                     return null;
                 }
 
-                if (item.element.type === ELEMENT.CHECK_BOX) {
+                if (item.element.type === ELEMENT.CHECK_BOX
+                    || item.element.type === ELEMENT.LABEL) {
                     return null;
                 }
 

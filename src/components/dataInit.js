@@ -27,7 +27,15 @@ class DataInit extends Component {
         glas: [],
         sls: [],
         currentSubject: '',
-        answerArea: ''
+        answerArea: '',
+        /**
+         * 选中的单据所属的会计科目
+         */
+        currentAccountTitle: null,
+        /**
+         * 选中的明细科目
+         */
+        currentAccountDetail: null,
     }
 
     componentDidMount() {
@@ -228,7 +236,7 @@ class DataInit extends Component {
             return;
         }
         const { examines } = this.props.data;
-        const { isDataInit } = this.props;
+        const { isDataInit, currentPage } = this.props;
         const data = [];
         const answer = [];
 
@@ -287,10 +295,11 @@ class DataInit extends Component {
             ...valueOpt
         }
 
-        if (this.props.isDataInit) {
-            this.props.onSave(dataFinal);
+        if (this.props.isDataInit
+            || isEmpty(answerArea)) {
+            this.props.onSave(currentPage, dataFinal);
         }else {
-            this.props.onSave(dataFinal, answerArea);
+            this.props.onSave(currentPage, dataFinal, answerArea);
         }
     }
 
@@ -303,6 +312,16 @@ class DataInit extends Component {
         this.setState({
             answerArea: value
         })
+    }
+
+    onBackgroundLoaded = () => {
+        this.resetSelectHeightOfAntd()
+    }
+
+    onAccountTitleSelected = subject => {
+        this.setState({
+            currentAccountTitle: subject
+        });
     }
 
     render() {
@@ -323,6 +342,8 @@ class DataInit extends Component {
             loading,
             currentCopy,
             onCopyChange,
+            onAccountTitleSubejctSelected,
+            onAccountDetailSubjectSelected,
         } = this.props;
 
         const { all, glas, sls, currentSubject, answerArea } = this.state;
@@ -340,7 +361,8 @@ class DataInit extends Component {
             activityId,
             currentSubject,
             isDataInit,
-            currentCopy
+            currentCopy,
+            onBackgroundLoaded: this.onBackgroundLoaded,
         }
 
         const renderTags = () => {
@@ -508,8 +530,9 @@ class DataInit extends Component {
                         <Popover key={`${subject.subjectId}_${index}`}
                                 title={subject.subjectName}
                                 style={{height:256, width:370}}
+                                trigger="click"
                                 content={content}>
-                            <Button type="ghost">
+                            <Button type="ghost" onClick={e => this.onAccountTitleSelected(subject)}>
                                 {subject.subjectName}
                                 <span className={styles.arrow}></span>
                             </Button>
@@ -667,6 +690,14 @@ DataInit.propTypes = {
      * 切换联次回调
      */
     onCopyChange: PropTypes.func,
+    /**
+     * 账单所属会计科目即第0级被选中时的回调
+     */
+    onAccountTitleSubejctSelected: PropTypes.func,
+    /**
+     * 账单所属会计明细科目被选中时的回调
+     */
+    onAccountDetailSubjectSelected: PropTypes.func,
 }
 
 
@@ -674,9 +705,9 @@ DataInit.defaultProps = {
     ratioWidth: 1,
     ratioHeight: 1,
     data: null,
-    // subjectTotal: mockSubject,
-    // subjectDetail: mockSubject,
-    subjectTotals: [],
+    subjectTotals: mockSubject,
+    // subjectDetails: mockSubject,
+    // subjectTotals: [],
     subjectDetails: [],
     subjectsTopLevel: mockSubject,
     subjectsTree: mockSubject,
@@ -699,7 +730,8 @@ DataInit.defaultProps = {
     onPageChange: page => {
         console.log(`page ${page}`);
     },
-    onSave: (data, answer) => {
+    onSave: (page, data, answer) => {
+        console.log('page = ', page);
         console.log(`data = ${JSON.stringify(data)}`);
         console.log('answer = ', answer);
     },
@@ -720,5 +752,11 @@ DataInit.defaultProps = {
     },
     onCopyChange: copy => {
         console.log(`copy = ${copy}`);
+    },
+    onAccountTitleSubejctSelected: subject => {
+        console.log('subject = ', subject);
+    },
+    onAccountDetailSubjectSelected: subject => {
+        console.log('subject = ', subject);
     }
 }

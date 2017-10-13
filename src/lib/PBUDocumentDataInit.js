@@ -25,9 +25,16 @@ const PBUDocumentDataInit = ({
     onSave,
     subjectsTopLevel,
     subjectsTree,
-    onSubjectSelected,
     loading,
-    onCopyChange
+    onCopyChange,
+    /**
+     * 账单所属会计科目即第0级被选中时的回调
+     */
+    onAccountTitleSubejctSelected,
+    /**
+     * 账单所属会计明细科目被选中时的回调
+     */
+    onAccountDetailSubjectSelected,
 }) => {
 
     const docProps = {
@@ -47,9 +54,16 @@ const PBUDocumentDataInit = ({
         onSave,
         subjectsTopLevel,
         subjectsTree,
-        onSubjectSelected,
         loading,
-        onCopyChange
+        onCopyChange,
+        /**
+         * 账单所属会计科目即第0级被选中时的回调
+         */
+        onAccountTitleSubejctSelected,
+        /**
+         * 账单所属会计明细科目被选中时的回调
+         */
+        onAccountDetailSubjectSelected,
     }
 
     return (
@@ -127,10 +141,6 @@ PBUDocumentDataInit.propTypes = {
      */
     subjectsTree: PropTypes.array,
     /**
-     * 会计科目分类被选中时的回调
-     */
-    onSubjectSelected: PropTypes.func,
-    /**
      * 加载中效果
      */
     loading: PropTypes.bool,
@@ -138,6 +148,14 @@ PBUDocumentDataInit.propTypes = {
      * 切换联次回调
      */
     onCopyChange: PropTypes.func,
+    /**
+     * 账单所属会计科目即第0级被选中时的回调
+     */
+    onAccountTitleSubejctSelected: PropTypes.func,
+    /**
+     * 账单所属会计明细科目被选中时的回调
+     */
+    onAccountDetailSubjectSelected: PropTypes.func,
 }
 
 PBUDocumentDataInit.defaultProps = {

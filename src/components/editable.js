@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import DocBG from './background';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
-import { AutoComplete } from 'antd';
+import { AutoComplete, message } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 
 const DocEditable = ({
@@ -27,7 +27,29 @@ const DocEditable = ({
     currentCopy,
     currentSubject,
     isDataInit,
+    onBackgroundLoaded,
 }) => {
+    //明细账输入时必须先输入总账科目
+    const onSubjectDetailChange = (item, value) => {
+        if (isDataInit) {
+            if (all[item.gla]
+                && all[item.gla].data
+                && !isEmpty(all[item.gla].data)) {
+                onSubjectChange(item, value, all[item.gla].data)
+                return;
+            }
+        }else {
+            if (all[item.gla]
+                && all[item.gla].answer
+                && !isEmpty(all[item.gla].answer)) {
+                onSubjectChange(item, value, all[item.gla].answer)
+            }
+            return;
+        }
+
+        message.warning('请先选择总账科目');
+        return;
+    }
 
     const onElementChange = (item, value) => {
         let data;
@@ -178,6 +200,36 @@ const DocEditable = ({
                     break;
 
                 case ELEMENT.SL:
+
+                    if (isDataInit) {
+                        if (all[item.gla]
+                            && all[item.gla].data
+                            && !isEmpty(all[item.gla].data)) {
+                                readonly = {
+                                    ...readonly
+                                }
+                        }else {
+                            readonly = {
+                                readOnly: 'readonly',
+                                disabled: true
+                            }
+                        }
+
+                    }else {
+                        if (all[item.gla]
+                            && all[item.gla].answer
+                            && !isEmpty(all[item.gla].answer)) {
+                                readonly = {
+                                    ...readonly
+                                }
+                        }else {
+                            readonly = {
+                                readOnly: 'readonly',
+                                disabled: true
+                            }
+                        }
+                    }
+
                     return (
                         <AutoComplete key={`${item.name}_${index}`}
                             name={item.name}
@@ -192,7 +244,7 @@ const DocEditable = ({
                                 ...item.style
                             }}
                             {...readonly}
-                            onChange={value => onSubjectChange(item, value, all[item.gla] && all[item.gla].data ? all[item.gla].data : '' )}
+                            onChange={value => onSubjectDetailChange(item, value)}
                             onBlur={value => onSubjectBlur(sls, item, value)}
                         />
                     )
@@ -213,8 +265,20 @@ const DocEditable = ({
                     )
                     break;
 
-                case ELEMENT.ACCOUNT:
-
+                case ELEMENT.LABEL:
+                    return (
+                        <span key={`${item.name}_${index}`}
+                            name={item.name}
+                            style={{
+                                left: pos.left * ratioWidth,
+                                top: pos.top * ratioHeight,
+                                width: pos.width * ratioWidth,
+                                height: pos.height * ratioHeight,
+                                ...item.style
+                            }}>
+                                {'会计科目'}
+                            </span>
+                    )
                     break;
 
                 case ELEMENT.TEXT_AREA:
@@ -249,6 +313,7 @@ const DocEditable = ({
               ratioWidth={ratioWidth}
               ratioHeight={ratioHeight}
               currentCopy={currentCopy}
+              onBackgroundLoaded={onBackgroundLoaded}
               config={config}>
             {renderElements()}
         </DocBG>
@@ -271,6 +336,7 @@ DocEditable.propTypes = {
     onItemChange: PropTypes.func,
     activityId: PropTypes.string.isRequired,
     currentCopy: PropTypes.number,
+    onBackgroundLoaded: PropTypes.func,
 }
 
 DocEditable.defaultProps = {
@@ -284,5 +350,6 @@ DocEditable.defaultProps = {
     onSubjectBlur: () => {},
     onItemChange: () => {},
     activityId: 'ERR_ACTIVITY_ID',
-    currentCopy: 0
+    currentCopy: 0,
+    onBackgroundLoaded: () => {}
 }

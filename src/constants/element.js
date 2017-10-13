@@ -33,5 +33,9 @@ export default {
     /**
      * checkbox，暂时没用
      */
-    CHECK_BOX: 'CHECK_BOX'
+    CHECK_BOX: 'CHECK_BOX',
+    /**
+     * 只读label
+     */
+    LABEL: 'LABEL'
 }
