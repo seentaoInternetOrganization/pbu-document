@@ -154,7 +154,7 @@ const EditWeightHeader = ({
             examines: examines
         };
         console.log('data = ', JSON.stringify(data));
-        onSave(data);
+        onSave(JSON.stringify(data));
     }
 
     const renderTags = () => {

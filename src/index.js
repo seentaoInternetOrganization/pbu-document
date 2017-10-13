@@ -23,7 +23,8 @@ const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY006
 
 // ReactDOM.render((<PBUDocumentDataInit docConfigUrl={docConfigUrl}
 //                                 docCode='DJY0066'
-//                                 // docData={mockData.docData}
+//                                 docData={mockData.docData}
+//                                 totalPage={3}
 //                                 activityId='18bcf3382fa8c93d'
 //                             />), document.getElementById('app'));
 // ReactDOM.render((<PBUDocumentExamineSet docConfigUrl={docConfigUrl}

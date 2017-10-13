@@ -297,9 +297,9 @@ class DataInit extends Component {
 
         if (this.props.isDataInit
             || isEmpty(answerArea)) {
-            this.props.onSave(currentPage, dataFinal);
+            this.props.onSave(currentPage, JSON.stringify(dataFinal));
         }else {
-            this.props.onSave(currentPage, dataFinal, answerArea);
+            this.props.onSave(currentPage, JSON.stringify(dataFinal), answerArea);
         }
     }
 
@@ -378,7 +378,7 @@ class DataInit extends Component {
                 }
 
                 tagNodes.push(
-                    <Tag key={i}
+                    <Tag key={`tag_${i}`}
                         {...highlightOpt}
                         closable={totalPage > 1}
                         onClick={e => {
@@ -386,6 +386,7 @@ class DataInit extends Component {
                             onPageChange(i + 1);
                         }}
                         onClose={e => {
+                            e.preventDefault();
                             onRemovePage(i + 1)
                         }}>
                         {i+1}
@@ -732,7 +733,7 @@ DataInit.defaultProps = {
     },
     onSave: (page, data, answer) => {
         console.log('page = ', page);
-        console.log(`data = ${JSON.stringify(data)}`);
+        console.log(`data = ${data}`);
         console.log('answer = ', answer);
     },
     isDataInit: true,
