@@ -50,8 +50,16 @@ class DataInit extends Component {
             sls: this.combineSubjects(nextProps.subjectDetails)
         })
         // this.combineDataToState(nextProps);
-        if (nextProps.currentPage !== this.props.currentPage) {
+        if (nextProps.currentPage !== this.props.currentPage
+            || nextProps.activityId !== this.props.activityId) {
             this.combineDataToState(nextProps);
+            return;
+        }
+
+        if (!(this.props.data
+            && this.props.data.all)) {
+            this.combineDataToState(nextProps);
+            return;
         }
     }
 
