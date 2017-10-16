@@ -13,17 +13,14 @@ import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { Button , Select, Tag, AutoComplete, Icon, Upload, message, Popover, Table, Affix } from 'antd';
 import isNumeric from 'validator/lib/isNumeric';
 import isEmpty from 'validator/lib/isEmpty';
-import mockSubjects from '../mock/mockSubject.json';
 
 const Option = Select.Option;
 const { CheckableTag } = Tag;
 
-const mockSubject = mockSubjects.accountingSubjects;
-
 class DataInit extends Component {
 
     state = {
-        all: {},
+        all: this.props.data && this.props.data.all ? this.props.data.all : {},
         glas: [],
         sls: [],
         currentSubject: '',
@@ -52,7 +49,10 @@ class DataInit extends Component {
             glas: this.combineSubjects(nextProps.subjectTotals),
             sls: this.combineSubjects(nextProps.subjectDetails)
         })
-        this.combineDataToState(nextProps);
+        // this.combineDataToState(nextProps);
+        if (nextProps.currentPage !== this.props.currentPage) {
+            this.combineDataToState(nextProps);
+        }
     }
 
     componentDidUpdate() {
@@ -176,14 +176,14 @@ class DataInit extends Component {
         }else {
 
             if (isDataInit) {
-                newAll[item.name] ={
+                newAll[item.name] = {
                     ...all[item.name],
                     data: selected.value,
                     subjectName: selected.text,
                     activityId,
                 };
             }else {
-                newAll[item.name] ={
+                newAll[item.name] = {
                     ...all[item.name],
                     answer: selected.value,
                     subjectName: selected.text,
@@ -210,12 +210,14 @@ class DataInit extends Component {
             newAll[item.name] = {
                 ...all[item.name],
                 data: value,
+                subjectName: '',
                 activityId
             };
         }else {
             newAll[item.name] = {
                 ...all[item.name],
                 answer: value,
+                subjectName: '',
                 activityId
             };
         }
@@ -706,14 +708,14 @@ DataInit.defaultProps = {
     ratioWidth: 1,
     ratioHeight: 1,
     data: null,
-    subjectTotals: mockSubject,
+    // subjectTotals: mockSubject,
     // subjectDetails: mockSubject,
-    // subjectTotals: [],
+    subjectTotals: [],
     subjectDetails: [],
-    subjectsTopLevel: mockSubject,
-    subjectsTree: mockSubject,
-    // subjectsTopLevel: [],
-    // subjectsTree: [],
+    // subjectsTopLevel: mockSubject,
+    // subjectsTree: mockSubject,
+    subjectsTopLevel: [],
+    subjectsTree: [],
     onSubjectSelected: subject => {
         console.log('subject selected ', subject);
     },
