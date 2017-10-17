@@ -96,7 +96,8 @@ export default class PBUDocument extends Component {
             onCopyChange,
             onAccountTitleSubejctSelected,
             onAccountDetailSubjectSelected,
-            answerDesc
+            answerDesc,
+            uploadProps
         }
 
         //单据预览

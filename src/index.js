@@ -7,10 +7,10 @@ import PBUDocumentExamineSet from './lib/PBUDocumentExamineSet';
 import PBUDocumentAnswerSet from './lib/PBUDocumentAnswerSet';
 import mockSubjects from './mock/mockSubject.json';
 
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
 // const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 
@@ -62,16 +62,35 @@ class Demo extends Component {
     }
 
     render() {
+        const uploadProps = {
+            name: 'file',
+            action: '/',
+            onChange(info) {
+                console.log('!!!!!!!!');
+                if (info.file.status !== 'uploading') {
+                    console.log(info.file, info.fileList);
+                }
+                if (info.file.status === 'done') {
+                    message.success(`${info.file.name} file uploaded successfully`);
+                } else if (info.file.status === 'error') {
+                    message.error(`${info.file.name} file upload failed.`);
+                }
+            },
+        }
+
         return (
             <PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
                                             docCode='DJY0066'
-                                            docData={this.state.docData}
+                                            // docData={this.state.docData}
                                             activityId='18bcf3382fa8c93d'
                                             currentCopy={currentCopy}
                                             onCopyChange={this.onCopyChange}
                                             subjectTotals={this.state.subjectTotals}
                                             onSearchSubjects={this.onSearchSubjects}
+                                            subjectsTopLevel={mockSubjects.accountingSubjects}
+                                            subjectsTree={mockSubjects.accountingSubjects}
                                             answerDesc={'哈哈哈哈'}
+                                            uploadProps={{...uploadProps}}
                                             // loading={true}
                                         />
         )

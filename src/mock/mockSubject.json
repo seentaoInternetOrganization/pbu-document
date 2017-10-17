@@ -18,7 +18,29 @@
   },{
   "subjectId":"000004",
   "subjectName":"004-科目4",
-  "subjectCode":"4"
+  "subjectCode":"4",
+  "children": [
+  {
+  "subjectId":"000001",
+  "subjectName":"000001-科目1",
+  "subjectCode":"1"
+  },
+  {
+  "subjectId":"000002",
+  "subjectName":"000002-科目2",
+  "subjectCode":"2"
+  },
+  {
+  "subjectId":"000003",
+  "subjectName":"000003-科目3",
+  "subjectCode":"3",
+  "isAnswerSetted": 1
+  },{
+  "subjectId":"000004",
+  "subjectName":"000004-科目4",
+  "subjectCode":"4",
+  "isInitDataSetted": 1
+  }]
   },{
   "subjectId":"000005",
   "subjectName":"005-科目5",

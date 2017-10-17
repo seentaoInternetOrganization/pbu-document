@@ -334,6 +334,8 @@ class DataInit extends Component {
         this.setState({
             currentAccountTitle: subject
         });
+
+        this.props.onAccountTitleSubejctSelected(subject);
     }
 
     render() {
@@ -412,19 +414,11 @@ class DataInit extends Component {
         //渲染答案描述区域
         const renderAnswerArea = () => {
             if (!isDataInit) {
+                console.log('uploadProps = ', uploadProps);
                 return (
                     <section className={styles.right_container}>
-                        {/* <div>
-                            <h2>财务专用章设置：</h2>
-                            <div className={styles.btn_group}>
-                                <Button className={styles.current}>人名章</Button>
-                                <Button>合同章</Button>
-                                <Button>什么章</Button>
-                            </div>
-                        </div> */}
                         <div>
                             <h2>答案解析：</h2>
-                            {/* <div className={styles.txt}>富文本</div> */}
                             <textarea className={styles.txt}
                                     placeholder={'请输入答案解析'}
                                     onChange={e => this.onAnswerChange(e.target.value)}
@@ -455,33 +449,6 @@ class DataInit extends Component {
             }
         }
 
-        const subSubjects = () => {
-            const columns = [
-                { title: '', dataIndex: 'subjectCode', key: 'subjectCode' },
-                { title: '', dataIndex: 'subjectName', key: 'subjectName' },
-            ]
-
-            const data = subjectsTree.map((item, index) => {
-                return {
-                    key: index,
-                    subjectCode: item.subjectCode,
-                    subjectName: item.subjectName,
-                }
-            })
-
-            return (
-                <div>
-                    <Table
-                        loading={!subjectsTree.length > 0}
-                        columns={columns}
-                        dataSource={data}
-                        pagination={false}
-                        bordered={false}
-                    />
-                </div>
-            )
-        }
-
         const renderSubjects = () => {
             if (config[0].hasSubject) {
                 const subjectNodes = subjectsTopLevel.map((subject, index) => {
@@ -490,11 +457,12 @@ class DataInit extends Component {
                         let childrenOpt = {};
 
                         if (item.children) {
-                            const childrenNodes = subjectsTree.map((item, j) => {
+                            const childrenNodes = item.children.map((subItem, j) => {
                                 return {
                                     key: 'child_' + index+'_'+j,
-                                    subjectCode: item.subjectCode,
-                                    subjectName: item.subjectName
+                                    childSubjectCode: subItem.subjectCode,
+                                    subjectName: subItem.subjectName,
+                                    subjectId: subItem.subjectId,
                                 }
                             })
 
@@ -507,18 +475,19 @@ class DataInit extends Component {
                             key: index,
                             subjectCode: item.subjectCode,
                             subjectName: item.subjectName,
+                            subjectId: item.subjectId,
                             ...childrenOpt
                         }
                     });
 
                     const columns = [
                         { title: (
-                            <span style={{ visibility: 'hidden' }}>expend</span>
+                            <span style={{ visibility: 'hidden' }}>e</span>
                         ), key: 'expends' },
-                        { title: '科目编码', dataIndex: 'subjectCode', key: 'subjectCode' },
+                        { title: '科目编码', key: 'subjectCode', dataIndex: 'subjectCode' },
                         { title: (
                             <span style={{ visibility: 'hidden' }}>科目编码</span>
-                        ), dataIndex: 'subjectId', key: 'subjectId' },
+                        ), key: 'childSubjectCode', dataIndex: 'childSubjectCode' },
                         { title: '科目名称', dataIndex: 'subjectName', key: 'subjectName' },
                     ]
 
@@ -535,6 +504,9 @@ class DataInit extends Component {
                                 dataSource={data}
                                 pagination={false}
                                 bordered={true}
+                                onRowClick={(record, index, e) => {
+                                    console.log('record = ', record, ' index = ', index, ' e = ', e);
+                                }}
                             />
                         </div>
                     )
@@ -543,7 +515,7 @@ class DataInit extends Component {
                         <Popover key={`${subject.subjectId}_${index}`}
                                 title={subject.subjectName}
                                 style={{height:256, width:370}}
-                                trigger="click"
+                                // trigger="click"
                                 content={content}>
                             <Button type="ghost" onClick={e => this.onAccountTitleSelected(subject)}>
                                 {subject.subjectName}
