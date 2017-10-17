@@ -10,6 +10,8 @@ import DocBG from './background';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { AutoComplete, message } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
+import isNumeric from 'validator/lib/isNumeric';
+import isDecimal from 'validator/lib/isDecimal';
 
 const DocEditable = ({
     config,
@@ -54,30 +56,37 @@ const DocEditable = ({
     const onElementChange = (item, value) => {
         let data;
 
-        if (item.constraint) {
+        if (!isEmpty(value)
+            && item.constraint) {
             //暂时先只考虑这几种情况
             switch (item.type) {
                 case ELEMENT.INTEGER:
-                    data = parseInt(value)
+                    if (!isNumeric(value)) {
+                        return;
+                    }
+                    data = parseInt(value) + ''
                     break;
                 case ELEMENT.FLOAT:
-                    data = parseFloat(value)
+                    if (!isDecimal(value)) {
+                        return;
+                    }
+                    data = parseFloat(value) + ''
                     break;
                 default:
-                    data = value
+                    data = value + ''
                     break;
             }
 
             if (item.constraint
                 && item.constraint.maxValue
                 && parseFloat(value) > item.constraint.maxValue) {
-                data = '';
+                return;
             }
 
             if (item.constraint
-                &&item.constraint.minValue
+                && item.constraint.minValue
                 && parseFloat(value) < item.constraint.minValue) {
-                data = '';
+                return;
             }
 
         }else {
@@ -172,7 +181,7 @@ const DocEditable = ({
                                     {...readonly}
                                     value={value}
                                     onChange={e => {
-                                        onItemChange(item, e.target.value)
+                                        onElementChange(item, e.target.value)
                                     }}
                                 />
                     )
@@ -193,7 +202,8 @@ const DocEditable = ({
                                 ...item.style
                             }}
                             {...readonly}
-                            onChange={value => onSubjectChange(item, value)}
+                            onSearch={value => onSubjectChange(item, value)}
+                            onSelect={value => onSubjectBlur(glas, item, value)}
                             onBlur={value => onSubjectBlur(glas, item, value)}
                         />
                     )
@@ -244,7 +254,8 @@ const DocEditable = ({
                                 ...item.style
                             }}
                             {...readonly}
-                            onChange={value => onSubjectDetailChange(item, value)}
+                            onSearch={value => onSubjectDetailChange(item, value)}
+                            onSelect={value => onSubjectBlur(sls, item, value)}
                             onBlur={value => onSubjectBlur(sls, item, value)}
                         />
                     )
@@ -276,7 +287,7 @@ const DocEditable = ({
                                 height: pos.height * ratioHeight,
                                 ...item.style
                             }}>
-                                {'会计科目'}
+                                {item.textValue ? item.textValue : ''}
                             </span>
                     )
                     break;
@@ -297,7 +308,7 @@ const DocEditable = ({
                                     {...readonly}
                                     value={value}
                                     onChange={e => {
-                                        onItemChange(item, e.target.value)
+                                        onElementChange(item, e.target.value)
                                     }}
                                 />
                     )

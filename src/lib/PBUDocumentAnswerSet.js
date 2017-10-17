@@ -37,6 +37,7 @@ const PBUDocumentAnswerSet = ({
      * 账单所属会计明细科目被选中时的回调
      */
     onAccountDetailSubjectSelected,
+    answerDesc,
 }) => {
     const docProps = {
         docConfigUrl,
@@ -66,6 +67,7 @@ const PBUDocumentAnswerSet = ({
          * 账单所属会计明细科目被选中时的回调
          */
         onAccountDetailSubjectSelected,
+        answerDesc
     }
 
     return (
@@ -138,6 +140,10 @@ PBUDocumentAnswerSet.propTypes = {
      */
     uploadProps: PropTypes.object,
     /**
+     * 答案描述
+     */
+    answerDesc: PropTypes.string,
+    /**
      * 第0级科目分类
      */
     subjectsTopLevel: PropTypes.array,
@@ -166,6 +172,7 @@ PBUDocumentAnswerSet.propTypes = {
 PBUDocumentAnswerSet.defaultProps = {
     docConfigUrl: '',
     docCode: '',
+    answerDesc: ''
 }
 
 export default PBUDocumentAnswerSet;

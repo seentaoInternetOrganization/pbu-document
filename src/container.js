@@ -72,6 +72,8 @@ export default class PBUDocument extends Component {
             onCopyChange,
             onAccountTitleSubejctSelected,
             onAccountDetailSubjectSelected,
+            uploadProps,
+            answerDesc,
         } = this.props;
 
         const { docConfig, errMsg, ratioWidth, ratioHeight } = this.state;
@@ -93,7 +95,8 @@ export default class PBUDocument extends Component {
             onSubjectSelected,
             onCopyChange,
             onAccountTitleSubejctSelected,
-            onAccountDetailSubjectSelected
+            onAccountDetailSubjectSelected,
+            answerDesc
         }
 
         //单据预览
@@ -265,6 +268,15 @@ PBUDocument.propTypes = {
      * 账单所属会计明细科目被选中时的回调
      */
     onAccountDetailSubjectSelected: PropTypes.func,
+    /**
+     * 上传组件参数
+     * @see https://ant.design/components/upload/
+     */
+    uploadProps: PropTypes.object,
+    /**
+     * 答案描述
+     */
+    answerDesc: PropTypes.string,
 }
 
 PBUDocument.defaultProps = {

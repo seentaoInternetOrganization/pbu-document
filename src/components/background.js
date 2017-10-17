@@ -35,20 +35,33 @@ class DocBG extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            loading: true,
-            currentCopy: this.props.currentCopy
-        })
-        this.loadBackgroundImg(this.props.config[this.props.currentCopy].backgroundImage, () => {
+        if (isEmpty(this.props.config[this.props.currentCopy].backgroundImage)) {
             this.setState({
-                loading: false
+                loading: false,
+                currentCopy: this.props.currentCopy
             })
-            this.props.onBackgroundLoaded()
-        })
+            // this.props.onBackgroundLoaded()
+        }else {
+            this.setState({
+                loading: true,
+                currentCopy: this.props.currentCopy
+            })
+
+            this.loadBackgroundImg(this.props.config[this.props.currentCopy].backgroundImage, () => {
+                this.setState({
+                    loading: false
+                })
+                this.props.onBackgroundLoaded()
+            })
+        }
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.state.currentCopy === nextProps.currentCopy) {
+            return;
+        }
+
+        if (isEmpty(nextProps.config[nextProps.currentCopy].backgroundImage)) {
             return;
         }
 

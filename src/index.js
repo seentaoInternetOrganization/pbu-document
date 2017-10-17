@@ -12,6 +12,7 @@ const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY006
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
+// const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 
 
 // Render
@@ -70,6 +71,7 @@ class Demo extends Component {
                                             onCopyChange={this.onCopyChange}
                                             subjectTotals={this.state.subjectTotals}
                                             onSearchSubjects={this.onSearchSubjects}
+                                            answerDesc={'哈哈哈哈'}
                                             // loading={true}
                                         />
         )

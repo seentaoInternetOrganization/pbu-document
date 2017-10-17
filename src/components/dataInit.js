@@ -24,7 +24,7 @@ class DataInit extends Component {
         glas: [],
         sls: [],
         currentSubject: '',
-        answerArea: '',
+        answerArea: this.props.answerDesc,
         /**
          * 选中的单据所属的会计科目
          */
@@ -39,7 +39,8 @@ class DataInit extends Component {
         this.resetSelectHeightOfAntd()
         this.setState({
             glas: this.combineSubjects(this.props.subjectTotals),
-            sls: this.combineSubjects(this.props.subjectDetails)
+            sls: this.combineSubjects(this.props.subjectDetails),
+            answerArea: this.props.answerDesc
         })
         this.combineDataToState(this.props);
     }
@@ -47,9 +48,10 @@ class DataInit extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState({
             glas: this.combineSubjects(nextProps.subjectTotals),
-            sls: this.combineSubjects(nextProps.subjectDetails)
+            sls: this.combineSubjects(nextProps.subjectDetails),
+            answerArea: nextProps.answerDesc
         })
-        // this.combineDataToState(nextProps);
+
         if (nextProps.currentPage !== this.props.currentPage
             || nextProps.activityId !== this.props.activityId) {
             this.combineDataToState(nextProps);
@@ -678,10 +680,6 @@ DataInit.propTypes = {
      */
     isDataInit: PropTypes.bool,
     /**
-     * 上传组件参数
-     */
-    uploadProps: PropTypes.object,
-    /**
      * 第0级科目分类
      */
     subjectsTopLevel: PropTypes.array,
@@ -709,6 +707,15 @@ DataInit.propTypes = {
      * 账单所属会计明细科目被选中时的回调
      */
     onAccountDetailSubjectSelected: PropTypes.func,
+    /**
+     * 上传组件参数
+     * @see https://ant.design/components/upload/
+     */
+    uploadProps: PropTypes.object,
+    /**
+     * 答案描述
+     */
+    answerDesc: PropTypes.string,
 }
 
 
