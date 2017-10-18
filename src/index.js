@@ -81,7 +81,7 @@ class Demo extends Component {
         return (
             <PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
                                             docCode='DJY0066'
-                                            // docData={this.state.docData}
+                                            docData={this.state.docData}
                                             activityId='18bcf3382fa8c93d'
                                             currentCopy={currentCopy}
                                             onCopyChange={this.onCopyChange}

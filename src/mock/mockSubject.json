@@ -28,7 +28,19 @@
   {
   "subjectId":"000002",
   "subjectName":"000002-科目2",
-  "subjectCode":"2"
+  "subjectCode":"2",
+  "children": [
+    {
+    "subjectId":"000001",
+    "subjectName":"000001-科目1",
+    "subjectCode":"1"
+    },
+    {
+    "subjectId":"000002",
+    "subjectName":"000002-科目2",
+    "subjectCode":"2"
+    }
+  ]
   },
   {
   "subjectId":"000003",

@@ -13,6 +13,7 @@ import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { Button , Select, Tag, AutoComplete, Icon, Upload, message, Popover, Table, Affix } from 'antd';
 import isNumeric from 'validator/lib/isNumeric';
 import isEmpty from 'validator/lib/isEmpty';
+import AccountSubjectPopover from './accountSubject';
 
 const Option = Select.Option;
 const { CheckableTag } = Tag;
@@ -338,6 +339,32 @@ class DataInit extends Component {
         this.props.onAccountTitleSubejctSelected(subject);
     }
 
+    onAccountDetailRowClicked = (record, index, e) => {
+        if (record.children) {
+            return;
+        }
+
+        if (this.props.isDataInit) {
+            if (!record.isInitDataSetted) {
+                return;
+            }
+        }else {
+            if (!record.isAnswerSetted) {
+                return;
+            }
+        }
+
+        this.setState({
+            currentAccountDetail: record
+        })
+
+        this.props.onAccountDetailSubjectSelected({
+            subjectId: record.subjectId,
+            subjectName: record.subjectName,
+            subjectCode: record.subjectCode ? record.subjectCode : record.childSubjectCode
+        })
+    }
+
     render() {
         const {
             config,
@@ -360,7 +387,7 @@ class DataInit extends Component {
             onAccountDetailSubjectSelected,
         } = this.props;
 
-        const { all, glas, sls, currentSubject, answerArea } = this.state;
+        const { all, glas, sls, currentSubject, answerArea, currentAccountTitle } = this.state;
         const docProps = {
             config,
             all,
@@ -414,7 +441,6 @@ class DataInit extends Component {
         //渲染答案描述区域
         const renderAnswerArea = () => {
             if (!isDataInit) {
-                console.log('uploadProps = ', uploadProps);
                 return (
                     <section className={styles.right_container}>
                         <div>
@@ -429,7 +455,7 @@ class DataInit extends Component {
                             <Upload {...uploadProps}>
                                 <Button><Icon type="upload" />上传答案文档</Button>
                             </Upload>
-                            <span className={styles.tip}>doc、xls、ppt、pdf   文件最大支持10M</span>
+                            <span className={styles.tip}>目前只支持pdf   文件最大支持10M</span>
                         </div>
                     </section>
                 )
@@ -445,90 +471,6 @@ class DataInit extends Component {
                     <section className={styles.bill_wrap}>
                         <DocEditable {...docProps} />
                     </section>
-                )
-            }
-        }
-
-        const renderSubjects = () => {
-            if (config[0].hasSubject) {
-                const subjectNodes = subjectsTopLevel.map((subject, index) => {
-
-                    const data = subjectsTree.map((item, index) => {
-                        let childrenOpt = {};
-
-                        if (item.children) {
-                            const childrenNodes = item.children.map((subItem, j) => {
-                                return {
-                                    key: 'child_' + index+'_'+j,
-                                    childSubjectCode: subItem.subjectCode,
-                                    subjectName: subItem.subjectName,
-                                    subjectId: subItem.subjectId,
-                                }
-                            })
-
-                            childrenOpt = {
-                                children: childrenNodes
-                            }
-                        }
-
-                        return {
-                            key: index,
-                            subjectCode: item.subjectCode,
-                            subjectName: item.subjectName,
-                            subjectId: item.subjectId,
-                            ...childrenOpt
-                        }
-                    });
-
-                    const columns = [
-                        { title: (
-                            <span style={{ visibility: 'hidden' }}>e</span>
-                        ), key: 'expends' },
-                        { title: '科目编码', key: 'subjectCode', dataIndex: 'subjectCode' },
-                        { title: (
-                            <span style={{ visibility: 'hidden' }}>科目编码</span>
-                        ), key: 'childSubjectCode', dataIndex: 'childSubjectCode' },
-                        { title: '科目名称', dataIndex: 'subjectName', key: 'subjectName' },
-                    ]
-
-                    const content = (
-                        <div style={{
-                            width: 370,
-                            height: 256,
-                            overflow:'scroll'
-                        }}>
-                            <Table
-                                loading={!subjectsTree.length > 0}
-                                size={'small'}
-                                columns={columns}
-                                dataSource={data}
-                                pagination={false}
-                                bordered={true}
-                                onRowClick={(record, index, e) => {
-                                    console.log('record = ', record, ' index = ', index, ' e = ', e);
-                                }}
-                            />
-                        </div>
-                    )
-
-                    return (
-                        <Popover key={`${subject.subjectId}_${index}`}
-                                title={subject.subjectName}
-                                style={{height:256, width:370}}
-                                // trigger="click"
-                                content={content}>
-                            <Button type="ghost" onClick={e => this.onAccountTitleSelected(subject)}>
-                                {subject.subjectName}
-                                <span className={styles.arrow}></span>
-                            </Button>
-                        </Popover>
-                    )
-                });
-
-                return (
-                    <div className={styles.subject}>
-                        {subjectNodes}
-                    </div>
                 )
             }
         }
@@ -567,7 +509,13 @@ class DataInit extends Component {
                 {renderCopies()}
                 <section className={styles.container} ref='docBG'>
     	            <div className={styles.sub_nav}>
-                        {renderSubjects()}
+                        <AccountSubjectPopover subjectsTopLevel={subjectsTopLevel}
+                                    subjectsTree={subjectsTree}
+                                    currentAccountTitle={currentAccountTitle}
+                                    onAccountDetailRowClicked={this.onAccountDetailRowClicked}
+                                    onAccountTitleSelected={this.onAccountTitleSelected}
+                                    isDataInit={isDataInit}
+                                    config={config}/>
                         <Button className={styles.btn_save} type="primary" loading={loading} onClick={this.onSave}>保存</Button>
                     </div>
                     {renderAnswerArea()}
