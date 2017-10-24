@@ -146,7 +146,9 @@ const AccountSubjectPopover = ({
                         style={{height:256, width:370}}
                         // trigger={'click'}
                         content={content}>
-                    <Button type="ghost" onClick={e => onAccountTitleSelected(subject)}>
+                    <Button type="ghost"
+                        onClick={e => onAccountTitleSelected(subject)}
+                        onMouseEnter={e => onAccountTitleSelected(subject)}>
                         {subject.subjectName}
                         <span className={styles.arrow}></span>
                     </Button>

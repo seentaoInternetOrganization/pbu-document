@@ -38,6 +38,7 @@ const PBUDocumentAnswerSet = ({
      */
     onAccountDetailSubjectSelected,
     answerDesc,
+    onDocChange,
 }) => {
     const docProps = {
         docConfigUrl,
@@ -67,7 +68,8 @@ const PBUDocumentAnswerSet = ({
          * 账单所属会计明细科目被选中时的回调
          */
         onAccountDetailSubjectSelected,
-        answerDesc
+        answerDesc,
+        onDocChange,
     }
 
     return (
@@ -167,6 +169,10 @@ PBUDocumentAnswerSet.propTypes = {
      * 账单所属会计明细科目被选中时的回调
      */
     onAccountDetailSubjectSelected: PropTypes.func,
+    /**
+     * onChange
+     */
+    onDocChange: PropTypes.func,
 }
 
 PBUDocumentAnswerSet.defaultProps = {

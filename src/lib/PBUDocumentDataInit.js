@@ -35,6 +35,7 @@ const PBUDocumentDataInit = ({
      * 账单所属会计明细科目被选中时的回调
      */
     onAccountDetailSubjectSelected,
+    onDocChange
 }) => {
 
     const docProps = {
@@ -64,6 +65,7 @@ const PBUDocumentDataInit = ({
          * 账单所属会计明细科目被选中时的回调
          */
         onAccountDetailSubjectSelected,
+        onDocChange,
     }
 
     return (
@@ -156,6 +158,10 @@ PBUDocumentDataInit.propTypes = {
      * 账单所属会计明细科目被选中时的回调
      */
     onAccountDetailSubjectSelected: PropTypes.func,
+    /**
+     * onChange
+     */
+    onDocChange: PropTypes.func,
 }
 
 PBUDocumentDataInit.defaultProps = {

@@ -53,17 +53,18 @@ class DataInit extends Component {
             answerArea: nextProps.answerDesc
         })
 
-        if (nextProps.currentPage !== this.props.currentPage
-            || nextProps.activityId !== this.props.activityId) {
-            this.combineDataToState(nextProps);
-            return;
-        }
-
-        if (!(this.props.data
-            && this.props.data.all)) {
-            this.combineDataToState(nextProps);
-            return;
-        }
+        this.combineDataToState(nextProps);
+        // if (nextProps.currentPage !== this.props.currentPage
+        //     || nextProps.activityId !== this.props.activityId) {
+        //     this.combineDataToState(nextProps);
+        //     return;
+        // }
+        //
+        // if (!(this.props.data
+        //     && this.props.data.all)) {
+        //     this.combineDataToState(nextProps);
+        //     return;
+        // }
     }
 
     componentDidUpdate() {
@@ -122,7 +123,6 @@ class DataInit extends Component {
     onItemChange = (item, value) => {
         const { all } = this.state;
         const { activityId, isDataInit } = this.props;
-
         const newAll = {
             ...all
         };
@@ -152,6 +152,11 @@ class DataInit extends Component {
         }
 
         this.setState({
+            all: newAll
+        })
+
+        this.props.onDocChange({
+            ...this.props.data,
             all: newAll
         })
     }
@@ -207,6 +212,11 @@ class DataInit extends Component {
             all: newAll,
             currentSubject: '',
         })
+
+        this.props.onDocChange({
+            ...this.props.data,
+            all: newAll
+        })
     }
 
     onSubjectChange = (item, value, totalSubjectId) => {
@@ -238,6 +248,10 @@ class DataInit extends Component {
             currentSubject: item.name
         })
 
+        this.props.onDocChange({
+            ...this.props.data,
+            all: newAll
+        })
         this.props.onSearchSubjects(value, totalSubjectId ? totalSubjectId : '');
     }
 
@@ -342,16 +356,6 @@ class DataInit extends Component {
     onAccountDetailRowClicked = (record, index, e) => {
         if (record.children) {
             return;
-        }
-
-        if (this.props.isDataInit) {
-            if (!record.isInitDataSetted) {
-                return;
-            }
-        }else {
-            if (!record.isAnswerSetted) {
-                return;
-            }
         }
 
         this.setState({
@@ -636,6 +640,10 @@ DataInit.propTypes = {
      * 答案描述
      */
     answerDesc: PropTypes.string,
+    /**
+     * onChange
+     */
+    onDocChange: PropTypes.func,
 }
 
 
@@ -696,5 +704,8 @@ DataInit.defaultProps = {
     },
     onAccountDetailSubjectSelected: subject => {
         console.log('subject = ', subject);
+    },
+    onDocChange: data => {
+        console.log('data = ', data);
     }
 }

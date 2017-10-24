@@ -74,6 +74,7 @@ export default class PBUDocument extends Component {
             onAccountDetailSubjectSelected,
             uploadProps,
             answerDesc,
+            onDocChange,
         } = this.props;
 
         const { docConfig, errMsg, ratioWidth, ratioHeight } = this.state;
@@ -97,7 +98,8 @@ export default class PBUDocument extends Component {
             onAccountTitleSubejctSelected,
             onAccountDetailSubjectSelected,
             answerDesc,
-            uploadProps
+            uploadProps,
+            onDocChange
         }
 
         //单据预览
@@ -278,6 +280,10 @@ PBUDocument.propTypes = {
      * 答案描述
      */
     answerDesc: PropTypes.string,
+    /**
+     * onChange
+     */
+    onDocChange: PropTypes.func,
 }
 
 PBUDocument.defaultProps = {
