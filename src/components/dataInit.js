@@ -427,11 +427,13 @@ class DataInit extends Component {
                         {...highlightOpt}
                         closable={totalPage > 1}
                         onClick={e => {
+                            e.preventDefault();
                             this.onSave();
                             onPageChange(i + 1);
                         }}
                         onClose={e => {
                             e.preventDefault();
+                            e.stopPropagation();
                             onRemovePage(i + 1)
                         }}>
                         {i+1}

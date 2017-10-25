@@ -8,10 +8,10 @@ import PBUDocumentAnswerSet from './lib/PBUDocumentAnswerSet';
 import mockSubjects from './mock/mockSubject.json';
 import { Button } from 'antd';
 
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
 // const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 
@@ -79,16 +79,16 @@ class Demo extends Component {
                 }
             },
         }
-        console.log('this.state.docData = ', this.state.docData);
-        console.log('empty = ', this.state.empty);
+        // console.log('this.state.docData = ', this.state.docData);
+        // console.log('empty = ', this.state.empty);
         return (
             <div>
-                <Button type='primary' onClick={() => {
+                {/* <Button type='primary' onClick={() => {
                     this.setState({
                         empty: !this.state.empty,
                         docData: this.state.empty ? { all: {}, data: []} : mockData.docData
                     })
-                }}>切换</Button>
+                }}>切换</Button> */}
                 <PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
                                             docCode='DJY0066'
                                             docData={this.state.docData}
@@ -101,6 +101,7 @@ class Demo extends Component {
                                             subjectsTree={mockSubjects.accountingSubjects}
                                             answerDesc={'哈哈哈哈'}
                                             uploadProps={{...uploadProps}}
+                                            totalPage={2}
                                             onDocChange={ data => {
                                                 this.setState({
                                                     docData: data
