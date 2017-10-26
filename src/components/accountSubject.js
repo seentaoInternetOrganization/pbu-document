@@ -15,7 +15,8 @@ const AccountSubjectPopover = ({
     onAccountTitleSelected,
     isDataInit,
     currentAccountTitle,
-    config
+    config,
+    visible
 }) => {
 
     const childrenGenerator = children => {
@@ -144,11 +145,11 @@ const AccountSubjectPopover = ({
                 <Popover key={`${subject.subjectId}_${index}`}
                         title={title}
                         style={{height:256, width:370}}
-                        // trigger={'click'}
+                        trigger={'click'}
+                        visible={visible && currentAccountTitle && currentAccountTitle.subjectId === subject.subjectId}
                         content={content}>
                     <Button type="ghost"
-                        onClick={e => onAccountTitleSelected(subject)}
-                        onMouseEnter={e => onAccountTitleSelected(subject)}>
+                        onClick={e => onAccountTitleSelected(subject)}>
                         {subject.subjectName}
                         <span className={styles.arrow}></span>
                     </Button>

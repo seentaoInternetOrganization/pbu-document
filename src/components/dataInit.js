@@ -34,6 +34,8 @@ class DataInit extends Component {
          * 选中的明细科目
          */
         currentAccountDetail: null,
+        custom: this.props.data && this.props.data.custom ? this.props.data.custom : {},
+        subjectVisible: false,
     }
 
     componentDidMount() {
@@ -83,8 +85,13 @@ class DataInit extends Component {
             ...data.all
         }
 
+        const newCustom = {
+            ...data.custom
+        }
+
         this.setState({
-            all: newAll
+            all: newAll,
+            custom: newCustom
         })
     }
 
@@ -256,13 +263,22 @@ class DataInit extends Component {
     }
 
     onSave = () => {
-        const { all, answerArea } = this.state;
-        if (!this.props.data
-            || !this.props.data.examines) {
-            message.warning('无甄别信息，请检查参数!');
-            return;
+        const { all, answerArea, currentAccountDetail, custom } = this.state;
+
+        let examines = [];
+
+        if (this.props.data
+            && this.props.data.examines) {
+            examines = this.props.data.examines;
         }
-        const { examines } = this.props.data;
+
+        if (this.props.config[0].hasSubject) {
+            if (currentAccountDetail === null) {
+                message.warning('请先选择科目!');
+                return;
+            }
+        }
+
         const { isDataInit, currentPage } = this.props;
         const data = [];
         const answer = [];
@@ -319,6 +335,7 @@ class DataInit extends Component {
         const dataFinal = {
             examines,
             all,
+            custom,
             ...valueOpt
         }
 
@@ -347,7 +364,12 @@ class DataInit extends Component {
 
     onAccountTitleSelected = subject => {
         this.setState({
-            currentAccountTitle: subject
+            currentAccountTitle: subject,
+            custom: {
+                ...this.state.custom,
+                subjectTitle: subject,
+            },
+            subjectVisible: true,
         });
 
         this.props.onAccountTitleSubejctSelected(subject);
@@ -358,15 +380,22 @@ class DataInit extends Component {
             return;
         }
 
-        this.setState({
-            currentAccountDetail: record
-        })
-
-        this.props.onAccountDetailSubjectSelected({
+        const subject = {
             subjectId: record.subjectId,
             subjectName: record.subjectName,
             subjectCode: record.subjectCode ? record.subjectCode : record.childSubjectCode
+        }
+
+        this.setState({
+            currentAccountDetail: subject,
+            custom: {
+                ...this.state.custom,
+                subjectDetail: subject,
+            },
+            subjectVisible: false
         })
+
+        this.props.onAccountDetailSubjectSelected(subject)
     }
 
     render() {
@@ -391,7 +420,7 @@ class DataInit extends Component {
             onAccountDetailSubjectSelected,
         } = this.props;
 
-        const { all, glas, sls, currentSubject, answerArea, currentAccountTitle } = this.state;
+        const { all, glas, sls, currentSubject, answerArea, currentAccountTitle, custom, subjectVisible } = this.state;
         const docProps = {
             config,
             all,
@@ -408,6 +437,7 @@ class DataInit extends Component {
             isDataInit,
             currentCopy,
             onBackgroundLoaded: this.onBackgroundLoaded,
+            custom
         }
 
         const renderTags = () => {
@@ -521,6 +551,7 @@ class DataInit extends Component {
                                     onAccountDetailRowClicked={this.onAccountDetailRowClicked}
                                     onAccountTitleSelected={this.onAccountTitleSelected}
                                     isDataInit={isDataInit}
+                                    visible={subjectVisible}
                                     config={config}/>
                         <Button className={styles.btn_save} type="primary" loading={loading} onClick={this.onSave}>保存</Button>
                     </div>

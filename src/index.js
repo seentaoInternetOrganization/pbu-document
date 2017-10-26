@@ -45,7 +45,9 @@ class Demo extends Component {
     state = {
         currentCopy: 0,
         subjectTotals: [],
-        docData: {},
+        docData: {
+            examines: []
+        },
         empty: true,
     }
 

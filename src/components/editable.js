@@ -13,6 +13,20 @@ import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
 import isDecimal from 'validator/lib/isDecimal';
 
+function getDescendantantProp(obj, desc) {
+    const arr = desc.split('.');
+    while(arr.length) {
+        if (obj) {
+            obj = obj[arr.shift()];
+        }else {
+            return;
+        }
+    }
+
+    return obj;
+}
+
+
 const DocEditable = ({
     config,
     all,
@@ -30,6 +44,7 @@ const DocEditable = ({
     currentSubject,
     isDataInit,
     onBackgroundLoaded,
+    custom,
 }) => {
     //明细账输入时必须先输入总账科目
     const onSubjectDetailChange = (item, value) => {
@@ -287,7 +302,12 @@ const DocEditable = ({
                                 height: pos.height * ratioHeight,
                                 ...item.style
                             }}>
-                                {item.textValue ? item.textValue : ''}
+                                {item.textValue && item.textValue}
+                                {
+                                    item.equalTo
+                                    && getDescendantantProp(custom, item.equalTo)
+                                    && getDescendantantProp(custom, item.equalTo)
+                                }
                             </span>
                     )
                     break;
