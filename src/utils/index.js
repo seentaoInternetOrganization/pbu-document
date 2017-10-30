@@ -42,6 +42,59 @@ exports.loadConfig = function(url, callback) {
  * @type {String}
  */
 exports.md5 = require('blueimp-md5');
-exports.indexElementsByName = function (elements) {
+/**
+ * 根据属性描述`desc`获取`obj`的子代的属性
+ * @eg:
+ * const obj = {a: {b: {c: 0}}};
+ * const c = getDescendantantProp(obj, "a.b.c")
+ * //c = 0
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/eval
+ * @param  {Object} obj  [description]
+ * @param  {String} desc [description]
+ * @return {Object}      [description]
+ */
+exports.getDescendantantProp = function (obj, desc) {
+    if (!obj) {
+        return;
+    }
 
+    if (!desc) {
+        return obj;
+    }
+
+    const arr = desc.split('.');
+
+    while(arr.length) {
+        if (obj) {
+            obj = obj[arr.shift()];
+        }else {
+            return;
+        }
+    }
+
+    return obj;
 };
+
+
+/**
+ * 获取可显示的联
+ * @param  {Object} config      单据配置信息
+ * @param  {Number} currentCopy 期望显示的联
+ * @return {Number}             允许显示的联
+ */
+exports.copyToShow = function(config, currentCopy) {
+    //如果当前单据只有1联，则返回0
+    if (config.length === 1) {
+        return 0
+    }
+    //如果传入的当前联大于总联数，则返回0
+    if (currentCopy > config.length - 1) {
+        return 0
+    }
+    //只有当前联存在元素信息时才返回当前联
+    if (config[currentCopy].elements) {
+        return currentCopy
+    }
+
+    return 0
+}

@@ -1,5 +1,6 @@
 /**
- * 单据模式
+ * 单据模式 废弃!!!!
+ * @deprecated
  */
 export default  {
     /**

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --content-base example",
     "build": "webpack --progress --colors --watch --config webpack.config.js",
-    "prePublishs": "webpack --progress --colors --config webpack.prepublish.config.js"
+    "publish": "webpack --progress --colors --config webpack.prepublish.config.js"
   },
   "author": "chenzhyc",
   "license": "MIT",

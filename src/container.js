@@ -1,6 +1,8 @@
 /**
+ * 废弃!!!!
  * @author AngusC
  * @description 单据
+ * @deprecated
  */
 import React, { Component } from 'react';
 import classnames from 'classnames';
@@ -117,7 +119,7 @@ export default class PBUDocument extends Component {
         const renderExamineSet = () => {
             return <EditWeight ratioWidth={1}
                                 ratioHeight={1}
-                                config={docConfig[0]}
+                                config={docConfig}
                                 data={docData}
                                 loading={loading}
                                 onSave={onSave}

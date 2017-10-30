@@ -35,6 +35,10 @@ class DocBG extends Component {
     }
 
     componentDidMount() {
+        if (this.props.currentCopy > this.props.config.length - 1) {
+            return;
+        }
+
         if (isEmpty(this.props.config[this.props.currentCopy].backgroundImage)) {
             this.setState({
                 loading: false,
@@ -57,6 +61,10 @@ class DocBG extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.currentCopy > nextProps.config.length - 1) {
+            return;
+        }
+
         if (this.state.currentCopy === nextProps.currentCopy) {
             return;
         }
@@ -80,23 +88,32 @@ class DocBG extends Component {
         const { config, ratioWidth, ratioHeight, children, className, currentCopy } = this.props;
         const { loading } = this.state;
 
+        //最大可渲染联次
+        const copyToRender = () => {
+            if (currentCopy > config.length - 1) {
+                return config.length - 1
+            }
+
+            return currentCopy
+        }
+
         let style = {
-            width: config[currentCopy].width * ratioWidth,
-            height: config[currentCopy].height * ratioHeight,
-            ...config[currentCopy].style
+            width: config[copyToRender()].width * ratioWidth,
+            height: config[copyToRender()].height * ratioHeight,
+            ...config[copyToRender()].style
         };
 
         if (!loading) {
             style = {
-                background: `#FFFFFF url(${config[currentCopy].backgroundImage}) no-repeat center center`,
-                width: config[currentCopy].width * ratioWidth,
-                height: config[currentCopy].height * ratioHeight,
-                ...config[currentCopy].style
+                background: `#FFFFFF url(${config[copyToRender()].backgroundImage}) no-repeat center center`,
+                width: config[copyToRender()].width * ratioWidth,
+                height: config[copyToRender()].height * ratioHeight,
+                ...config[copyToRender()].style
             }
         }
 
         return (
-            <div key={`${loading}_${currentCopy}`}
+            <div key={`${loading}_${copyToRender()}`}
                 className={className}
                 style={style}>
                 {loading

@@ -12,20 +12,7 @@ import { AutoComplete, message } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
 import isDecimal from 'validator/lib/isDecimal';
-
-function getDescendantantProp(obj, desc) {
-    const arr = desc.split('.');
-    while(arr.length) {
-        if (obj) {
-            obj = obj[arr.shift()];
-        }else {
-            return;
-        }
-    }
-
-    return obj;
-}
-
+import { getDescendantantProp } from '../utils';
 
 const DocEditable = ({
     config,

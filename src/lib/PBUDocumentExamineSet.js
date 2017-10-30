@@ -5,19 +5,20 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import PBUDocument from '../container';
-import { MODE } from '../constants';
+import MainContainer from '../main';
+import EditWeight from '../components/editWeight';
+
 
 const PBUDocumentExamineSet = ({ docConfigUrl, docCode, docData, onSave, loading }) => {
-
     return (
-        <PBUDocument docConfigUrl={docConfigUrl}
-                    mode={MODE.EXAMINE_SET}
-                    docCode={docCode}
-                    docData={docData}
-                    onSave={onSave}
-                    loading={loading}
+        <MainContainer docConfigUrl={docConfigUrl}>
+            <EditWeight ratioWidth={1}
+                        ratioHeight={1}
+                        data={docData}
+                        loading={loading}
+                        onSave={onSave}
                 />
+        </MainContainer>
     )
 }
 

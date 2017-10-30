@@ -5,13 +5,16 @@ import mockData from './mock/mockData.json';
 import PBUDocumentDataInit from './lib/PBUDocumentDataInit';
 import PBUDocumentExamineSet from './lib/PBUDocumentExamineSet';
 import PBUDocumentAnswerSet from './lib/PBUDocumentAnswerSet';
+import PBUDocumentPreview from './lib/PBUDocumentPreview';
+import PBUDocumentAnswer from './lib/PBUDocumentAnswer';
+import PBUDocumentData from './lib/PBUDocumentData';
 import mockSubjects from './mock/mockSubject.json';
 import { Button } from 'antd';
 
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
 // const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 
@@ -84,14 +87,14 @@ class Demo extends Component {
         // console.log('this.state.docData = ', this.state.docData);
         // console.log('empty = ', this.state.empty);
         return (
-            <div>
+            <div style={{ textAlign: 'center' }}>
                 {/* <Button type='primary' onClick={() => {
                     this.setState({
                         empty: !this.state.empty,
                         docData: this.state.empty ? { all: {}, data: []} : mockData.docData
                     })
                 }}>切换</Button> */}
-                <PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
+                {/* <PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
                                             docCode='DJY0066'
                                             docData={this.state.docData}
                                             activityId='18bcf3382fa8c93d'
@@ -110,7 +113,25 @@ class Demo extends Component {
                                                 })
                                             }}
                                             // loading={true}
-                                        />
+                                        /> */}
+                                        {/* <PBUDocumentExamineSet docConfigUrl={docConfigUrl}
+                                                                                docCode='DJY0066'
+                                                                                loading={false}
+                                                                            /> */}
+                                                                            {/* <div style={{ display: 'inline-block'}}>
+                                        <PBUDocumentPreview docConfigUrl={docConfigUrl}
+                                            docData={mockData.docData}/>
+                                        </div> */}
+                                        {/* <PBUDocumentDataInit docConfigUrl={docConfigUrl}
+                                                                        docCode='DJY0066'
+                                                                        docData={mockData.docData}
+                                                                        totalPage={3}
+                                                                        activityId='18bcf3382fa8c93d'
+                                                                    /> */}
+                                        <PBUDocumentData docConfigUrl={docConfigUrl}
+                                            docData={mockData.docData}
+                                            visibleSheet={'1,1,1,'}
+                                            activityId='18bcf3382fa8c93' />
                                     </div>
         )
     }

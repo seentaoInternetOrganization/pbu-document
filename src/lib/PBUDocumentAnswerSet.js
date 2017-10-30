@@ -5,8 +5,8 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import PBUDocument from '../container';
-import { MODE } from '../constants';
+import MainContainer from '../main';
+import DataInit from '../components/dataInit';
 
 const PBUDocumentAnswerSet = ({
     docConfigUrl,
@@ -73,9 +73,15 @@ const PBUDocumentAnswerSet = ({
     }
 
     return (
-        <PBUDocument mode={MODE.ANSWER_SET}
-                    {...docProps}
-            />
+        <MainContainer docConfigUrl={docConfigUrl}>
+            <DataInit ratioHeight={1}
+                        ratioWidth={1}
+                        data={docData}
+                        loading={loading}
+                        isDataInit={false}
+                        {...docProps}
+                    />
+        </MainContainer>
     )
 }
 

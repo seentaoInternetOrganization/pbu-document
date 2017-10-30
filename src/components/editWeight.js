@@ -56,7 +56,7 @@ class EditWeight extends Component {
         }
 
         Object.keys(newCompletedElement).forEach((name, index) => {
-            newCompletedElement[name]['element'] = config.elements[name];
+            newCompletedElement[name]['element'] = config[0].elements[name];
         });
 
         this.setState({
@@ -164,7 +164,7 @@ class EditWeight extends Component {
         const newTop = yInContainer < selectRect.startTop ? yInContainer : selectRect.startTop;
 
         if (this.state.showSelectRect) {
-            const elements = this.props.config.elements;
+            const elements = this.props.config[0].elements;
             let newSelectedElement = {
                 ...selectedElement
             };
@@ -343,7 +343,7 @@ class EditWeight extends Component {
         //顶部操作渲染
         const renderTopHeader = () => {
             return (
-                <EditWeightHeader config={config}
+                <EditWeightHeader config={config[0]}
                                 all={completedElement}
                                 editTagId={editTagId}
                                 selectedTag={selectedTag}
@@ -508,10 +508,10 @@ class EditWeight extends Component {
                 <div ref={'docContainer'}
                     className={classnames(styles.detail, styles.left)}
                     style={{
-                        background: `#FFFFFF url(${config.backgroundImage}) no-repeat center center`,
-                        width: config.width * ratioWidth,
-                        height: config.height * ratioHeight,
-                        ...config.style
+                        background: `#FFFFFF url(${config[0].backgroundImage}) no-repeat center center`,
+                        width: config[0].width * ratioWidth,
+                        height: config[0].height * ratioHeight,
+                        ...config[0].style
                     }}
                     {...mouseEventOpt}
                 >
@@ -540,7 +540,7 @@ EditWeight.propTypes =  {
     /**
      * 单据配置信息，当前联的
      */
-    config: PropTypes.object.isRequired,
+    config: PropTypes.array,
     /**
      * 横向缩放比例，默认1
      */

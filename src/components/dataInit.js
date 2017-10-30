@@ -573,7 +573,7 @@ DataInit.propTypes = {
     /**
      * 单据配置信息，当前联的
      */
-    config: PropTypes.array.isRequired,
+    config: PropTypes.array,
     /**
      * 横向缩放比例，默认1
      */
