@@ -22,10 +22,10 @@
   "dependencies": {
     "append-query": "^2.0.1",
     "blueimp-md5": "^2.10.0",
-    "validator": "^8.2.0",
-    "whatwg-fetch": "^2.0.3"
+    "validator": "^8.2.0"
   },
   "devDependencies": {
+    "whatwg-fetch": "^2.0.3",
     "antd": "^2.10.4",
     "autoprefixer": "^7.1.4",
     "babel-cli": "^6.24.1",

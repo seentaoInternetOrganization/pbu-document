@@ -37,10 +37,6 @@ const DocValues = ({
     //要展示的value
     const valueToShow = item => {
 
-        if (!all[item.name]) {
-            return;
-        }
-
         if (item.type === ELEMENT.LABEL) {
             if (item.textValue) {
                 return item.textValue
@@ -50,6 +46,10 @@ const DocValues = ({
                 return getDescendantantProp(docData.custom, item.equalTo)
             }
 
+            return;
+        }
+
+        if (!all[item.name]) {
             return;
         }
 

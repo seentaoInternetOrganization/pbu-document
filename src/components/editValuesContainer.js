@@ -160,11 +160,15 @@ export default class EditValuesContainer extends Component {
     }
 
     onAccountTitleSelected = subject => {
+        const { docData } = this.state
         this.setState({
             currentAccountTitle: subject,
-            custom: {
-                ...this.state.custom,
-                subjectTitle: subject,
+            docData: {
+                ...docData,
+                custom: {
+                    ...docData.custom,
+                    subjectTitle: subject,
+                },
             },
             subjectVisible: true,
         });
@@ -173,10 +177,7 @@ export default class EditValuesContainer extends Component {
     }
 
     onAccountDetailRowClicked = (record, index, e) => {
-        if (record.children) {
-            return;
-        }
-
+        const { docData } = this.state
         const subject = {
             subjectId: record.subjectId,
             subjectName: record.subjectName,
@@ -185,9 +186,12 @@ export default class EditValuesContainer extends Component {
 
         this.setState({
             currentAccountDetail: subject,
-            custom: {
-                ...this.state.custom,
-                subjectDetail: subject,
+            docData: {
+                ...docData,
+                custom: {
+                    ...docData.custom,
+                    subjectDetail: subject,
+                },
             },
             subjectVisible: false
         })
@@ -208,11 +212,6 @@ export default class EditValuesContainer extends Component {
                             onAccountDetailRowClicked={this.onAccountDetailRowClicked}
                             onAccountTitleSelected={this.onAccountTitleSelected}
                             normalEdit={true}
-                            onBlur={() => {
-                                this.setState({
-                                    subjectVisible: false,
-                                })
-                            }}
                             visible={subjectVisible}
                             hasErrorInfo={hasErrorInfo}
                             config={config}/>

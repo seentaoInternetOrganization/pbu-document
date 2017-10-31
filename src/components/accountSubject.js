@@ -162,6 +162,7 @@ const AccountSubjectPopover = ({
                         onVisibleChange={visible => {
                             onAccountTitleSelected(subject)
                         }}
+                        visible={visible && subject.subjectId === currentAccountTitle.subjectId}
                         content={content}>
                     <Button type="ghost">
                         {subject.subjectName}
