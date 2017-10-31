@@ -113,6 +113,7 @@ PBUDocumentEdit.defaultProps = {
     subjectDetails: [],
     subjectsTopLevel: [],
     subjectsTree: [],
+    currentCopy: 0,
     onAccountTitleSubejctSelected: subject => {
         console.log('subject = ', subject);
     },

@@ -1,3 +1,16 @@
+.wh(@w,@h){
+	width: @w;
+	height: @h;
+}
+
+.transition-transform(@transition) {
+  -webkit-transition: @transition;
+  -moz-transition: @transition;
+  -ms-transition: @transition;
+  -o-transition: @transition;
+  transition: @transition;
+}
+
 .container *{
   margin:0;
   padding:0;
@@ -36,4 +49,37 @@
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   padding:0 10px;
+}
+
+.main_container{
+  text-align: left;
+}
+
+.doc{
+  display: inline-block;
+  &.showCopy{
+    margin-left: 50px;
+  }
+}
+
+.copy{
+  display: inline-block;
+  position: fixed;
+  left:0px;
+  width: 50px;
+  z-index: 10;
+  text-align: right;
+  button{
+    background-image: linear-gradient(-180deg, #FAFAFA 0%, #F4F4F4 100%);
+    border: 1px solid #C1C1C1;
+    margin-bottom: 1px;
+    .transition-transform(all 0.30s ease-in-out);
+    .wh(30px, 30px);
+  }
+  button:hover, button:focus{
+    .wh(50px, 30px)
+  }
+  .highlight{
+    .wh(50px, 30px)
+  }
 }

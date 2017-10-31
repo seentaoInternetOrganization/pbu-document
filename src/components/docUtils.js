@@ -15,6 +15,9 @@ import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 * @return {Number}             允许显示的联
 */
 export function copyToShow(config, currentCopy) {
+    if (!currentCopy) {
+        return 0
+    }
     //如果当前单据只有1联，则返回0
     if (config.length === 1) {
         return 0

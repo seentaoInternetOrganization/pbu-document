@@ -50,6 +50,7 @@ export default class EditValuesContainer extends Component {
         sls: [],
         subjectVisible: false,
         currentAccountTitle: null,
+        currentCopy: this.props.currentCopy,
     }
 
     componentDidMount() {
@@ -57,7 +58,8 @@ export default class EditValuesContainer extends Component {
         this.setState({
             glas: combineSubjects(this.props.subjectTotals),
             sls: combineSubjects(this.props.subjectDetails),
-            docData: combineDataToState(this.props)
+            docData: combineDataToState(this.props),
+            currentCopy: this.props.currentCopy,
         })
     }
 
@@ -65,7 +67,8 @@ export default class EditValuesContainer extends Component {
         this.setState({
             glas: combineSubjects(nextProps.subjectTotals),
             sls: combineSubjects(nextProps.subjectDetails),
-            docData: combineDataToState(nextProps)
+            docData: combineDataToState(nextProps),
+            currentCopy: nextProps.currentCopy,
         })
     }
 
@@ -199,13 +202,48 @@ export default class EditValuesContainer extends Component {
         this.props.onAccountDetailSubjectSelected(subject)
     }
 
+    onCopyChange = (copy) => {
+        this.setState({
+            currentCopy: copy
+        })
+    }
 
     render() {
-        const { config, ratioHeight, ratioWidth, activityId, currentCopy, hasErrorInfo, subjectsTopLevel, subjectsTree } = this.props
-        const { docData, glas, sls, subjectVisible, currentAccountTitle } = this.state
+        const { config, ratioHeight, ratioWidth, activityId, hasErrorInfo, subjectsTopLevel, subjectsTree } = this.props
+        const { docData, glas, sls, subjectVisible, currentAccountTitle, currentCopy } = this.state
+
+        const renderCopies = () => {
+
+            const copyNodes = [];
+
+            for (let i = 0; i < config.length; i++) {
+
+                let className = '';
+                let title = `${i+1}`;
+
+                if (i === currentCopy) {
+                    className = styles.highlight
+                    title = `第${title}联`
+                }
+
+                copyNodes.push((
+                    <button key={i}
+                        className={className}
+                        type='ghost'
+                        onClick={e => this.onCopyChange(i)}
+                        >{title}</button>
+                ))
+            }
+
+            return (
+                <div className={styles.copy}>
+                    {copyNodes}
+                </div>
+            )
+        }
 
         return (
-            <div ref={'docBG'}>
+            <div ref={'docBG'} className={styles.main_container}>
                 <AccountSubjectPopover subjectsTopLevel={subjectsTopLevel}
                             subjectsTree={subjectsTree}
                             currentAccountTitle={currentAccountTitle}
@@ -215,19 +253,23 @@ export default class EditValuesContainer extends Component {
                             visible={subjectVisible}
                             hasErrorInfo={hasErrorInfo}
                             config={config}/>
-                <DocValues bgClassName={styles.container}
-                        config={config}
-                        docData={docData}
-                        glas={glas}
-                        sls={sls}
-                        ratioHeight={ratioHeight}
-                        ratioWidth={ratioWidth}
-                        activityId={activityId}
-                        onItemChange={this.onNormalItemChange}
-                        onSubjectSearch={this.onSubjectSearch}
-                        onSubjectSelected={this.onSubjectSelected}
-                        onSubjectBlur={this.onSubjectBlur}
-                        hasErrorInfo={hasErrorInfo}/>
+                {renderCopies()}
+                <div className={classnames(styles.doc, { [styles.showCopy] : config.length > 1})}>
+                    <DocValues bgClassName={styles.container}
+                            config={config}
+                            docData={docData}
+                            glas={glas}
+                            sls={sls}
+                            currentCopy={currentCopy}
+                            ratioHeight={ratioHeight}
+                            ratioWidth={ratioWidth}
+                            activityId={activityId}
+                            onItemChange={this.onNormalItemChange}
+                            onSubjectSearch={this.onSubjectSearch}
+                            onSubjectSelected={this.onSubjectSelected}
+                            onSubjectBlur={this.onSubjectBlur}
+                            hasErrorInfo={hasErrorInfo}/>
+                </div>
             </div>
         )
     }
