@@ -7,21 +7,6 @@ import PropTypes from 'prop-types';
 import isEmpty from 'validator/lib/isEmpty';
 import { Spin } from 'antd';
 
-// const DocBG = ({ config, ratioWidth, ratioHeight, children, className, currentCopy }) => {
-//
-//     return (
-//         <div className={className}
-//             style={{
-//             background: `#FFFFFF url(${config[currentCopy].backgroundImage}) no-repeat center center`,
-//             width: config[currentCopy].width * ratioWidth,
-//             height: config[currentCopy].height * ratioHeight,
-//             ...config[currentCopy].style
-//         }}>
-//             {children}
-//         </div>
-//     )
-// }
-
 class DocBG extends Component {
     state = {
         loading: false,
@@ -29,59 +14,59 @@ class DocBG extends Component {
     }
 
     loadBackgroundImg(imgUrl, callback) {
-        const image = document.createElement('img');
-        image.src = imgUrl;
-        image.onload = callback;
+        // const image = document.createElement('img');
+        // image.src = imgUrl;
+        // image.onload = callback;
     }
 
     componentDidMount() {
-        if (this.props.currentCopy > this.props.config.length - 1) {
-            return;
-        }
+        // if (this.props.currentCopy > this.props.config.length - 1) {
+        //     return;
+        // }
 
-        if (isEmpty(this.props.config[this.props.currentCopy].backgroundImage)) {
-            this.setState({
-                loading: false,
-                currentCopy: this.props.currentCopy
-            })
-            // this.props.onBackgroundLoaded()
-        }else {
-            this.setState({
-                loading: true,
-                currentCopy: this.props.currentCopy
-            })
-
-            this.loadBackgroundImg(this.props.config[this.props.currentCopy].backgroundImage, () => {
-                this.setState({
-                    loading: false
-                })
-                this.props.onBackgroundLoaded()
-            })
-        }
+        // if (isEmpty(this.props.config[this.props.currentCopy].backgroundImage)) {
+        //     this.setState({
+        //         loading: false,
+        //         currentCopy: this.props.currentCopy
+        //     })
+        //     // this.props.onBackgroundLoaded()
+        // }else {
+        //     this.setState({
+        //         loading: true,
+        //         currentCopy: this.props.currentCopy
+        //     })
+        //
+        //     this.loadBackgroundImg(this.props.config[this.props.currentCopy].backgroundImage, () => {
+        //         this.setState({
+        //             loading: false
+        //         })
+        //         this.props.onBackgroundLoaded()
+        //     })
+        // }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.currentCopy > nextProps.config.length - 1) {
-            return;
-        }
-
-        if (this.state.currentCopy === nextProps.currentCopy) {
-            return;
-        }
-
-        if (isEmpty(nextProps.config[nextProps.currentCopy].backgroundImage)) {
-            return;
-        }
-
-        this.setState({
-            loading: true
-        })
-        this.loadBackgroundImg(nextProps.config[nextProps.currentCopy].backgroundImage, () => {
-            this.setState({
-                loading: false
-            })
-            nextProps.onBackgroundLoaded()
-        })
+        // if (nextProps.currentCopy > nextProps.config.length - 1) {
+        //     return;
+        // }
+        //
+        // if (this.state.currentCopy === nextProps.currentCopy) {
+        //     return;
+        // }
+        //
+        // if (isEmpty(nextProps.config[nextProps.currentCopy].backgroundImage)) {
+        //     return;
+        // }
+        //
+        // this.setState({
+        //     loading: true
+        // })
+        // this.loadBackgroundImg(nextProps.config[nextProps.currentCopy].backgroundImage, () => {
+        //     this.setState({
+        //         loading: false
+        //     })
+        //     nextProps.onBackgroundLoaded()
+        // })
     }
 
     render() {
@@ -96,27 +81,28 @@ class DocBG extends Component {
 
             return currentCopy
         }
+        //
+        // let style = {
+        //     width: config[copyToRender()].width * ratioWidth,
+        //     height: config[copyToRender()].height * ratioHeight,
+        //     ...config[copyToRender()].style
+        // };
 
-        let style = {
-            width: config[copyToRender()].width * ratioWidth,
-            height: config[copyToRender()].height * ratioHeight,
-            ...config[copyToRender()].style
-        };
-
-        if (!loading) {
-            style = {
+        // if (!loading) {
+        const style = {
                 background: `#FFFFFF url(${config[copyToRender()].backgroundImage}) no-repeat center center`,
                 width: config[copyToRender()].width * ratioWidth,
                 height: config[copyToRender()].height * ratioHeight,
                 ...config[copyToRender()].style
             }
-        }
+        // }
 
         return (
             <div key={`${loading}_${copyToRender()}`}
                 className={className}
                 style={style}>
-                {loading
+                {children}
+                {/* {loading
                     ?
                     <div style={{
                         width:'100%',
@@ -128,7 +114,7 @@ class DocBG extends Component {
                     </div>
                     :
                     children
-                }
+                } */}
             </div>
         )
     }

@@ -9,6 +9,7 @@ import MainContainer from '../main';
 import ReadOnly from '../components/readonly';
 import { Button } from 'antd';
 import styles from '../main.less';
+import classnames from 'classnames';
 
 class PBUDocumentData extends Component {
     state = {
@@ -78,7 +79,7 @@ class PBUDocumentData extends Component {
         return (
             <div className={styles.container}>
                 {renderCopies()}
-                <MainContainer className={visibleSheet && styles.main_container }
+                <MainContainer className={classnames(styles.main_container, { [`${styles.showCopy}`]: !!visibleSheet})}
                             docConfigUrl={docConfigUrl}>
                     <ReadOnly showAnswer={false}
                             highlightAnswer={false}

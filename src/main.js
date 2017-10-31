@@ -37,6 +37,10 @@ export default class MainContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.docConfigUrl === this.props.docConfigUrl) {
+            return
+        }
+        
         this.loadDocConfig(nextProps);
     }
 

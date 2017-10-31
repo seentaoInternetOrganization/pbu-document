@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styles from './dataInit.less';
+import styles from './accountSubject.less';
 import { Popover, Table, Button } from 'antd';
 
 const AccountSubjectPopover = ({
@@ -16,7 +16,10 @@ const AccountSubjectPopover = ({
     isDataInit,
     currentAccountTitle,
     config,
-    visible
+    visible,
+    normalEdit,
+    onBlur,
+    hasErrorInfo,
 }) => {
 
     const childrenGenerator = children => {
@@ -50,7 +53,7 @@ const AccountSubjectPopover = ({
     if (config[0].hasSubject) {
         const subjectNodes = subjectsTopLevel.map((subject, index) => {
 
-            const data = subjectsTree.map((item, index) => {
+            const data = Array.isArray(subjectsTree) ? subjectsTree.map((item, index) => {
                 let childrenOpt = {};
 
                 if (item.children) {
@@ -70,12 +73,23 @@ const AccountSubjectPopover = ({
                     isInitDataSetted: item.isInitDataSetted,
                     ...childrenOpt
                 }
-            });
+            }) : [];
 
             const renderCell = (text, record, index) => {
 
                 if (record.children) {
                     return text;
+                }
+
+                if (normalEdit) {
+
+                    if (hasErrorInfo
+                        && record.isAnswerSetted
+                        && !record.isAnswered) {
+                        return <span style={{ background: '#FFFF80' }}>{text}</span>
+                    }
+
+                    return text
                 }
 
                 if (isDataInit) {
@@ -130,7 +144,7 @@ const AccountSubjectPopover = ({
                     overflow:'scroll'
                 }}>
                     <Table
-                        loading={!subjectsTree.length > 0}
+                        loading={subjectsTree === 'loading'}
                         size={'small'}
                         columns={columns}
                         dataSource={data}
@@ -144,12 +158,12 @@ const AccountSubjectPopover = ({
             return (
                 <Popover key={`${subject.subjectId}_${index}`}
                         title={title}
-                        style={{height:256, width:370}}
-                        trigger={'click'}
-                        visible={visible && currentAccountTitle && currentAccountTitle.subjectId === subject.subjectId}
+                        style={{ height:256, width:370 }}
+                        onVisibleChange={visible => {
+                            onAccountTitleSelected(subject)
+                        }}
                         content={content}>
-                    <Button type="ghost"
-                        onClick={e => onAccountTitleSelected(subject)}>
+                    <Button type="ghost">
                         {subject.subjectName}
                         <span className={styles.arrow}></span>
                     </Button>
@@ -158,7 +172,7 @@ const AccountSubjectPopover = ({
         });
 
         return (
-            <div className={styles.subject}>
+            <div className={normalEdit ? styles.normal : styles.subject}>
                 {subjectNodes}
             </div>
         )

@@ -8,13 +8,14 @@ import PBUDocumentAnswerSet from './lib/PBUDocumentAnswerSet';
 import PBUDocumentPreview from './lib/PBUDocumentPreview';
 import PBUDocumentAnswer from './lib/PBUDocumentAnswer';
 import PBUDocumentData from './lib/PBUDocumentData';
+import PBUDocumentEdit from './lib/PBUDocumentEdit';
 import mockSubjects from './mock/mockSubject.json';
 import { Button } from 'antd';
 
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
 // const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 
@@ -51,6 +52,7 @@ class Demo extends Component {
         docData: {
             examines: []
         },
+        // docData: mockData.docData,
         empty: true,
     }
 
@@ -61,6 +63,8 @@ class Demo extends Component {
     }
 
     onSearchSubjects = (value, subjectId) => {
+        console.log('value = ', value, ' subjectId = ', subjectId);
+
         setTimeout(() => {
             this.setState({
                 subjectTotals: mockSubjects.accountingSubjects
@@ -87,7 +91,8 @@ class Demo extends Component {
         // console.log('this.state.docData = ', this.state.docData);
         // console.log('empty = ', this.state.empty);
         return (
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'left' }}>
+                <div style={{ display: 'inline-block', width: 100, height: 100 }}/>
                 {/* <Button type='primary' onClick={() => {
                     this.setState({
                         empty: !this.state.empty,
@@ -128,10 +133,34 @@ class Demo extends Component {
                                                                         totalPage={3}
                                                                         activityId='18bcf3382fa8c93d'
                                                                     /> */}
-                                        <PBUDocumentData docConfigUrl={docConfigUrl}
+                                        {/* <PBUDocumentData docConfigUrl={docConfigUrl}
                                             docData={mockData.docData}
                                             visibleSheet={'1,1,1,'}
-                                            activityId='18bcf3382fa8c93' />
+                                            activityId='18bcf3382fa8c93' /> */}
+                                        {/* <div style={{ display: 'inline-block' }}>
+                                            <PBUDocumentAnswer docConfigUrl={docConfigUrl}
+                                                docData={mockData.docData}
+                                                subjectsTopLevel={mockSubjects.accountingSubjects}
+                                                subjectsTree={mockSubjects.accountingSubjects}
+                                                activityId='18bcf3382fa8c93' />
+                                        </div> */}
+                                        <PBUDocumentEdit
+                                            docConfigUrl={docConfigUrl}
+                                                docCode='DJY0066'
+                                                docData={this.state.docData}
+                                                activityId='18bcf3382fa8c93d'
+                                                subjectTotals={this.state.subjectTotals}
+                                                onSearchSubjects={this.onSearchSubjects}
+                                                subjectsTopLevel={mockSubjects.accountingSubjects}
+                                                subjectsTree={mockSubjects.accountingSubjects}
+                                                hasErrorInfo={true}
+                                                onDocChange={ data => {
+                                                    console.log('data = ', data);
+                                                    this.setState({
+                                                        docData: data
+                                                    })
+                                                }}
+                                        />
                                     </div>
         )
     }

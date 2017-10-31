@@ -74,27 +74,3 @@ exports.getDescendantantProp = function (obj, desc) {
 
     return obj;
 };
-
-
-/**
- * 获取可显示的联
- * @param  {Object} config      单据配置信息
- * @param  {Number} currentCopy 期望显示的联
- * @return {Number}             允许显示的联
- */
-exports.copyToShow = function(config, currentCopy) {
-    //如果当前单据只有1联，则返回0
-    if (config.length === 1) {
-        return 0
-    }
-    //如果传入的当前联大于总联数，则返回0
-    if (currentCopy > config.length - 1) {
-        return 0
-    }
-    //只有当前联存在元素信息时才返回当前联
-    if (config[currentCopy].elements) {
-        return currentCopy
-    }
-
-    return 0
-}

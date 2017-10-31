@@ -10,30 +10,82 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MainContainer from '../main';
 import ReadOnly from '../components/readonly';
+import AccountSubjectPopover from '../components/accountSubject';
+import styles from '../main.less';
 
-const PBUDocumentAnswer = ({
-    docConfigUrl,
-    docData,
-    visibleSheet,
-    activityId,
-    onAccountTitleSubejctSelected,
-    onAccountDetailSubjectSelected,
-    subjectsTopLevel,
-    subjectsTree,
-}) => {
+class PBUDocumentAnswer extends Component {
 
-    const docProps = {
-        docData,
-        activityId,
+    state = {
+        currentAccountTitle: null,
+        subjectVisible: false,
     }
 
-    return (
-        <MainContainer docConfigUrl={docConfigUrl}>
-            <ReadOnly showAnswer={true}
-                    highlightAnswer={true}
-                {...docProps} />
-        </MainContainer>
-    )
+    onAccountTitleSelected = subject => {
+
+        this.setState({
+            currentAccountTitle: subject,
+            subjectVisible: true,
+        });
+
+        this.props.onAccountTitleSubejctSelected(subject);
+    }
+
+    onAccountDetailRowClicked = (record, index, e) => {
+        if (record.children) {
+            return;
+        }
+
+        const subject = {
+            subjectId: record.subjectId,
+            subjectName: record.subjectName,
+            subjectCode: record.subjectCode ? record.subjectCode : record.childSubjectCode
+        }
+
+        this.setState({
+            currentAccountDetail: subject,
+            subjectVisible: false
+        })
+
+        this.props.onAccountDetailSubjectSelected(subject)
+    }
+
+    render() {
+        const {
+            docConfigUrl,
+            docData,
+            visibleSheet,
+            activityId,
+            onAccountTitleSubejctSelected,
+            onAccountDetailSubjectSelected,
+            subjectsTopLevel,
+            subjectsTree,
+        } = this.props;
+
+        const docProps = {
+            docData,
+            activityId,
+        }
+
+        const { currentAccountTitle, subjectVisible } = this.state
+
+        return (
+            <div className={styles.container}>
+                <MainContainer className={styles.main_container}
+                            docConfigUrl={docConfigUrl}>
+                    <AccountSubjectPopover subjectsTopLevel={subjectsTopLevel}
+                                subjectsTree={subjectsTree}
+                                currentAccountTitle={currentAccountTitle}
+                                onAccountDetailRowClicked={this.onAccountDetailRowClicked}
+                                onAccountTitleSelected={this.onAccountTitleSelected}
+                                isDataInit={false}
+                                visible={subjectVisible}/>
+                    <ReadOnly showAnswer={true}
+                            highlightAnswer={true}
+                        {...docProps} />
+                </MainContainer>
+            </div>
+        )
+    }
 }
 
 export default PBUDocumentAnswer;
@@ -75,4 +127,13 @@ PBUDocumentAnswer.propTypes = {
      * 第0级科目分类对应的子分类
      */
     subjectsTree: PropTypes.any,
+}
+
+PBUDocumentAnswer.defaultProps = {
+    onAccountTitleSubejctSelected: subject => {
+        console.log('subject = ', subject);
+    },
+    onAccountDetailSubjectSelected: subject => {
+        console.log('subject = ', subject);
+    },
 }

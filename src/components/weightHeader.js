@@ -153,7 +153,6 @@ const EditWeightHeader = ({
             all: newAll,
             examines: examines
         };
-        console.log('data = ', JSON.stringify(data));
         onSave(JSON.stringify(data));
     }
 

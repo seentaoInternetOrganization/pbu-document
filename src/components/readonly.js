@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
 import DocBG from './background';
 import bgStyles from './background.css';
 import { ELEMENT } from '../constants';
-import { copyToShow, getDescendantantProp } from '../utils';
+import { getDescendantantProp } from '../utils';
+import { copyToShow } from './docUtils';
 
 const ReadOnly = ({
     config,

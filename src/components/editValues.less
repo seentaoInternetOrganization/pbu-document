@@ -1,0 +1,39 @@
+.container *{
+  margin:0;
+  padding:0;
+  font-family: 'Hiragino Sans GB', 'Helvetica Neue', 'Microsoft Yahei',Arial, sans-serif;
+  color:#313131;
+}
+
+.container{
+  border: 1px solid #E1E1E1;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+  input{
+    background: none;
+  }
+  input, textarea {
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    border: 1px solid #DDDDDD;
+  }
+
+  input:focus, textarea:focus {
+    box-shadow: 0 0 5px #3dcc61;
+    border: 1px solid #3dcc61;
+  }
+}
+
+.container span,.container input{
+  position: absolute;
+  font-size: 14px;
+  background: none;
+  outline: none;
+  display: inline-block;
+  line-height: 33px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding:0 10px;
+}
