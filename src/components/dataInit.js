@@ -372,6 +372,13 @@ class DataInit extends Component {
             subjectVisible: true,
         });
 
+        this.props.onDocChange({
+            ...this.props.data,
+            custom: {
+                ...this.state.custom,
+                subjectTitle: subject,
+            }
+        })
         this.props.onAccountTitleSubejctSelected(subject);
     }
 
@@ -393,6 +400,14 @@ class DataInit extends Component {
                 subjectDetail: subject,
             },
             subjectVisible: false
+        })
+
+        this.props.onDocChange({
+            ...this.props.data,
+            custom: {
+                ...this.state.custom,
+                subjectDetail: subject,
+            }
         })
 
         this.props.onAccountDetailSubjectSelected(subject)

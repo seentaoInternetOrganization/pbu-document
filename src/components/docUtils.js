@@ -59,6 +59,11 @@ export function basicStyleOfItem(item, highlightItem, highlightColor, ratioWidth
 
 //判断数字合法性
 export function testNumber(item, value) {
+
+    if (!item.constraint) {
+        return true;
+    }
+
     const tooBig = item.constraint.maxValue && parseFloat(value) > item.constraint.maxValue
     const tooSmall = item.constraint.minValue && parseFloat(value) < item.constraint.minValue
 
@@ -70,10 +75,6 @@ export function canChange(item, value) {
     //输入空，通过
     if (isEmpty(value)) {
         return true
-    }
-    //不存在约束，通过
-    if (!item.constraint) {
-        return true;
     }
 
     switch (item.type) {

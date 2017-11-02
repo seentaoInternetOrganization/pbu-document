@@ -13,9 +13,9 @@ import mockSubjects from './mock/mockSubject.json';
 import { Button } from 'antd';
 
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
 // const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 
@@ -99,7 +99,7 @@ class Demo extends Component {
                         docData: this.state.empty ? { all: {}, data: []} : mockData.docData
                     })
                 }}>切换</Button> */}
-                {/* <PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
+                <PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
                                             docCode='DJY0066'
                                             docData={this.state.docData}
                                             activityId='18bcf3382fa8c93d'
@@ -118,7 +118,7 @@ class Demo extends Component {
                                                 })
                                             }}
                                             // loading={true}
-                                        /> */}
+                                        />
                                         {/* <PBUDocumentExamineSet docConfigUrl={docConfigUrl}
                                                                                 docCode='DJY0066'
                                                                                 loading={false}
@@ -145,7 +145,7 @@ class Demo extends Component {
                                                 subjectsTree={mockSubjects.accountingSubjects}
                                                 activityId='18bcf3382fa8c93' />
                                         </div> */}
-                                        <PBUDocumentEdit
+                                        {/* <PBUDocumentEdit
                                             docConfigUrl={docConfigUrl}
                                                 docCode='DJY0066'
                                                 docData={this.state.docData}
@@ -161,7 +161,7 @@ class Demo extends Component {
                                                         docData: data
                                                     })
                                                 }}
-                                        />
+                                        /> */}
                                     </div>
         )
     }
