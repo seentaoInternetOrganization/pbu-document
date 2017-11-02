@@ -11,7 +11,7 @@
 .menus div{display:inline-block;overflow:scroll;line-height:60px;width: 100%;}
 .menus ul{width: 885px;}
 .menus li{height:32px;display: inline-block;border: 1px solid #C1C1C1;border-radius: 2px;position: relative;color:#919191;cursor: pointer;margin:0 5px;box-sizing: border-box;-webkit-box-sizing: border-box;line-height: 32px!important;}
-.menus li input{width: calc(~"100% - 4px");height: 26px;display: block;}
+.menus li input{height: 26px;display: block;min-width: 50px;max-width: 100px}
 .menus li b{padding:0 14px;display: inline-block;height:32px;line-height:32px;font-weight: normal;}
 .menus li:hover{color:#3DCC61;border-color: #3DCC61;}
 /*.menus .tag{padding:0 14px;height:32px;line-height:32px;display: inline-block;border: 1px solid #C1C1C1;border-radius: 2px;position: relative;color:#919191;cursor: pointer;margin:0 5px;box-sizing: border-box;-webkit-box-sizing: border-box;}*/

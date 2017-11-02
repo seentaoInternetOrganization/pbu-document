@@ -31,6 +31,7 @@ const DocValues = ({
     onSubjectSearch,
     onSubjectSelected,
     onSubjectBlur,
+    editable,
 }) => {
 
     const { all } = docData;
@@ -53,14 +54,6 @@ const DocValues = ({
             return;
         }
 
-        // if (item.type === ELEMENT.SL) {
-        //     //没有设置对应的总账科目时清空
-        //     if (!all[item.gla].value
-        //         || isEmpty(all[item.gla].value)) {
-        //         return;
-        //     }
-        // }
-
         if (all[item.name].subjectName) {
             return all[item.name].subjectName
         }
@@ -73,6 +66,12 @@ const DocValues = ({
             return all[item.name].answer
         }else if (all[item.name].value) {
             return all[item.name].value
+        }
+
+        if (hasErrorInfo
+            && all[item.name].hasOwnProperty('correct')
+            && !all[item.name].correct) {
+            return ''
         }
     }
 
@@ -104,7 +103,8 @@ const DocValues = ({
     //元素是否可编辑
     const canEdit = item => {
         //非第一联不可编辑
-        if (currentCopy > 0) {
+        if (currentCopy > 0
+            || !editable) {
             return false
         }
 
@@ -137,13 +137,13 @@ const DocValues = ({
     const renderReadOnlyItem = (item, index) => {
         const value = valueToShow(item)
 
-        if (!value) {
+        if (!value && value !== '') {
             return null
         }
 
         return (
             <span key={`readonly_${index}`}
-                style={basicStyleOfItem(item)}>
+                style={styleOfItem(item)}>
                 {value}
             </span>
         )
@@ -167,8 +167,8 @@ const DocValues = ({
     const renderSelectItem = (item, index, dataSource) => {
 
         const styleOfSelect = {
-            ...basicStyleOfItem(item),
-            top: basicStyleOfItem(item).top - 4
+            ...styleOfItem(item),
+            top: styleOfItem(item).top - 4
         }
 
         const glaSubjectId = () => {
@@ -203,12 +203,8 @@ const DocValues = ({
     const renderTextareaItem = (item, index) => {
         const value = valueToShow(item);
 
-        if (!value) {
-            return null
-        }
-
         const style = {
-            ...basicStyleOfItem(item),
+            ...styleOfItem(item),
             resize: 'none',
         }
 

@@ -23,6 +23,7 @@ const PBUDocumentEdit = ({
     onDocChange,
     onAccountTitleSubejctSelected,
     onAccountDetailSubjectSelected,
+    editable,
 }) => {
 
     const docProps = {
@@ -40,6 +41,7 @@ const PBUDocumentEdit = ({
         onDocChange,
         onAccountTitleSubejctSelected,
         onAccountDetailSubjectSelected,
+        editable,
     }
 
     return (
@@ -105,6 +107,10 @@ PBUDocumentEdit.propTypes = {
      * 账单所属会计明细科目被选中时的回调
      */
     onAccountDetailSubjectSelected: PropTypes.func,
+    /**
+     * 是否可编辑，默认true
+     */
+    editable: PropTypes.bool,
 }
 
 PBUDocumentEdit.defaultProps = {
@@ -122,7 +128,8 @@ PBUDocumentEdit.defaultProps = {
     },
     onSearchSubjects: (value, subjectId) => {
         console.log('value = ', value, ' subjectId = ', subjectId);
-    }
+    },
+    editable: true
 }
 
 export default PBUDocumentEdit;

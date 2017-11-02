@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { loadConfig } from './utils';
+import isEmpty from 'validator/lib/isEmpty';
 
 export default class MainContainer extends Component {
     state = {
@@ -37,10 +38,11 @@ export default class MainContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.docConfigUrl === this.props.docConfigUrl) {
+        if (!isEmpty(this.props.docConfigUrl)
+            && nextProps.docConfigUrl === this.props.docConfigUrl) {
             return
         }
-        
+
         this.loadDocConfig(nextProps);
     }
 

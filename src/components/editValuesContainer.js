@@ -82,13 +82,15 @@ export default class EditValuesContainer extends Component {
 
     resetSelectHeightOfAntd() {
         const { config } = this.props;
-        const selectHeight = [];
-
-        Object.values(config[0].elements).forEach(item => {
+        const selectHeight = Object.values(config[0].elements)
+        .filter(item => {
             if (item.type === ELEMENT.GLA
                 || item.type === ELEMENT.SL) {
-                selectHeight.push(`${item.pos.height}px`);
+                return true
             }
+        })
+        .map(item => {
+            return `${item.pos.height}px`
         })
 
         //might be a hack
@@ -209,10 +211,14 @@ export default class EditValuesContainer extends Component {
     }
 
     render() {
-        const { config, ratioHeight, ratioWidth, activityId, hasErrorInfo, subjectsTopLevel, subjectsTree } = this.props
+        const { config, ratioHeight, ratioWidth, activityId, hasErrorInfo, subjectsTopLevel, subjectsTree, editable } = this.props
         const { docData, glas, sls, subjectVisible, currentAccountTitle, currentCopy } = this.state
 
         const renderCopies = () => {
+
+            if (config.length == 1) {
+                return;
+            }
 
             const copyNodes = [];
 
@@ -268,7 +274,8 @@ export default class EditValuesContainer extends Component {
                             onSubjectSearch={this.onSubjectSearch}
                             onSubjectSelected={this.onSubjectSelected}
                             onSubjectBlur={this.onSubjectBlur}
-                            hasErrorInfo={hasErrorInfo}/>
+                            hasErrorInfo={hasErrorInfo}
+                            editable={editable}/>
                 </div>
             </div>
         )

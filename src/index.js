@@ -49,10 +49,10 @@ class Demo extends Component {
     state = {
         currentCopy: 0,
         subjectTotals: [],
-        docData: {
-            examines: []
-        },
-        // docData: mockData.docData,
+        // docData: {
+        //     examines: []
+        // },
+        docData: mockData.docData,
         empty: true,
     }
 
@@ -122,6 +122,7 @@ class Demo extends Component {
                                         {/* <PBUDocumentExamineSet docConfigUrl={docConfigUrl}
                                                                                 docCode='DJY0066'
                                                                                 loading={false}
+                                                                                docData={mockData.docData}
                                                                             /> */}
                                                                             {/* <div style={{ display: 'inline-block'}}>
                                         <PBUDocumentPreview docConfigUrl={docConfigUrl}

@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import DocBG from './background';
 import bgStyles from './background.css';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR } from '../constants';
+import { copyToShow, basicStyleOfItem, testNumber, canChange } from './docUtils';
 
 const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
 
@@ -22,14 +23,17 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
                 return (
                     <input key={`${item.name}_${index}`}
                                 type="checkbox"
-                                style={{
-                                    left: pos.left * ratioWidth,
-                                    top: pos.top * ratioHeight,
-                                    width: pos.width * ratioWidth,
-                                    height: pos.height * ratioHeight,
-                                    ...item.style
-                                }}
+                                style={basicStyleOfItem(item)}
                             />
+                )
+            }
+
+            if (item.type === ELEMENT.LABEL) {
+                return (
+                    <span key={`readonly_${index}`}
+                        style={basicStyleOfItem(item)}>
+                        {item.textValue && item.textValue}
+                    </span>
                 )
             }
 

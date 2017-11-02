@@ -498,14 +498,27 @@ class DataInit extends Component {
             }
         }
 
+        const renderPage = () => {
+            return (
+                <div className={classnames(styles.tags, {[styles.tags_mid]: isDataInit, [styles.tags_left]: !isDataInit})}>
+                    {renderTags()}
+                    <Button size="small" type="dashed" onClick={this.appendPage}>+ 续页</Button>
+                </div>
+            )
+        }
+
         //渲染单据
         const renderDoc = () => {
             if (isDataInit) {
-                return <DocEditable {...docProps} />
+                return <div style={{ display: "inline-block" }}>
+                    <DocEditable {...docProps} />
+                    {renderPage()}
+                </div>
             }else {
                 return (
                     <section className={styles.bill_wrap}>
                         <DocEditable {...docProps} />
+                        {renderPage()}
                     </section>
                 )
             }
@@ -533,8 +546,10 @@ class DataInit extends Component {
                 }
 
                 return (
-                    <div className={styles.copy}>
-                        {copyNodes}
+                    <div style={{ textAlign: 'left' }}>
+                        <div className={styles.copy}>
+                            {copyNodes}
+                        </div>
                     </div>
                 )
             }
@@ -557,10 +572,6 @@ class DataInit extends Component {
                     </div>
                     {renderAnswerArea()}
                     {renderDoc()}
-                    <div className={isDataInit ? classnames(styles.tags, styles.tags_mid) : styles.tags }>
-                        {renderTags()}
-                        <Button size="small" type="dashed" onClick={this.appendPage}>+ 续页</Button>
-                    </div>
                 </section>
             </div>
         )

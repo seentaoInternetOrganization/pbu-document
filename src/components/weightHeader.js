@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import styles from './editWeight.css';
 import reactComposition from 'react-composition';
 import { EXAMINE } from '../constants';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 
 /**
  * 对象转入examines中
@@ -130,7 +130,7 @@ const EditWeightHeader = ({
     all,
     selectedTag,
     editTagId,
-    editTempValue,
+    editTagName,
     onSave,
     onClearAll,
     onSelectTags,
@@ -186,18 +186,12 @@ const EditWeightHeader = ({
                     {
                         editTagId === item.examineId
                         ?
-                        <input
-                            value={editTempValue}
-                            onKeyPress={e => {
-                                if (e.key === 'Enter') {
-                                    onTagBlur();
-                                }
-                            }}
-                            onBlur={onTagBlur}
-                                {...reactComposition({
-                                    onChange: onEditTag
-                                })}
-                             />
+                        <Input value={editTagName}
+                                onPressEnter={onTagBlur}
+                                onBlur={onTagBlur}
+                                maxLength={6}
+                                onChange={onEditTag}
+                            />
                         :
                         <b>
                             {item.examineName}

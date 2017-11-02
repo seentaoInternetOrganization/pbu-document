@@ -33,7 +33,6 @@ class EditWeight extends Component {
         selectedTag: '',
         editTagId: '',
         editTagName: '',
-        editTempValue: '',
     }
 
     componentDidMount() {
@@ -51,13 +50,18 @@ class EditWeight extends Component {
             return;
         }
 
-        const newCompletedElement = {
-            ...data.all
-        }
-
-        Object.keys(newCompletedElement).forEach((name, index) => {
-            newCompletedElement[name]['element'] = config[0].elements[name];
-        });
+        //去掉不属于此单据的元素
+        const newCompletedElement = Object.keys(data.all).filter(key => {
+            return !!config[0].elements[key] && data.all[key].examineType
+        }).reduce((sum, key) => {
+            return {
+                ...sum,
+                [key]: {
+                    ...data.all[key],
+                    element: config[0].elements[key]
+                }
+            }
+        }, {})
 
         this.setState({
             completedElement: newCompletedElement
@@ -278,19 +282,9 @@ class EditWeight extends Component {
         })
     }
 
-    onEditTag = (e) => {
-        let value = e.target.value;
-        if (e.reactComposition.composition === false) {
-
-            if (value.length > 5) {
-                value = value.slice(0, 5)
-            }
-            this.setState({
-                editTagName: value
-            })
-        }
+    onEditTag = e => {
         this.setState({
-            editTempValue: value
+            editTagName:  e.target.value
         })
     }
 
@@ -298,7 +292,6 @@ class EditWeight extends Component {
         this.setState({
             editTagId: examineId,
             editTagName: examineName,
-            editTempValue: examineName
         })
     }
 
@@ -317,6 +310,7 @@ class EditWeight extends Component {
 
         this.setState({
             editTagId: '',
+            selectedTag: '',
             completedElement: newCompletedElement
         })
     }
@@ -337,7 +331,6 @@ class EditWeight extends Component {
             examineTypeIndex,
             editTagId,
             editTagName,
-            editTempValue,
          } = this.state;
 
         //顶部操作渲染
@@ -347,7 +340,6 @@ class EditWeight extends Component {
                                 all={completedElement}
                                 editTagId={editTagId}
                                 selectedTag={selectedTag}
-                                editTempValue={editTempValue}
                                 onSave={this.onSave}
                                 onClearAll={this.onClearAll}
                                 onSelectTags={this.onSelectTags}
@@ -355,6 +347,7 @@ class EditWeight extends Component {
                                 onTagBlur={this.onTagBlur}
                                 onRemoveByTagId={this.onRemoveByTagId}
                                 onEditTag={this.onEditTag}
+                                editTagName={editTagName}
                                 loading={loading}
                 />
             )
@@ -412,6 +405,9 @@ class EditWeight extends Component {
         //渲染选择完成区
         const renderCompletedZone = () => {
             const elementNodes = Object.values(completedElement).map((item, index) => {
+                if (!item.element) {
+                    return;
+                }
 
                 const { pos } = item.element;
 

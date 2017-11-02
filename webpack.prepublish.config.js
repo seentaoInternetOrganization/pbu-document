@@ -69,11 +69,12 @@ const config = {
             'react-dom'   : 'umd react-dom',
             'antd'        : 'antd',
         },
+        /^antd*/,
         /^rc-*/,
         'prop-types',
         'classnames',
         'whatwg-fetch',
-        
+
     ]
 };
 
