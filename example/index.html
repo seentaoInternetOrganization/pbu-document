@@ -9,6 +9,48 @@
     <div id="app">
         <!-- This element's contents will be replaced with MainContain -->
     </div>
+    <script>
+        (function() {
+          var testObject = {};
+          if (!(Object.setPrototypeOf || testObject.__proto__)) {
+              var nativeGetPrototypeOf = Object.getPrototypeOf;
+
+              Object.getPrototypeOf = function(object) {
+                  if (object.__proto__) {
+                      return object.__proto__;
+                  } else {
+                      return nativeGetPrototypeOf.call(Object, object);
+                  }
+              }
+          }
+
+          String.prototype.replaceAll = function(search, replacement) {
+              var target = this;
+              return target.replace(new RegExp(search, 'g'), replacement);
+          };
+          if (!String.prototype.includes) {
+              String.prototype.includes = function() {
+                 'use strict';
+                 return String.prototype.indexOf.apply(this, arguments) !== -1;
+              };
+          };
+          if (!Array.prototype.includes) {
+              Object.defineProperty(Array.prototype, "includes", {
+                enumerable: false,
+                value: function(obj) {
+                    var newArr = this.filter(function(el) {
+                      return el == obj;
+                    });
+                    return newArr.length > 0;
+                  }
+              });
+          };
+        })();
+    </script>
+    <script src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,es5-shim/4.5.7/es5-shim.min.js,es5-shim/4.5.7/es5-sham.min.js,html5shiv/3.7.2/html5shiv.min.js,media-match/2.0.2/media.match.min.js"></script>
+    <script src="https://oss.staoedu.com/webapps/sttplatform/public/mediaMatch/polyfill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
     <script src="./bundle.js"></script>
 </body>
 </html>

@@ -11,7 +11,8 @@ const config = {
         filename: 'bundle.js'
     },
     devServer: {
-        historyApiFallback: true
+        historyApiFallback: true,
+        host: "10.12.1.74",
     },
     resolve: {
         extensions: ['', '.js', '.jsx']

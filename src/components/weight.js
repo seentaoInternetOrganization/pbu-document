@@ -37,7 +37,9 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
                 )
             }
 
-            if (data == null) {
+            if (data == null
+                || typeof data !== 'object'
+                || !data.all) {
                 return;
             }
 

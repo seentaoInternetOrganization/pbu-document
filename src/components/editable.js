@@ -13,6 +13,7 @@ import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
 import isDecimal from 'validator/lib/isDecimal';
 import { getDescendantantProp } from '../utils';
+const Option = AutoComplete.Option;
 
 const DocEditable = ({
     config,
@@ -193,7 +194,7 @@ const DocEditable = ({
                     return (
                         <AutoComplete key={`${item.name}_${index}`}
                             name={item.name}
-                            dataSource={glas}
+                            // dataSource={glas}
                             value={value}
                             style={{
                                 left: pos.left * ratioWidth,
@@ -207,7 +208,17 @@ const DocEditable = ({
                             onSearch={value => onSubjectChange(item, value)}
                             onSelect={value => onSubjectBlur(glas, item, value)}
                             onBlur={value => onSubjectBlur(glas, item, value)}
-                        />
+                        >
+                            {glas.map(item => {
+                                return (
+                                    <Option key={item.value}>
+                                        <div style={{ overflow: 'scroll' }}>
+                                            {item.text}
+                                        </div>
+                                    </Option>
+                                )
+                            })}
+                        </AutoComplete>
                     )
                     break;
 
@@ -245,7 +256,7 @@ const DocEditable = ({
                     return (
                         <AutoComplete key={`${item.name}_${index}`}
                             name={item.name}
-                            dataSource={sls}
+                            // dataSource={sls}
                             value={value}
                             style={{
                                 left: pos.left * ratioWidth,
@@ -259,7 +270,17 @@ const DocEditable = ({
                             onSearch={value => onSubjectDetailChange(item, value)}
                             onSelect={value => onSubjectBlur(sls, item, value)}
                             onBlur={value => onSubjectBlur(sls, item, value)}
-                        />
+                        >
+                            {sls.map(item => {
+                                return (
+                                    <Option key={item.value}>
+                                        <div style={{ overflow: 'scroll' }}>
+                                            {item.text}
+                                        </div>
+                                    </Option>
+                                )
+                            })}
+                        </AutoComplete>
                     )
                     break;
 

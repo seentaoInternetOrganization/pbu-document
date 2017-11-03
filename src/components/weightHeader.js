@@ -210,13 +210,13 @@ const EditWeightHeader = ({
 
         return (
             <div className={styles.menus}>
-                {tagLength > 30 && <span className={styles.pre}><i className={styles.iconfont}/></span>}
+                {/* {tagLength > 30 && <span className={styles.pre}><i className={styles.iconfont}/></span>} */}
                 <div>
                     <ul>
                         {tagNodes}
                     </ul>
                 </div>
-                {tagLength > 30 && <span className={styles.next}><i className={styles.iconfont}/></span>}
+                {/* {tagLength > 30 && <span className={styles.next}><i className={styles.iconfont}/></span>} */}
             </div>
         )
     }

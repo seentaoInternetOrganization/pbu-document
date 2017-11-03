@@ -14,6 +14,7 @@ import { Button , Select, Tag, AutoComplete, Icon, Upload, message, Popover, Tab
 import isNumeric from 'validator/lib/isNumeric';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
+import { mapExaminesWithAll } from './docUtils';
 
 const Option = Select.Option;
 const { CheckableTag } = Tag;
@@ -56,17 +57,6 @@ class DataInit extends Component {
         })
 
         this.combineDataToState(nextProps);
-        // if (nextProps.currentPage !== this.props.currentPage
-        //     || nextProps.activityId !== this.props.activityId) {
-        //     this.combineDataToState(nextProps);
-        //     return;
-        // }
-        //
-        // if (!(this.props.data
-        //     && this.props.data.all)) {
-        //     this.combineDataToState(nextProps);
-        //     return;
-        // }
     }
 
     componentDidUpdate() {
@@ -280,55 +270,16 @@ class DataInit extends Component {
         }
 
         const { isDataInit, currentPage } = this.props;
-        const data = [];
-        const answer = [];
-
-        examines.forEach(item => {
-            let sortIfExist = {};
-
-            if (item.sortOrder && Array.isArray(item.sortOrder)) {
-                sortIfExist = {
-                    sortOrder: item.sortOrder
-                }
-            }
-
-            const dataToPush = {
-                examineId: item.examineId,
-                examineType: item.examineType,
-                examineName: item.examineName,
-                ...sortIfExist,
-            }
-            let willPush = false;
-
-            Object.keys(item).forEach(elmName => {
-                if (isDataInit) {
-                    if (all[elmName]
-                        && all[elmName].data) {
-                        dataToPush[elmName] = all[elmName].data;
-                        willPush = true;
-                    }
-                }else {
-                    if (all[elmName]
-                        && all[elmName].answer) {
-                        dataToPush[elmName] = all[elmName].answer;
-                        willPush = true;
-                    }
-                }
-            })
-
-            willPush && isDataInit && data.push(dataToPush);
-            willPush && !isDataInit && answer.push(dataToPush);
-        })
 
         let valueOpt = {};
 
         if (isDataInit) {
             valueOpt = {
-                data
+                data: mapExaminesWithAll(examines, 'data', all)
             }
         }else {
             valueOpt = {
-                answer
+                answers: mapExaminesWithAll(examines, 'answer', all)
             }
         }
 
@@ -497,6 +448,7 @@ class DataInit extends Component {
                         <div>
                             <h2>答案解析：</h2>
                             <textarea className={styles.txt}
+                                    maxLength={500}
                                     placeholder={'请输入答案解析'}
                                     onChange={e => this.onAnswerChange(e.target.value)}
                                     value={answerArea}/>
@@ -524,16 +476,22 @@ class DataInit extends Component {
 
         //渲染单据
         const renderDoc = () => {
+
+            const docNodes = () => {
+                return (
+                    <div style={{ display: "inline-block" }}>
+                        <DocEditable {...docProps} />
+                        {renderPage()}
+                    </div>
+                )
+            }
+
             if (isDataInit) {
-                return <div style={{ display: "inline-block" }}>
-                    <DocEditable {...docProps} />
-                    {renderPage()}
-                </div>
+                return docNodes()
             }else {
                 return (
                     <section className={styles.bill_wrap}>
-                        <DocEditable {...docProps} />
-                        {renderPage()}
+                        {docNodes()}
                     </section>
                 )
             }

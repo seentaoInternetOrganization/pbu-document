@@ -33,6 +33,7 @@ class EditWeight extends Component {
         selectedTag: '',
         editTagId: '',
         editTagName: '',
+        tagNameBackup: ''
     }
 
     componentDidMount() {
@@ -292,6 +293,7 @@ class EditWeight extends Component {
         this.setState({
             editTagId: examineId,
             editTagName: examineName,
+            tagNameBackup: examineName,
         })
     }
 
@@ -300,17 +302,20 @@ class EditWeight extends Component {
             ...this.state.completedElement
         }
 
-        if (!isEmpty(this.state.editTagName)) {
-            Object.values(newCompletedElement).forEach(item => {
-                if (item.examineId === this.state.editTagId) {
+        Object.values(newCompletedElement).forEach(item => {
+            if (item.examineId === this.state.editTagId) {
+                if (!isEmpty(this.state.editTagName)) {
                     item.examineName = this.state.editTagName
+                }else {
+                    item.examineName = this.state.tagNameBackup
                 }
-            });
-        }
+            }
+        });
 
         this.setState({
             editTagId: '',
             selectedTag: '',
+            tagNameBackup: '',
             completedElement: newCompletedElement
         })
     }

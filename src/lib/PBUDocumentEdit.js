@@ -111,6 +111,10 @@ PBUDocumentEdit.propTypes = {
      * 是否可编辑，默认true
      */
     editable: PropTypes.bool,
+    /**
+     * onChange回调
+     */
+    onDocChange: PropTypes.func,
 }
 
 PBUDocumentEdit.defaultProps = {
@@ -129,7 +133,10 @@ PBUDocumentEdit.defaultProps = {
     onSearchSubjects: (value, subjectId) => {
         console.log('value = ', value, ' subjectId = ', subjectId);
     },
-    editable: true
+    editable: true,
+    onDocChange: data => {
+        console.log('data = ', data);
+    }
 }
 
 export default PBUDocumentEdit;

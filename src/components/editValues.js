@@ -14,6 +14,7 @@ import isNumeric from 'validator/lib/isNumeric';
 import isDecimal from 'validator/lib/isDecimal';
 import { getDescendantantProp } from '../utils';
 import { copyToShow, basicStyleOfItem, testNumber, canChange } from './docUtils';
+const Option = AutoComplete.Option;
 
 const DocValues = ({
     config,
@@ -180,7 +181,7 @@ const DocValues = ({
         return (
             <AutoComplete key={`${item.name}_${index}`}
                 name={item.name}
-                dataSource={dataSource}
+                // dataSource={dataSource}
                 value={valueToShow(item)}
                 style={styleOfSelect}
                 onSearch={value => {
@@ -188,14 +189,24 @@ const DocValues = ({
                 }}
                 onSelect={(value, option) => {
                     onSubjectSelected(item, value, {
-                        text: option.props.children,
+                        text: option.props.children.props.children,
                         value: value
                     })
                 }}
                 onBlur={value => {
                     onSubjectBlur(item, value, dataSource)
                 }}
-            />
+            >
+                {dataSource.map(item => {
+                    return (
+                        <Option key={item.value}>
+                            <div style={{ overflow: 'scroll' }}>
+                                {item.text}
+                            </div>
+                        </Option>
+                    )
+                })}
+            </AutoComplete>
         )
     }
 

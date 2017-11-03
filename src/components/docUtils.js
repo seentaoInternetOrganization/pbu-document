@@ -89,3 +89,60 @@ export function canChange(item, value) {
 
     return true
 }
+
+/**
+ * 根据examines和all，生成对应的keyOfAll
+ * @param  {Array} examines 甄别信息数组
+ * @param  {String} keyOfAll all中要取的key, 可取值`data`,`answer`, `value`
+ * @param  {Object} all      documentBody中的all
+ * @return {Array}          新生成的数组
+ */
+export function mapExaminesWithAll(examines, keyOfAll, all) {
+    if (examines.length == 0
+        || !all
+        || !keyOfAll
+        || isEmpty(keyOfAll)) {
+        return []
+    }
+
+    //每项元素固定的key
+    const staticItems = ['examineId', 'examineType', 'examineName', 'sortOrder']
+
+    function sortOrder(item) {
+        if (item.sortOrder
+            && Array.isArray(item.sortOrder)) {
+            return {
+                sortOrder: item.sortOrder
+            }
+        }
+    }
+
+    function excludeStaticProperty(key) {
+        return !staticItems.includes(key)
+    }
+    //先排除掉未填过值，然后拼装
+    return examines.filter(item => {
+        return Object.keys(item)
+        .filter(excludeStaticProperty)
+        .filter(key => {
+            return all[key] && all[key][keyOfAll]
+        }).length > 0
+    }).map(item => {
+        return Object.keys(item)
+        .filter(excludeStaticProperty)
+        .filter(key => {
+            return all[key] && all[key][keyOfAll]
+        })
+        .reduce((sum, key) => {
+            return {
+                ...sum,
+                [key]: all[key][keyOfAll],
+                ...sortOrder(item)
+            }
+        }, {
+            examineId: item.examineId,
+            examineType: item.examineType,
+            examineName: item.examineName
+        })
+    })
+}
