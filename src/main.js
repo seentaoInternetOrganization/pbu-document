@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { loadConfig } from './utils';
 import isEmpty from 'validator/lib/isEmpty';
+import { Spin } from 'antd';
 
 export default class MainContainer extends Component {
     state = {
@@ -23,7 +24,7 @@ export default class MainContainer extends Component {
         loadConfig(docConfigUrl, docConfig => {
             if (!docConfig || docConfig.length < 1) {
                 this.setState({
-                    errMsg: '加载失败'
+                    errMsg: '.'
                 })
             }else {
                 this.setState({
@@ -62,7 +63,7 @@ export default class MainContainer extends Component {
                     docConfig.length > 0 ?
                     renderChildren()
                     :
-                    errMsg
+                    <Spin />
                 }
             </div>
         )

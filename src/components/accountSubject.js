@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './accountSubject.less';
 import { Popover, Table, Button } from 'antd';
+import classnames from 'classnames';
 
 const AccountSubjectPopover = ({
     subjectsTopLevel,
@@ -134,15 +135,13 @@ const AccountSubjectPopover = ({
             ]
 
             const title = (
-                <div className={styles.subject_title}>{subject.subjectName}</div>
+                <div className={styles.subject_title}>
+                    <span>{subject.subjectName}</span>
+                </div>
             )
 
             const content = (
-                <div style={{
-                    width: 370,
-                    height: 256,
-                    overflow:'scroll'
-                }}>
+                <div className={styles.subject_content}>
                     <Table
                         loading={subjectsTree === 'loading'}
                         size={'small'}
@@ -155,16 +154,30 @@ const AccountSubjectPopover = ({
                 </div>
             )
 
+            const visibleOpt = () => {
+                if (!visible
+                    && currentAccountTitle
+                    && subject.subjectId === currentAccountTitle.subjectId) {
+                    return {
+                        visible
+                    }
+                }
+            }
+
             return (
                 <Popover key={`${subject.subjectId}_${index}`}
                         title={title}
                         style={{ height:256, width:370 }}
                         onVisibleChange={visible => {
-                            onAccountTitleSelected(subject)
+                            setTimeout(() => {
+                                onAccountTitleSelected(subject)
+                            }, 300)
                         }}
-                        visible={visible && subject.subjectId === currentAccountTitle.subjectId}
+                        // visible={true}
+                        {...visibleOpt()}
                         content={content}>
-                    <Button type="ghost">
+                    <Button type="ghost" className={classnames({ [styles.highlightBtn]: currentAccountTitle
+                    && subject.subjectId === currentAccountTitle.subjectId })}>
                         {subject.subjectName}
                         <span className={styles.arrow}></span>
                     </Button>

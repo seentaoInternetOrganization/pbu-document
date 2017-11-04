@@ -12,10 +12,10 @@ import PBUDocumentEdit from './lib/PBUDocumentEdit';
 import mockSubjects from './mock/mockSubject.json';
 import { Button } from 'antd';
 
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
 // const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 
@@ -54,6 +54,7 @@ class Demo extends Component {
         // },
         docData: mockData.docData,
         empty: true,
+        answerDesc: '哈哈哈哈',
     }
 
     onCopyChange = (copy) => {
@@ -110,12 +111,13 @@ class Demo extends Component {
                                     onSearchSubjects={this.onSearchSubjects}
                                     subjectsTopLevel={mockSubjects.accountingSubjects}
                                     subjectsTree={mockSubjects.accountingSubjects}
-                                    answerDesc={'哈哈哈哈'}
+                                    answerDesc={this.state.answerDesc}
                                     uploadProps={{...uploadProps}}
                                     totalPage={2}
-                                    onDocChange={ data => {
+                                    onDocChange={ (data, answerDesc) => {
                                         this.setState({
-                                            docData: data
+                                            docData: data,
+                                            answerDesc,
                                         })
                                     }}/>
                 <span>设置权重及甄别方式</span>
@@ -130,10 +132,22 @@ class Demo extends Component {
                 </div>
                 <div>预置数据</div>
                 <PBUDocumentDataInit docConfigUrl={docConfigUrl}
-                                    docCode='DJY0066'
-                                    docData={mockData.docData}
-                                    totalPage={3}
-                                    activityId='18bcf3382fa8c93d'/>
+                                    docData={this.state.docData}
+                                    activityId='18bcf3382fa8c93d'
+                                    currentCopy={currentCopy}
+                                    onCopyChange={this.onCopyChange}
+                                    subjectTotals={this.state.subjectTotals}
+                                    onSearchSubjects={this.onSearchSubjects}
+                                    subjectsTopLevel={mockSubjects.accountingSubjects}
+                                    subjectsTree={mockSubjects.accountingSubjects}
+                                    answerDesc={'哈哈哈哈'}
+                                    uploadProps={{...uploadProps}}
+                                    totalPage={2}
+                                    onDocChange={ data => {
+                                        this.setState({
+                                            docData: data
+                                        })
+                                    }}/>
                 <div>背景单据展示</div>
                 <PBUDocumentData docConfigUrl={docConfigUrl}
                     docData={mockData.docData}

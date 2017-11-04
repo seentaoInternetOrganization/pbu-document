@@ -8,7 +8,7 @@
 .menus .pre:hover,.menus .next:hover{background: #D1D1D1;color:#A8A8A8;}
 .menus .pre i:before{content:"\e900";font-size:12px;}
 .menus .next i:before{content:"\e901";font-size:12px;}
-.menus div{display:inline-block;overflow:scroll;line-height:60px;width: 100%;white-space: nowrap;}
+.menus div{display:inline-block;overflow:auto;line-height:60px;width: 100%;white-space: nowrap;}
 /*.menus ul{width: 885px;}*/
 .menus li{height:32px;display: inline-block;border: 1px solid #C1C1C1;border-radius: 2px;position: relative;color:#919191;cursor: pointer;margin:0 5px;box-sizing: border-box;-webkit-box-sizing: border-box;line-height: 32px!important;}
 .menus li input{height: 26px;display: block;min-width: 50px;max-width: 100px}

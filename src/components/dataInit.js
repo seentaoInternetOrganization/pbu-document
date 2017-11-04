@@ -155,7 +155,7 @@ class DataInit extends Component {
         this.props.onDocChange({
             ...this.props.data,
             all: newAll
-        })
+        }, this.state.answerArea)
     }
 
     onSubjectBlur = (subjects, item, value) => {
@@ -213,7 +213,7 @@ class DataInit extends Component {
         this.props.onDocChange({
             ...this.props.data,
             all: newAll
-        })
+        }, this.state.answerArea)
     }
 
     onSubjectChange = (item, value, totalSubjectId) => {
@@ -248,7 +248,7 @@ class DataInit extends Component {
         this.props.onDocChange({
             ...this.props.data,
             all: newAll
-        })
+        }, this.state.answerArea)
         this.props.onSearchSubjects(value, totalSubjectId ? totalSubjectId : '');
     }
 
@@ -307,6 +307,10 @@ class DataInit extends Component {
         this.setState({
             answerArea: value
         })
+
+        this.props.onDocChange({
+            ...this.props.data,
+        }, value)
     }
 
     onBackgroundLoaded = () => {
@@ -316,9 +320,11 @@ class DataInit extends Component {
     onAccountTitleSelected = subject => {
         this.setState({
             currentAccountTitle: subject,
+            currentAccountDetail: null,
             custom: {
                 ...this.state.custom,
                 subjectTitle: subject,
+                subjectDetail: undefined,
             },
             subjectVisible: true,
         });
@@ -329,7 +335,7 @@ class DataInit extends Component {
                 ...this.state.custom,
                 subjectTitle: subject,
             }
-        })
+        }, this.state.answerArea)
         this.props.onAccountTitleSubejctSelected(subject);
     }
 
@@ -359,7 +365,7 @@ class DataInit extends Component {
                 ...this.state.custom,
                 subjectDetail: subject,
             }
-        })
+        }, this.state.answerArea)
 
         this.props.onAccountDetailSubjectSelected(subject)
     }

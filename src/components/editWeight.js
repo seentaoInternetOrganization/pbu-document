@@ -304,7 +304,7 @@ class EditWeight extends Component {
 
         Object.values(newCompletedElement).forEach(item => {
             if (item.examineId === this.state.editTagId) {
-                if (!isEmpty(this.state.editTagName)) {
+                if (!isEmpty(this.state.editTagName.trim())) {
                     item.examineName = this.state.editTagName
                 }else {
                     item.examineName = this.state.tagNameBackup

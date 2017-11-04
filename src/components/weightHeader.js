@@ -187,6 +187,7 @@ const EditWeightHeader = ({
                         editTagId === item.examineId
                         ?
                         <Input value={editTagName}
+                                style={{ height: 32 }}
                                 onPressEnter={onTagBlur}
                                 onBlur={onTagBlur}
                                 maxLength={6}
