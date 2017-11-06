@@ -12,32 +12,13 @@ import PBUDocumentEdit from './lib/PBUDocumentEdit';
 import mockSubjects from './mock/mockSubject.json';
 import { Button, message } from 'antd';
 
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
 // const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 
-
-// Render
-// ReactDOM.render((<PBUDocument configUrl={docConfigUrl}
-//                                 mode='DATA_INIT'
-//                                 // mode='EXAMINE_SET'
-//                                 docCode='DJY0066'
-//                                 docData={mockData.docData}
-//                             />), document.getElementById('app'));
-
-// ReactDOM.render((<PBUDocumentDataInit docConfigUrl={docConfigUrl}
-//                                 docCode='DJY0066'
-//                                 docData={mockData.docData}
-//                                 totalPage={3}
-//                                 activityId='18bcf3382fa8c93d'
-//                             />), document.getElementById('app'));
-// ReactDOM.render((<PBUDocumentExamineSet docConfigUrl={docConfigUrl}
-//                                         docCode='DJY0066'
-//                                         loading={false}
-//                                     />), document.getElementById('app'))
 let currentCopy = 0;
 
 function onCopyChange(copy) {

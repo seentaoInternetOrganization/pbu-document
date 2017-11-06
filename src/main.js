@@ -40,7 +40,9 @@ export default class MainContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!isEmpty(this.props.docConfigUrl)
+        if (this.props.docConfigUrl
+            && typeof this.props.docConfigUrl === 'string'
+            && !isEmpty(this.props.docConfigUrl)
             && nextProps.docConfigUrl === this.props.docConfigUrl) {
             return
         }

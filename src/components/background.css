@@ -23,10 +23,10 @@
   background: none;
   outline: none;
   display: inline-block;
-  line-height: 33px;
+  /*line-height: 33px;*/
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  padding:0 10px;
+  /*padding:0 10px;*/
 }
 .container div{
   position: absolute;

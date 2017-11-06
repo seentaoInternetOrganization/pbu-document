@@ -2,7 +2,7 @@
 .sub_nav{background: #FFFFFF;box-shadow: 0 1px 2px 0 rgba(0,0,0,0.10);width: 100%;height: 60px;}
 .sub_nav *{margin:0;padding:0;list-style: none;outline: none;}
 .sub_nav h2{font-size: 16px;line-height:60px;color: #313131;width: 180px;margin-left: 20px;_display:inline;float: left;}
-.menus{width: 750px;float: left;position: relative;padding:0 42px;box-sizing: border-box;-webkit-box-sizing: border-box;}
+.menus{width: 55%;float: left;position: relative;box-sizing: border-box;-webkit-box-sizing: border-box;}
 .menus .pre,.menus .next{display: inline-block;width: 22px;height: 32px;background: #EBEBEB;border-radius: 2px;cursor: pointer;position: absolute;left: 0;top:14px;line-height: 30px;text-align: center;color:#C1C1C1;}
 .menus .next{left:auto;right:0;}
 .menus .pre:hover,.menus .next:hover{background: #D1D1D1;color:#A8A8A8;}

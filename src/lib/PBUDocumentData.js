@@ -79,7 +79,7 @@ class PBUDocumentData extends Component {
         return (
             <div className={styles.container}>
                 {renderCopies()}
-                <MainContainer className={classnames(styles.main_container, { [`${styles.showCopy}`]: !!visibleSheet})}
+                <MainContainer className={styles.main_container}
                             docConfigUrl={docConfigUrl}>
                     <ReadOnly showAnswer={false}
                             highlightAnswer={false}
