@@ -5,7 +5,7 @@
 
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
-import isDecimal from 'validator/lib/isDecimal';
+import isFloat from 'validator/lib/isFloat';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 
 /**
@@ -83,7 +83,7 @@ export function canChange(item, value) {
             break;
 
         case ELEMENT.FLOAT:
-            return isDecimal(value) && testNumber(item, value)
+            return isFloat(value) && testNumber(item, value)
             break;
     }
 

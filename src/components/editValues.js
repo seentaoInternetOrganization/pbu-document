@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import DocBG from './background';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
-import { AutoComplete, message } from 'antd';
+import { AutoComplete, message, Tooltip } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
 import isDecimal from 'validator/lib/isDecimal';
@@ -200,9 +200,9 @@ const DocValues = ({
                 {dataSource.map(item => {
                     return (
                         <Option key={item.value}>
-                            <div style={{ overflow: 'scroll' }}>
+                            <Tooltip title={item.text}>
                                 {item.text}
-                            </div>
+                            </Tooltip>
                         </Option>
                     )
                 })}

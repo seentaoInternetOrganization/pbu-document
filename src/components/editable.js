@@ -8,11 +8,12 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import DocBG from './background';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
-import { AutoComplete, message } from 'antd';
+import { AutoComplete, message, Tooltip } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
-import isDecimal from 'validator/lib/isDecimal';
+import isFloat from 'validator/lib/isFloat';
 import { getDescendantantProp } from '../utils';
+import { canChange } from './docUtils';
 const Option = AutoComplete.Option;
 
 const DocEditable = ({
@@ -57,46 +58,9 @@ const DocEditable = ({
     }
 
     const onElementChange = (item, value) => {
-        let data;
-
-        if (!isEmpty(value)
-            && item.constraint) {
-            //暂时先只考虑这几种情况
-            switch (item.type) {
-                case ELEMENT.INTEGER:
-                    if (!isNumeric(value)) {
-                        return;
-                    }
-                    data = parseInt(value) + ''
-                    break;
-                case ELEMENT.FLOAT:
-                    if (!isDecimal(value)) {
-                        return;
-                    }
-                    data = parseFloat(value) + ''
-                    break;
-                default:
-                    data = value + ''
-                    break;
-            }
-
-            if (item.constraint
-                && item.constraint.maxValue
-                && parseFloat(value) > item.constraint.maxValue) {
-                return;
-            }
-
-            if (item.constraint
-                && item.constraint.minValue
-                && parseFloat(value) < item.constraint.minValue) {
-                return;
-            }
-
-        }else {
-            data = value;
+        if (canChange(item, value)) {
+            onItemChange(item, value)
         }
-
-        onItemChange(item, data);
     }
 
     const renderElements = () => {
@@ -212,9 +176,9 @@ const DocEditable = ({
                             {glas.map(item => {
                                 return (
                                     <Option key={item.value}>
-                                        <div style={{ overflow: 'scroll' }}>
+                                        <Tooltip title={item.text}>
                                             {item.text}
-                                        </div>
+                                        </Tooltip>
                                     </Option>
                                 )
                             })}
@@ -274,9 +238,9 @@ const DocEditable = ({
                             {sls.map(item => {
                                 return (
                                     <Option key={item.value}>
-                                        <div style={{ overflow: 'scroll' }}>
+                                        <Tooltip title={item.text}>
                                             {item.text}
-                                        </div>
+                                        </Tooltip>
                                     </Option>
                                 )
                             })}

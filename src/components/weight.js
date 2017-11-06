@@ -10,6 +10,7 @@ import DocBG from './background';
 import bgStyles from './background.css';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR } from '../constants';
 import { copyToShow, basicStyleOfItem, testNumber, canChange } from './docUtils';
+import { excludePropertyOfObject } from '../utils';
 
 const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
 
@@ -47,14 +48,11 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
                 return (
                     <span key={`readonly_${index}`}
                         style={{
-                            left: pos.left * ratioWidth,
-                            top: pos.top * ratioHeight,
-                            width: pos.width * ratioWidth,
-                            height: pos.height * ratioHeight,
+                            ...excludePropertyOfObject(basicStyleOfItem(item), 'letterSpacing'),
                             border: `1px solid ${EXAMINE_COLOR[data.all[item.name].examineType]}`,
                             borderRadius: 2,
                             background: '#fff',
-                            ...item.style
+                            textAlign: 'center',
                         }}>
                         {data.all[item.name].weight}
                     </span>

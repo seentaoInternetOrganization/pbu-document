@@ -74,3 +74,27 @@ exports.getDescendantantProp = function (obj, desc) {
 
     return obj;
 };
+
+/**
+ * 过滤掉obj的key属性，并生成一个新的对象
+ * @return {Object|undefined}
+ */
+exports.excludePropertyOfObject = function(obj, key) {
+    if (!obj
+        || typeof obj !== 'object'
+        || !key
+        || typeof key !== 'string') {
+        return
+    }
+
+    return Object.keys(obj)
+    .filter(_key => {
+        return _key !== key
+    })
+    .reduce((sum, _key) => {
+        return {
+            ...sum,
+            [_key]: obj[_key]
+        }
+    }, {})
+}

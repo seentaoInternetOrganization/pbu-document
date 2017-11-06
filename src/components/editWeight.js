@@ -443,7 +443,8 @@ class EditWeight extends Component {
                             <input id={item.element.name}
                                 style={{
                                     background: '#fff',
-                                    padding:'0 10px'
+                                    textAlign: 'center'
+                                    // padding:'0 10px'
                                 }}
                                 name={item.element.name}
                                 value={item.weight}
