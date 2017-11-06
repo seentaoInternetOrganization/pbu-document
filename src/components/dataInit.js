@@ -265,7 +265,7 @@ class DataInit extends Component {
         if (this.props.config[0].hasSubject) {
             if (currentAccountDetail === null) {
                 message.warning('请先选择科目!');
-                return;
+                return false
             }
         }
 
@@ -296,11 +296,12 @@ class DataInit extends Component {
         }else {
             this.props.onSave(currentPage, JSON.stringify(dataFinal), answerArea);
         }
+
+        return true
     }
 
     appendPage = () => {
-        this.onSave();
-        this.props.onAppendPage();
+        return this.onSave() && this.props.onAppendPage();
     }
 
     onAnswerChange = (value) => {
@@ -430,8 +431,7 @@ class DataInit extends Component {
                         closable={totalPage > 1}
                         onClick={e => {
                             e.preventDefault();
-                            this.onSave();
-                            onPageChange(i + 1);
+                            this.onSave() && onPageChange(i + 1)
                         }}
                         onClose={e => {
                             e.preventDefault();

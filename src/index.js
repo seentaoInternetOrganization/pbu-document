@@ -10,7 +10,7 @@ import PBUDocumentAnswer from './lib/PBUDocumentAnswer';
 import PBUDocumentData from './lib/PBUDocumentData';
 import PBUDocumentEdit from './lib/PBUDocumentEdit';
 import mockSubjects from './mock/mockSubject.json';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
@@ -55,6 +55,8 @@ class Demo extends Component {
         docData: mockData.docData,
         empty: true,
         answerDesc: '哈哈哈哈',
+        totalPage: 1,
+        currentPage: 1,
     }
 
     onCopyChange = (copy) => {
@@ -105,6 +107,7 @@ class Demo extends Component {
                                     docCode='DJY0066'
                                     docData={this.state.docData}
                                     activityId='18bcf3382fa8c93d'
+                                    currentPage={this.state.currentPage}
                                     currentCopy={currentCopy}
                                     onCopyChange={this.onCopyChange}
                                     subjectTotals={this.state.subjectTotals}
@@ -112,8 +115,14 @@ class Demo extends Component {
                                     subjectsTopLevel={mockSubjects.accountingSubjects}
                                     subjectsTree={mockSubjects.accountingSubjects}
                                     answerDesc={this.state.answerDesc}
+                                    onAppendPage={() => {
+                                        this.setState({
+                                            totalPage: this.state.totalPage + 1,
+                                            currentPage: this.state.currentPage + 1,
+                                        })
+                                    }}
                                     uploadProps={{...uploadProps}}
-                                    totalPage={2}
+                                    totalPage={this.state.totalPage}
                                     onDocChange={ (data, answerDesc) => {
                                         this.setState({
                                             docData: data,
@@ -171,6 +180,9 @@ class Demo extends Component {
                         onSearchSubjects={this.onSearchSubjects}
                         subjectsTopLevel={mockSubjects.accountingSubjects}
                         subjectsTree={mockSubjects.accountingSubjects}
+                        onConfigLoaded={config => {
+                            console.log('!!!!config = ', config);
+                        }}
                         hasErrorInfo={true}
                         onDocChange={ data => {
                             console.log('data = ', data);

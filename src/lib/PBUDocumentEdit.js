@@ -24,6 +24,7 @@ const PBUDocumentEdit = ({
     onAccountTitleSubejctSelected,
     onAccountDetailSubjectSelected,
     editable,
+    onConfigLoaded,
 }) => {
 
     const docProps = {
@@ -45,7 +46,8 @@ const PBUDocumentEdit = ({
     }
 
     return (
-        <MainContainer docConfigUrl={docConfigUrl}>
+        <MainContainer docConfigUrl={docConfigUrl}
+                    onConfigLoaded={onConfigLoaded}>
             <EditValuesContainer ratioHeight={1}
                         ratioWidth={1}
                         {...docProps}
@@ -115,6 +117,11 @@ PBUDocumentEdit.propTypes = {
      * onChange回调
      */
     onDocChange: PropTypes.func,
+    /**
+     * 当单据配置文件加载完毕时的回调
+     * @param {Object} docConfig 单据配置文件信息
+     */
+    onConfigLoaded: PropTypes.func,
 }
 
 PBUDocumentEdit.defaultProps = {

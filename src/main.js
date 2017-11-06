@@ -30,6 +30,7 @@ export default class MainContainer extends Component {
                 this.setState({
                     docConfig: docConfig,
                 })
+                this.props.onConfigLoaded(docConfig)
             }
         })
     }
@@ -79,4 +80,15 @@ MainContainer.propTypes = {
      * 类名
      */
     className: PropTypes.string,
+    /**
+     * 当单据配置文件加载完毕时的回调
+     * @param {Object} docConfig 单据配置文件信息
+     */
+    onConfigLoaded: PropTypes.func,
+}
+
+MainContainer.defaultProps = {
+    onConfigLoaded: config => {
+        console.log('config');
+    }
 }
