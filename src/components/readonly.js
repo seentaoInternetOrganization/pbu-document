@@ -10,6 +10,10 @@ import bgStyles from './background.css';
 import { ELEMENT } from '../constants';
 import { getDescendantantProp } from '../utils';
 import { copyToShow } from './docUtils';
+import { Checkbox, Radio, Select } from 'antd';
+const Option = Select.Option;
+const CheckboxGroup = Checkbox.Group;
+const RadioGroup = Radio.Group;
 
 const ReadOnly = ({
     config,
@@ -28,7 +32,8 @@ const ReadOnly = ({
 
         if (showAnswer
             && highlightAnswer) {
-            if (all[item.name].answer
+            if (all[item.name]
+                && all[item.name].answer
                 && all[item.name].activityId === activityId) {
                 return true;
             }
@@ -41,14 +46,6 @@ const ReadOnly = ({
     const valueToShow = item => {
         const { all } = docData;
 
-        if (!all[item.name]) {
-            return;
-        }
-
-        if (all[item.name].subjectName) {
-            return all[item.name].subjectName
-        }
-
         if (item.type === ELEMENT.LABEL) {
             if (item.textValue) {
                 return item.textValue
@@ -58,7 +55,15 @@ const ReadOnly = ({
                 return getDescendantantProp(docData.custom, item.equalTo)
             }
 
+            return '';
+        }
+
+        if (!all[item.name]) {
             return;
+        }
+
+        if (all[item.name].subjectName) {
+            return all[item.name].subjectName
         }
 
         if (showAnswer) {
@@ -105,7 +110,7 @@ const ReadOnly = ({
     const renderNormalItem = (item, index) => {
         const value = valueToShow(item)
 
-        if (!value) {
+        if (!value && value !== '') {
             return null
         }
 
@@ -139,6 +144,68 @@ const ReadOnly = ({
         )
     }
 
+    //复选框
+    const renderCheckBox = (item, index) => {
+        if (!item.options) {
+            return (
+                <input key={`${item.name}_${index}`}
+                            type="checkbox"
+                            style={basicStyleOfItem(item)}
+                        />
+            )
+        }else {
+            return (
+                <div key={`${item.name}_${index}`}
+                    style={basicStyleOfItem(item)}>
+                    <CheckboxGroup options={item.options}
+                                disabled={true}
+                                value={valueToShow(item)}
+                    />
+                </div>
+            )
+        }
+    }
+
+    //单选框
+    const renderRadio = (item, index) => {
+        return (
+            <div key={`${item.name}_${index}`}
+                style={basicStyleOfItem(item)}>
+                <RadioGroup style={{
+                    position: 'relative',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                }}  disabled={true}
+                    value={valueToShow(item)}
+                    options={item.options}/>
+            </div>
+        )
+    }
+
+    //下拉选择框
+    const renderSelect = (item, index) => {
+        const renderOptions = options => {
+            return options.map(option => {
+                return (
+                    <Option key={option}
+                            value={option}>
+                            {option}
+                        </Option>
+                )
+            })
+        }
+
+        return (
+            <Select key={`${item.name}_${index}`}
+                    disabled={true}
+                    value={valueToShow(item)}
+                    allowClear={true}
+                    style={basicStyleOfItem(item)}>
+                {renderOptions(item.options)}
+            </Select>
+        )
+    }
+
     const renderElements = () => {
         //无数据或不存在all
         if (!docData
@@ -149,12 +216,6 @@ const ReadOnly = ({
         const copy = copyToShow(config, currentCopy);
 
         const elementNodes = Object.values(config[copy].elements).map((item, index) => {
-            /**
-             * 忽略checkbox
-             */
-            if (item.type === ELEMENT.CHECK_BOX) {
-                return null
-            }
 
             switch (item.type) {
                 case ELEMENT.INPUT:
@@ -168,7 +229,17 @@ const ReadOnly = ({
                 case ELEMENT.TEXT_AREA:
                     return renderTextareaItem(item, index)
                     break;
+                case ELEMENT.CHECK_BOX:
+                    return renderCheckBox(item, index)
+                    break;
 
+                case ELEMENT.RADIO:
+                    return renderRadio(item, index)
+                    break
+
+                case ELEMENT.SELECT:
+                    return renderSelect(item, index)
+                    break;
             }
         })
 

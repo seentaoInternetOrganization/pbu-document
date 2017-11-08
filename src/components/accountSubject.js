@@ -32,6 +32,7 @@ const AccountSubjectPopover = ({
                 subjectId: item.subjectId,
                 isAnswerSetted: item.isAnswerSetted,
                 isInitDataSetted: item.isInitDataSetted,
+                isAnswered: item.isAnswered,
             }
 
             let childrenOpt = {};
@@ -72,6 +73,7 @@ const AccountSubjectPopover = ({
                     subjectId: item.subjectId,
                     isAnswerSetted: item.isAnswerSetted,
                     isInitDataSetted: item.isInitDataSetted,
+                    isAnswered: item.isAnswered,
                     ...childrenOpt
                 }
             }) : [];
@@ -169,6 +171,7 @@ const AccountSubjectPopover = ({
                         title={title}
                         style={{ height:256, width:370 }}
                         onVisibleChange={visible => {
+                            //为了动画的完整展示
                             setTimeout(() => {
                                 onAccountTitleSelected(subject)
                             }, 300)

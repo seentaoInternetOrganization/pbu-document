@@ -1,6 +1,6 @@
 /**
  * @author AngusC
- * @description 只读单据展示组件
+ * @description 单据权重展示组件
  */
 
 import React, { Component } from 'react';

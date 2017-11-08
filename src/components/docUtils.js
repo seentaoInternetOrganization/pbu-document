@@ -73,7 +73,8 @@ export function testNumber(item, value) {
 //判断输入的内容的合法性
 export function canChange(item, value) {
     //输入空，通过
-    if (isEmpty(value)) {
+    if (typeof value === 'string'
+        && isEmpty(value)) {
         return true
     }
 
@@ -145,4 +146,64 @@ export function mapExaminesWithAll(examines, keyOfAll, all) {
             examineName: item.examineName
         })
     })
+}
+
+//处理总账科目和明细账科目
+export function combineSubjects(subjects) {
+    if (!Array.isArray(subjects)) {
+        return []
+    }
+
+    const combined = subjects.map(subject => {
+        return {
+            value: subject.subjectId,
+            text: subject.subjectName
+        }
+    });
+
+    return combined;
+}
+
+export function combineDataToState(props) {
+    if (!props.docData) {
+        return { all: {} }
+    }
+
+    if (!props.docData.all) {
+        return {
+            ...props.docData,
+            all: {}
+        }
+    }
+
+    return props.docData
+}
+
+/**
+ * 重置antd的Select或AutoComplete组件的高度，a hack
+ * @param {Array} config 单据配置文件
+ */
+export function resetSelectHeightOfAntd(config, dom) {
+    if (!config
+        || !Array.isArray(config)
+        || config.length == 0
+        || !config[0].elements) {
+
+    }
+    const selectHeight = [];
+
+    Object.values(config[0].elements).forEach(item => {
+        if (item.type === ELEMENT.GLA
+            || item.type === ELEMENT.SL) {
+            selectHeight.push(`${item.pos.height}px`);
+        }
+    })
+
+    //might be a hack
+    const selectNodes = dom.getElementsByClassName('ant-select-selection--single');
+
+    for (let i = 0; i < selectNodes.length; i++) {
+        selectNodes[i].style.height = selectHeight[i];
+        selectNodes[i].style.backgroundColor = 'transparent';
+    }
 }

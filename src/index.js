@@ -15,9 +15,9 @@ import { Button, message } from 'antd';
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
-// const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
+const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 
 let currentCopy = 0;
 
@@ -83,6 +83,33 @@ class Demo extends Component {
                         docData: this.state.empty ? { all: {}, data: []} : mockData.docData
                     })
                 }}>切换</Button> */}
+                <span>设置权重及甄别方式</span>
+                <PBUDocumentExamineSet docConfigUrl={docConfigUrl}
+                                        docCode='DJY0066'
+                                        loading={false}
+                                        docData={mockData.docData}/>
+                <div>权重及甄别方式预览</div>
+                <div style={{ display: 'inline-block'}}>
+                    <PBUDocumentPreview docConfigUrl={docConfigUrl}
+                        docData={mockData.docData}/>
+                </div>
+                <div>预置数据</div>
+                <PBUDocumentDataInit docConfigUrl={docConfigUrl}
+                                    docData={this.state.docData}
+                                    activityId='18bcf3382fa8c93d'
+                                    currentCopy={currentCopy}
+                                    onCopyChange={this.onCopyChange}
+                                    subjectTotals={this.state.subjectTotals}
+                                    onSearchSubjects={this.onSearchSubjects}
+                                    subjectsTopLevel={mockSubjects.accountingSubjects}
+                                    subjectsTree={mockSubjects.accountingSubjects}
+                                    uploadProps={{...uploadProps}}
+                                    totalPage={2}
+                                    onDocChange={ data => {
+                                        this.setState({
+                                            docData: data
+                                        })
+                                    }}/>
                 <span>设置答案</span>
                 <PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
                                     docCode='DJY0066'
@@ -110,38 +137,10 @@ class Demo extends Component {
                                             answerDesc,
                                         })
                                     }}/>
-                <span>设置权重及甄别方式</span>
-                <PBUDocumentExamineSet docConfigUrl={docConfigUrl}
-                                        docCode='DJY0066'
-                                        loading={false}
-                                        docData={mockData.docData}/>
-                <div>权重及甄别方式预览</div>
-                <div style={{ display: 'inline-block'}}>
-                    <PBUDocumentPreview docConfigUrl={docConfigUrl}
-                        docData={mockData.docData}/>
-                </div>
-                <div>预置数据</div>
-                <PBUDocumentDataInit docConfigUrl={docConfigUrl}
-                                    docData={this.state.docData}
-                                    activityId='18bcf3382fa8c93d'
-                                    currentCopy={currentCopy}
-                                    onCopyChange={this.onCopyChange}
-                                    subjectTotals={this.state.subjectTotals}
-                                    onSearchSubjects={this.onSearchSubjects}
-                                    subjectsTopLevel={mockSubjects.accountingSubjects}
-                                    subjectsTree={mockSubjects.accountingSubjects}
-                                    answerDesc={'哈哈哈哈'}
-                                    uploadProps={{...uploadProps}}
-                                    totalPage={2}
-                                    onDocChange={ data => {
-                                        this.setState({
-                                            docData: data
-                                        })
-                                    }}/>
                 <div>背景单据展示</div>
                 <PBUDocumentData docConfigUrl={docConfigUrl}
                     docData={mockData.docData}
-                    visibleSheet={'1,1,1,'}
+                    visibleSheet={'0,1,1,'}
                     activityId='18bcf3382fa8c93' />
                 <div>查看答案</div>
                 <div style={{ display: 'inline-block' }}>
@@ -149,7 +148,7 @@ class Demo extends Component {
                         docData={mockData.docData}
                         subjectsTopLevel={mockSubjects.accountingSubjects}
                         subjectsTree={mockSubjects.accountingSubjects}
-                        activityId='18bcf3382fa8c93' />
+                        activityId='18bcf3382fa8c93d' />
                 </div>
                 <div>编辑内容</div>
                 <PBUDocumentEdit

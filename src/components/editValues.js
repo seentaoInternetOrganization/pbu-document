@@ -8,13 +8,13 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import DocBG from './background';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
-import { AutoComplete, message, Tooltip } from 'antd';
+import { AutoComplete, message, Tooltip, Checkbox, Radio, Select } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
-import isDecimal from 'validator/lib/isDecimal';
-import { getDescendantantProp } from '../utils';
 import { copyToShow, basicStyleOfItem, testNumber, canChange } from './docUtils';
 const Option = AutoComplete.Option;
+const CheckboxGroup = Checkbox.Group;
+const RadioGroup = Radio.Group;
 
 const DocValues = ({
     config,
@@ -33,48 +33,12 @@ const DocValues = ({
     onSubjectSelected,
     onSubjectBlur,
     editable,
+    disabledColor,
+    valueToShow,
+    canEdit,
 }) => {
 
     const { all } = docData;
-    //要展示的value
-    const valueToShow = item => {
-
-        if (item.type === ELEMENT.LABEL) {
-            if (item.textValue) {
-                return item.textValue
-            }else if (item.equalTo
-                    && docData.custom
-                    && getDescendantantProp(docData.custom, item.equalTo)) {
-                return getDescendantantProp(docData.custom, item.equalTo)
-            }
-
-            return;
-        }
-
-        if (!all[item.name]) {
-            return;
-        }
-
-        if (all[item.name].subjectName) {
-            return all[item.name].subjectName
-        }
-
-        //展示预置的数据，非本activityId的答案和学生填写的value
-        if (all[item.name].data) {
-            return all[item.name].data
-        }else if (all[item.name].answer
-                && all[item.name].activityId !== activityId) {
-            return all[item.name].answer
-        }else if (all[item.name].value) {
-            return all[item.name].value
-        }
-
-        if (hasErrorInfo
-            && all[item.name].hasOwnProperty('correct')
-            && !all[item.name].correct) {
-            return ''
-        }
-    }
 
     //元素onChange监听
     const onElementChange = (item, value) => {
@@ -101,39 +65,6 @@ const DocValues = ({
         }
     }
 
-    //元素是否可编辑
-    const canEdit = item => {
-        //非第一联不可编辑
-        if (currentCopy > 0
-            || !editable) {
-            return false
-        }
-
-        if (all[item.name]
-            && all[item.name].data) {
-            return false;
-        }
-
-        if (item.type === ELEMENT.SL) {
-            //没有设置对应的总账科目时不可编辑明细
-            return all[item.gla]
-                    && all[item.gla].value
-                    && !isEmpty(all[item.gla].value)
-        }
-
-        if (!all[item.name]) {
-            return true
-        }
-
-        //如果此元素不属于本节点，则不允许编辑
-        if (all[item.name].activityId
-            && all[item.name].activityId !== activityId) {
-            return false
-        }
-
-        return true
-    }
-
     //渲染只读元素，包括Label
     const renderReadOnlyItem = (item, index) => {
         const value = valueToShow(item)
@@ -142,9 +73,18 @@ const DocValues = ({
             return null
         }
 
+        if (item.type === ELEMENT.LABEL) {
+            return (
+                <span key={`readonly_${index}`}
+                    style={styleOfItem(item)}>
+                    {value}
+                </span>
+            )
+        }
+
         return (
             <span key={`readonly_${index}`}
-                style={styleOfItem(item)}>
+                style={{...styleOfItem(item), ...disabledColor}}>
                 {value}
             </span>
         )
@@ -181,7 +121,6 @@ const DocValues = ({
         return (
             <AutoComplete key={`${item.name}_${index}`}
                 name={item.name}
-                // dataSource={dataSource}
                 value={valueToShow(item)}
                 style={styleOfSelect}
                 onSearch={value => {
@@ -243,18 +182,77 @@ const DocValues = ({
         )
     }
 
+    //复选框
+    const renderCheckBox = (item, index) => {
+        if (!item.options) {
+            return (
+                <input key={`${item.name}_${index}`}
+                            type="checkbox"
+                            style={basicStyleOfItem(item)}
+                        />
+            )
+        }else {
+            return (
+                <div key={`${item.name}_${index}`}
+                    style={basicStyleOfItem(item)}>
+                    <CheckboxGroup options={item.options}
+                                disabled={!canEdit(item)}
+                                value={valueToShow(item)}
+                            onChange={value => onElementChange(item, value)}
+                    />
+                </div>
+            )
+        }
+    }
+
+    //单选框
+    const renderRadio = (item, index) => {
+        return (
+            <div key={`${item.name}_${index}`}
+                style={basicStyleOfItem(item)}>
+                <RadioGroup style={{
+                    position: 'relative',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                }}  disabled={!canEdit(item)}
+                    value={valueToShow(item)}
+                    onChange={e => onElementChange(item, e.target.value)}
+                    options={item.options}/>
+            </div>
+        )
+    }
+
+    //下拉选择框
+    const renderSelect = (item, index) => {
+        const renderOptions = options => {
+            return options.map(option => {
+                return (
+                    <Option key={option}
+                            value={option}>
+                            {option}
+                        </Option>
+                )
+            })
+        }
+
+        return (
+            <Select key={`${item.name}_${index}`}
+                    disabled={!canEdit(item)}
+                    value={valueToShow(item)}
+                    allowClear={true}
+                    onChange={value => onElementChange(item, value ? value : '')}
+                    style={basicStyleOfItem(item)}>
+                {renderOptions(item.options)}
+            </Select>
+        )
+    }
+
     //渲染元素们
     const renderElements = () => {
 
         const copy = copyToShow(config, currentCopy)
 
         const elementNodes = Object.values(config[copy].elements).map((item, index) => {
-            /**
-             * 忽略checkbox
-             */
-            if (item.type === ELEMENT.CHECK_BOX) {
-                return null
-            }
 
             switch (item.type) {
                 case ELEMENT.INPUT:
@@ -276,6 +274,17 @@ const DocValues = ({
 
                 case ELEMENT.TEXT_AREA:
                     return renderTextareaItem(item, index)
+                    break;
+                case ELEMENT.CHECK_BOX:
+                    return renderCheckBox(item, index)
+                    break;
+
+                case ELEMENT.RADIO:
+                    return renderRadio(item, index)
+                    break
+
+                case ELEMENT.SELECT:
+                    return renderSelect(item, index)
                     break;
             }
         });
@@ -311,10 +320,18 @@ DocValues.propTypes = {
     onSubjectSearch: PropTypes.func,
     onSubjectSelected: PropTypes.func,
     onSubjectBlur: PropTypes.func,
+    disabledColor: PropTypes.object,
+    canEdit: PropTypes.func,
+    valueToShow: PropTypes.func,
 }
 
 DocValues.defaultProps = {
     onItemChange: (item, value) => {
         console.log('value = ', value);
-    }
+    },
+    editable: true,
+    hasErrorInfo: false,
+    disabledColor: {},
+    canEdit: () => {},
+    valueToShow: () => {}
 }

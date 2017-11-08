@@ -11,9 +11,30 @@ import { Button } from 'antd';
 import styles from '../main.less';
 import classnames from 'classnames';
 
+function firstCopy(visibleSheet) {
+    if (!visibleSheet
+        || visibleSheet.split(',').indexOf('1') == -1) {
+        return 0
+    }
+
+    return visibleSheet.split(',').indexOf('1')
+}
+
 class PBUDocumentData extends Component {
     state = {
-        currentCopy: 0
+        currentCopy: firstCopy(this.props.visibleSheet)
+    }
+
+    componentDidMount() {
+        this.setState({
+            currentCopy: firstCopy(this.props.visibleSheet)
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            currentCopy: firstCopy(nextProps.visibleSheet)
+        })
     }
 
     onCopyChange = (copy) => {

@@ -10,63 +10,19 @@ import { Spin } from 'antd';
 class DocBG extends Component {
     state = {
         loading: false,
-        currentCopy: 0,
-    }
-
-    loadBackgroundImg(imgUrl, callback) {
-        // const image = document.createElement('img');
-        // image.src = imgUrl;
-        // image.onload = callback;
+        currentCopy: this.props.currentCopy,
     }
 
     componentDidMount() {
-        // if (this.props.currentCopy > this.props.config.length - 1) {
-        //     return;
-        // }
-
-        // if (isEmpty(this.props.config[this.props.currentCopy].backgroundImage)) {
-        //     this.setState({
-        //         loading: false,
-        //         currentCopy: this.props.currentCopy
-        //     })
-        //     // this.props.onBackgroundLoaded()
-        // }else {
-        //     this.setState({
-        //         loading: true,
-        //         currentCopy: this.props.currentCopy
-        //     })
-        //
-        //     this.loadBackgroundImg(this.props.config[this.props.currentCopy].backgroundImage, () => {
-        //         this.setState({
-        //             loading: false
-        //         })
-        //         this.props.onBackgroundLoaded()
-        //     })
-        // }
+        this.setState({
+            currentCopy: this.props.currentCopy
+        })
     }
 
     componentWillReceiveProps(nextProps) {
-        // if (nextProps.currentCopy > nextProps.config.length - 1) {
-        //     return;
-        // }
-        //
-        // if (this.state.currentCopy === nextProps.currentCopy) {
-        //     return;
-        // }
-        //
-        // if (isEmpty(nextProps.config[nextProps.currentCopy].backgroundImage)) {
-        //     return;
-        // }
-        //
-        // this.setState({
-        //     loading: true
-        // })
-        // this.loadBackgroundImg(nextProps.config[nextProps.currentCopy].backgroundImage, () => {
-        //     this.setState({
-        //         loading: false
-        //     })
-        //     nextProps.onBackgroundLoaded()
-        // })
+        this.setState({
+            currentCopy: this.props.currentCopy
+        })
     }
 
     render() {
@@ -81,40 +37,19 @@ class DocBG extends Component {
 
             return currentCopy
         }
-        //
-        // let style = {
-        //     width: config[copyToRender()].width * ratioWidth,
-        //     height: config[copyToRender()].height * ratioHeight,
-        //     ...config[copyToRender()].style
-        // };
 
-        // if (!loading) {
         const style = {
                 background: `#FFFFFF url(${config[copyToRender()].backgroundImage}) no-repeat center center`,
                 width: config[copyToRender()].width * ratioWidth,
                 height: config[copyToRender()].height * ratioHeight,
                 ...config[copyToRender()].style
             }
-        // }
 
         return (
             <div key={`${loading}_${copyToRender()}`}
                 className={className}
                 style={style}>
                 {children}
-                {/* {loading
-                    ?
-                    <div style={{
-                        width:'100%',
-                        textAlign: 'center',
-                        position: 'absolute',
-                        top: '48%'
-                    }}>
-                        <Spin tip="单据加载中..."/>
-                    </div>
-                    :
-                    children
-                } */}
             </div>
         )
     }

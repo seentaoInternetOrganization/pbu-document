@@ -11,6 +11,8 @@ import styles from './editValues.less'
 import { ELEMENT } from '../constants';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
+import { getDescendantantProp } from '../utils';
+import { resetSelectHeightOfAntd } from './docUtils';
 
 //处理总账科目和明细账科目
 function combineSubjects(subjects) {
@@ -54,7 +56,7 @@ export default class EditValuesContainer extends Component {
     }
 
     componentDidMount() {
-        this.resetSelectHeightOfAntd()
+        resetSelectHeightOfAntd(this.props.config, this.refs.docBG)
         this.setState({
             glas: combineSubjects(this.props.subjectTotals),
             sls: combineSubjects(this.props.subjectDetails),
@@ -73,33 +75,7 @@ export default class EditValuesContainer extends Component {
     }
 
     componentDidUpdate() {
-        this.resetSelectHeightOfAntd()
-    }
-
-    onBackgroundLoaded = () => {
-        this.resetSelectHeightOfAntd()
-    }
-
-    resetSelectHeightOfAntd() {
-        const { config } = this.props;
-        const selectHeight = Object.values(config[0].elements)
-        .filter(item => {
-            if (item.type === ELEMENT.GLA
-                || item.type === ELEMENT.SL) {
-                return true
-            }
-        })
-        .map(item => {
-            return `${item.pos.height}px`
-        })
-
-        //might be a hack
-        const selectNodes = this.refs.docBG.getElementsByClassName('ant-select-selection--single');
-
-        for (let i = 0; i < selectNodes.length; i++) {
-            selectNodes[i].style.height = selectHeight[i];
-            selectNodes[i].style.backgroundColor = 'transparent';
-        }
+        resetSelectHeightOfAntd(this.props.config, this.refs.docBG)
     }
 
     onItemChange = (item, valueProps, addActivityId) => {
@@ -142,7 +118,11 @@ export default class EditValuesContainer extends Component {
     }
 
     onNormalItemChange = (item, value) => {
-        this.onItemChange(item, { value }, !isEmpty(value))
+        if (Array.isArray(value)) {
+            this.onItemChange(item, { value }, value.length > 0)
+        }else {
+            this.onItemChange(item, { value }, !isEmpty(value))
+        }
     }
 
     onSubjectSearch = (item, value, subjectId) => {
@@ -204,10 +184,89 @@ export default class EditValuesContainer extends Component {
         this.props.onAccountDetailSubjectSelected(subject)
     }
 
-    onCopyChange = (copy) => {
+    onCopyChange = copy => {
         this.setState({
             currentCopy: copy
         })
+    }
+
+    //要展示的value
+    valueToShow = item => {
+        const { editable, hasErrorInfo, activityId } = this.props
+        const { docData } = this.state
+        const { all } = docData
+
+        if (item.type === ELEMENT.LABEL) {
+            if (item.textValue) {
+                return item.textValue
+            }else if (item.equalTo
+                    && docData.custom
+                    && getDescendantantProp(docData.custom, item.equalTo)) {
+                return getDescendantantProp(docData.custom, item.equalTo)
+            }
+
+            return;
+        }
+
+        if (!all[item.name]) {
+            return;
+        }
+
+        if (all[item.name].subjectName) {
+            return all[item.name].subjectName
+        }
+
+        //展示预置的数据，非本activityId的答案和学生填写的value
+        if (all[item.name].data) {
+            return all[item.name].data
+        }else if (all[item.name].answer
+                && all[item.name].activityId !== activityId) {
+            return all[item.name].answer
+        }else if (all[item.name].value) {
+            return all[item.name].value
+        }
+
+        if (hasErrorInfo
+            && all[item.name].hasOwnProperty('correct')
+            && !all[item.name].correct) {
+            return ''
+        }
+    }
+
+    //元素是否可编辑
+    canEdit = item => {
+        const { editable, hasErrorInfo, activityId } = this.props
+        const { docData, currentCopy } = this.state
+        const { all } = docData
+        //非第一联不可编辑
+        if (currentCopy > 0
+            || !editable) {
+            return false
+        }
+
+        if (all[item.name]
+            && all[item.name].data) {
+            return false;
+        }
+
+        if (item.type === ELEMENT.SL) {
+            //没有设置对应的总账科目时不可编辑明细
+            return all[item.gla]
+                    && all[item.gla].value
+                    && !isEmpty(all[item.gla].value)
+        }
+
+        if (!all[item.name]) {
+            return true
+        }
+
+        //如果此元素不属于本节点，则不允许编辑
+        if (all[item.name].activityId
+            && all[item.name].activityId !== activityId) {
+            return false
+        }
+
+        return true
     }
 
     render() {
@@ -275,6 +334,8 @@ export default class EditValuesContainer extends Component {
                             onSubjectSelected={this.onSubjectSelected}
                             onSubjectBlur={this.onSubjectBlur}
                             hasErrorInfo={hasErrorInfo}
+                            canEdit={this.canEdit}
+                            valueToShow={this.valueToShow}
                             editable={editable}/>
                 </div>
             </div>

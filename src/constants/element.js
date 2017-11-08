@@ -31,11 +31,20 @@ export default {
      */
     SL: 'SL',
     /**
-     * checkbox，暂时没用
+     * 只读label
+     */
+    LABEL: 'LABEL',
+    /**
+     * checkbox，即多选
      */
     CHECK_BOX: 'CHECK_BOX',
     /**
-     * 只读label
+     * 单选
      */
-    LABEL: 'LABEL'
+    RADIO: 'RADIO',
+    /**
+     * 下拉选择
+     */
+    SELECT: 'SELECT',
+
 }

@@ -7,253 +7,145 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import DocBG from './background';
-import DocEditable from './editable';
 import styles from './dataInit.less';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { Button , Select, Tag, AutoComplete, Icon, Upload, message, Popover, Table, Affix } from 'antd';
 import isNumeric from 'validator/lib/isNumeric';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
-import { mapExaminesWithAll } from './docUtils';
+import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd } from './docUtils';
+import DocValues from './editValues';
+import { getDescendantantProp } from '../utils';
 
 const Option = Select.Option;
 const { CheckableTag } = Tag;
 
+/**
+ * 保存为
+ */
+function saveAs(value, isDataInit) {
+    if (isDataInit) {
+        return {
+            data: value,
+        }
+    }else {
+        return {
+            answer: value
+        }
+    }
+}
+
 class DataInit extends Component {
 
     state = {
-        all: this.props.data && this.props.data.all ? this.props.data.all : {},
+        docData: combineDataToState(this.props),
         glas: [],
         sls: [],
-        currentSubject: '',
-        answerArea: this.props.answerDesc,
-        /**
-         * 选中的单据所属的会计科目
-         */
-        currentAccountTitle: null,
-        /**
-         * 选中的明细科目
-         */
-        currentAccountDetail: null,
-        custom: this.props.data && this.props.data.custom ? this.props.data.custom : {},
         subjectVisible: false,
+        currentAccountTitle: null,
+        currentCopy: this.props.currentCopy,
+        answerArea: this.props.answerDesc,
     }
 
     componentDidMount() {
-        this.resetSelectHeightOfAntd()
+        resetSelectHeightOfAntd(this.props.config, this.refs.docBG)
         this.setState({
-            glas: this.combineSubjects(this.props.subjectTotals),
-            sls: this.combineSubjects(this.props.subjectDetails),
+            glas: combineSubjects(this.props.subjectTotals),
+            sls: combineSubjects(this.props.subjectDetails),
+            docData: combineDataToState(this.props),
+            currentCopy: this.props.currentCopy,
             answerArea: this.props.answerDesc
         })
-        this.combineDataToState(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            glas: this.combineSubjects(nextProps.subjectTotals),
-            sls: this.combineSubjects(nextProps.subjectDetails),
+            glas: combineSubjects(nextProps.subjectTotals),
+            sls: combineSubjects(nextProps.subjectDetails),
+            docData: combineDataToState(nextProps),
+            currentCopy: nextProps.currentCopy,
             answerArea: nextProps.answerDesc
         })
-
-        this.combineDataToState(nextProps);
     }
 
     componentDidUpdate() {
-        this.resetSelectHeightOfAntd()
+        resetSelectHeightOfAntd(this.props.config, this.refs.docBG)
     }
 
-    combineDataToState(props) {
-        const { data } = props;
+    onItemChange = (item, valueProps, addActivityId) => {
+        const { activityId } = this.props
 
-        if (!data
-            || !data.all) {
-            return;
-        }
-
-        const newAll = {
-            ...data.all
-        }
-
-        const newCustom = {
-            ...data.custom
-        }
-
-        this.setState({
-            all: newAll,
-            custom: newCustom
-        })
-    }
-
-    //处理总账科目和明细账科目
-    combineSubjects(subjects) {
-        const combined = subjects.map(subject => {
-            return {
-                value: subject.subjectId,
-                text: subject.subjectName
-            }
-        });
-
-        return combined;
-    }
-
-    resetSelectHeightOfAntd() {
-        const { config } = this.props;
-        const selectHeight = [];
-
-        Object.values(config[0].elements).forEach(item => {
-            if (item.type === ELEMENT.GLA
-                || item.type === ELEMENT.SL) {
-                selectHeight.push(`${item.pos.height}px`);
-            }
-        })
-
-        //might be a hack
-        const selectNodes = this.refs.docBG.getElementsByClassName('ant-select-selection--single');
-
-        for (let i = 0; i < selectNodes.length; i++) {
-            selectNodes[i].style.height = selectHeight[i];
-            selectNodes[i].style.backgroundColor = 'transparent';
-        }
-    }
-
-    onItemChange = (item, value) => {
-        const { all } = this.state;
-        const { activityId, isDataInit } = this.props;
-        const newAll = {
-            ...all
-        };
-
-        let activityOpt = {
-            activityId,
-        }
-
-        if (isEmpty(value)) {
-            activityOpt = {
-                activityId: ''
-            }
-        }
-
-        if (isDataInit) {
-            newAll[item.name] = {
-                ...all[item.name],
-                data: value,
-                ...activityOpt
-            };
-        }else {
-            newAll[item.name] = {
-                ...all[item.name],
-                answer: value,
-                ...activityOpt
-            };
-        }
-
-        this.setState({
-            all: newAll
-        })
-
-        this.props.onDocChange({
-            ...this.props.data,
-            all: newAll
-        }, this.state.answerArea)
-    }
-
-    onSubjectBlur = (subjects, item, value) => {
-        const { all } = this.state;
-        const { activityId, isDataInit } = this.props;
-
-        const selected = subjects.find(item => {
-            return item.text === value
-                    || item.value === value;
-        })
-
-        const newAll = {
-            ...all
-        };
-
-        if (!selected) {
-
-            if (all[item.name]
-                && all[item.name].subjectName
-                && !isEmpty(all[item.name].subjectName)) {
-                return;
-            }
-
-            newAll[item.name] = {
-                ...all[item.name],
-                data: '',
-                answer: '',
-                subjectName: '',
-                activityId: ''
-            };
-        }else {
-
-            if (isDataInit) {
-                newAll[item.name] = {
-                    ...all[item.name],
-                    data: selected.value,
-                    subjectName: selected.text,
-                    activityId,
-                };
+        const activityOpt = () => {
+            if (addActivityId) {
+                return {
+                    activityId
+                }
             }else {
-                newAll[item.name] = {
-                    ...all[item.name],
-                    answer: selected.value,
-                    subjectName: selected.text,
-                    activityId,
-                };
+                return {
+                    activityId: ''
+                }
+            }
+        }
+
+        const { docData } = this.state
+
+        const newAll = {
+            ...docData.all,
+            [item.name]: {
+                ...docData.all[item.name],
+                ...valueProps,
+                ...activityOpt()
             }
         }
 
         this.setState({
-            all: newAll,
-            currentSubject: '',
+            docData: {
+                ...docData,
+                all: newAll
+            }
         })
 
         this.props.onDocChange({
-            ...this.props.data,
+            ...docData,
             all: newAll
         }, this.state.answerArea)
     }
 
-    onSubjectChange = (item, value, totalSubjectId) => {
-        const { all } = this.state;
-        const { activityId, isDataInit } = this.props;
 
-        const newAll = {
-            ...all
-        };
 
-        if (isDataInit) {
-            newAll[item.name] = {
-                ...all[item.name],
-                data: value,
-                subjectName: '',
-                activityId
-            };
+    onNormalItemChange = (item, value) => {
+        const { isDataInit } = this.props
+        if (Array.isArray(value)) {
+            this.onItemChange(item, saveAs(value, isDataInit), value.length > 0)
         }else {
-            newAll[item.name] = {
-                ...all[item.name],
-                answer: value,
-                subjectName: '',
-                activityId
-            };
+            this.onItemChange(item, saveAs(value, isDataInit), !isEmpty(value))
         }
+    }
 
-        this.setState({
-            all: newAll,
-            currentSubject: item.name
+    onSubjectSearch = (item, value, subjectId) => {
+        const { isDataInit } = this.props
+        this.onItemChange(item, { ...saveAs(value, isDataInit), subjectName: value, }, !isEmpty(value))
+        this.props.onSearchSubjects(value, subjectId)
+    }
+
+    onSubjectSelected = (item, value, option) => {
+        const { isDataInit } = this.props
+        this.onItemChange(item, { ...saveAs(value, isDataInit), subjectName: option.text, }, !isEmpty(value))
+    }
+
+    onSubjectBlur = (item, value, dataSource) => {
+        const { isDataInit } = this.props
+        const selected = dataSource.find(item => {
+            return item.text === value
         })
 
-        this.props.onDocChange({
-            ...this.props.data,
-            all: newAll
-        }, this.state.answerArea)
-        this.props.onSearchSubjects(value, totalSubjectId ? totalSubjectId : '');
+        if (selected) {
+            this.onItemChange(item, { ...saveAs(selected.value, isDataInit), subjectName: value }, !isEmpty(value))
+        }
     }
 
     onSave = () => {
-        const { all, answerArea, currentAccountDetail, custom } = this.state;
+        const { docData, answerArea, currentAccountDetail } = this.state;
 
         let examines = [];
 
@@ -275,18 +167,18 @@ class DataInit extends Component {
 
         if (isDataInit) {
             valueOpt = {
-                data: mapExaminesWithAll(examines, 'data', all)
+                data: mapExaminesWithAll(examines, 'data', docData.all)
             }
         }else {
             valueOpt = {
-                answers: mapExaminesWithAll(examines, 'answer', all)
+                answers: mapExaminesWithAll(examines, 'answer', docData.all)
             }
         }
 
         const dataFinal = {
             examines,
-            all,
-            custom,
+            all: docData.all,
+            custom: docData.custom,
             ...valueOpt
         }
 
@@ -319,32 +211,24 @@ class DataInit extends Component {
     }
 
     onAccountTitleSelected = subject => {
+        const { docData } = this.state
         this.setState({
             currentAccountTitle: subject,
-            currentAccountDetail: null,
-            custom: {
-                ...this.state.custom,
-                subjectTitle: subject,
-                subjectDetail: undefined,
+            docData: {
+                ...docData,
+                custom: {
+                    ...docData.custom,
+                    subjectTitle: subject,
+                },
             },
             subjectVisible: true,
         });
 
-        this.props.onDocChange({
-            ...this.props.data,
-            custom: {
-                ...this.state.custom,
-                subjectTitle: subject,
-            }
-        }, this.state.answerArea)
         this.props.onAccountTitleSubejctSelected(subject);
     }
 
     onAccountDetailRowClicked = (record, index, e) => {
-        if (record.children) {
-            return;
-        }
-
+        const { docData } = this.state
         const subject = {
             subjectId: record.subjectId,
             subjectName: record.subjectName,
@@ -353,22 +237,117 @@ class DataInit extends Component {
 
         this.setState({
             currentAccountDetail: subject,
-            custom: {
-                ...this.state.custom,
-                subjectDetail: subject,
+            docData: {
+                ...docData,
+                custom: {
+                    ...docData.custom,
+                    subjectDetail: subject,
+                },
             },
             subjectVisible: false
         })
 
-        this.props.onDocChange({
-            ...this.props.data,
-            custom: {
-                ...this.state.custom,
-                subjectDetail: subject,
-            }
-        }, this.state.answerArea)
+        this.onSave() && this.props.onAccountDetailSubjectSelected(subject)
+    }
 
-        this.props.onAccountDetailSubjectSelected(subject)
+    onCopyChange = (copy) => {
+        this.setState({
+            currentCopy: copy
+        })
+    }
+
+    //要展示的value
+    valueToShow = item => {
+        const { editable, hasErrorInfo, activityId } = this.props
+        const { docData } = this.state
+        const { all } = docData
+
+        if (item.type === ELEMENT.LABEL) {
+            if (item.textValue) {
+                return item.textValue
+            }else if (item.equalTo
+                    && docData.custom
+                    && getDescendantantProp(docData.custom, item.equalTo)) {
+                return getDescendantantProp(docData.custom, item.equalTo)
+            }
+
+            return;
+        }
+
+        if (!all[item.name]) {
+            return;
+        }
+
+        if (all[item.name].subjectName) {
+            return all[item.name].subjectName
+        }
+
+        //展示预置的数据，非本activityId的答案和学生填写的value
+        if (all[item.name].data) {
+            return all[item.name].data
+        }else if (all[item.name].answer) {
+            return all[item.name].answer
+        }
+    }
+
+    //元素是否可编辑
+    canEdit = item => {
+        const { hasErrorInfo, activityId, isDataInit } = this.props
+        const { docData, currentCopy } = this.state
+        const { all } = docData
+        //非第一联不可编辑
+        if (currentCopy > 0) {
+            return false
+        }
+
+        if (all[item.name]
+            && all[item.name].activityId
+            && all[item.name].activityId === activityId) {
+
+            if (isDataInit
+                && all[item.name].answer) {
+                    if ((typeof all[item.name].answer === 'string'
+                        && !isEmpty(all[item.name].answer))
+                        || (Array.isArray(all[item.name].answer)
+                        && all[item.name].answer.length > 0)) {
+                        return false
+                    }
+
+            }else if (!isDataInit
+                        && all[item.name].data) {
+                    if ((typeof all[item.name].data === 'string'
+                        && !isEmpty(all[item.name].data))
+                        || (Array.isArray(all[item.name].data)
+                        && all[item.name].data.length > 0)) {
+                        return false
+                    }
+            }
+        }
+
+        if (item.type === ELEMENT.SL) {
+            //没有设置对应的总账科目时不可编辑明细
+            if (isDataInit) {
+                return all[item.gla]
+                        && all[item.gla].data
+                        && !isEmpty(all[item.gla].data)
+            }else {
+                return all[item.gla]
+                        && all[item.gla].answer
+                        && !isEmpty(all[item.gla].answer)
+            }
+        }
+
+        if (!all[item.name]) {
+            return true
+        }
+
+        //如果此元素不属于本节点，则不允许编辑
+        if (all[item.name].activityId
+            && all[item.name].activityId !== activityId) {
+            return false
+        }
+
+        return true
     }
 
     render() {
@@ -393,24 +372,28 @@ class DataInit extends Component {
             onAccountDetailSubjectSelected,
         } = this.props;
 
-        const { all, glas, sls, currentSubject, answerArea, currentAccountTitle, custom, subjectVisible } = this.state;
+        // const { all, glas, sls, currentSubject, answerArea, currentAccountTitle, custom, subjectVisible } = this.state;
+        const { docData, glas, sls, currentSubject, answerArea, currentAccountTitle, subjectVisible } = this.state;
+
         const docProps = {
             config,
-            all,
+            docData,
             glas,
             sls,
             ratioHeight,
             ratioWidth,
             bgClassName: isDataInit ? styles.main_container : styles.bill,
-            onSubjectChange: this.onSubjectChange,
             onSubjectBlur: this.onSubjectBlur,
-            onItemChange: this.onItemChange,
+            onItemChange: this.onNormalItemChange,
+            onSubjectSearch: this.onSubjectSearch,
+            onSubjectSelected: this.onSubjectSelected,
             activityId,
             currentSubject,
             isDataInit,
             currentCopy,
-            onBackgroundLoaded: this.onBackgroundLoaded,
-            custom
+            disabledColor: { color: 'lightgrey' },
+            canEdit: this.canEdit,
+            valueToShow: this.valueToShow
         }
 
         const renderTags = () => {
@@ -485,8 +468,8 @@ class DataInit extends Component {
 
             const docNodes = () => {
                 return (
-                    <div style={{ display: "inline-block" }}>
-                        <DocEditable {...docProps} />
+                    <div style={{ display: "inline-block", textAlign: 'left' }}>
+                        <DocValues {...docProps}/>
                         {renderPage()}
                     </div>
                 )

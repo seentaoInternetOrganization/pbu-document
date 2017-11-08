@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './editWeight.css';
-import { intersectRect } from '../utils';
+import { intersectRect, getDescendantantProp } from '../utils';
 import { EXAMINE, ELEMENT, ELEMENT_TYPE, EXAMINE_NAME, EXAMINE_COLOR, EXAMINE_TEXT } from '../constants';
 import stylesBG from './background.css';
 import isEmpty from 'validator/lib/isEmpty';
@@ -16,6 +16,8 @@ import md5 from 'blueimp-md5';
 import Rectangle, { zeroRect, makeRect } from './selectedRectangle';
 import reactComposition from 'react-composition';
 import EditWeightHeader from './weightHeader';
+import { copyToShow, basicStyleOfItem, testNumber, canChange } from './docUtils';
+
 
 class EditWeight extends Component {
     state = {
@@ -128,8 +130,8 @@ class EditWeight extends Component {
                 return;
             }
             //去掉checkbox和label
-            if (item.type === ELEMENT.CHECK_BOX
-                || item.type === ELEMENT.LABEL) {
+            if (item.type === ELEMENT.LABEL
+                || (item.type === ELEMENT.CHECK_BOX && !item.options)) {
                 return;
             }
 
@@ -336,8 +338,8 @@ class EditWeight extends Component {
             examineTypeIndex,
             editTagId,
             editTagName,
-         } = this.state;
-
+        } = this.state;
+        const docData = data
         //顶部操作渲染
         const renderTopHeader = () => {
             return (
@@ -420,9 +422,8 @@ class EditWeight extends Component {
                     && selectedTag !== item.examineId) {
                     return null;
                 }
-
-                if (item.element.type === ELEMENT.CHECK_BOX
-                    || item.element.type === ELEMENT.LABEL) {
+                if (item.element.type === ELEMENT.LABEL
+                    || (item.element.type === ELEMENT.CHECK_BOX && !item.element.options)) {
                     return null;
                 }
 
@@ -492,6 +493,51 @@ class EditWeight extends Component {
             return elementNodes;
         }
 
+        //要展示的value
+        const valueToShow = item => {
+
+            if (item.type === ELEMENT.LABEL) {
+                if (item.textValue) {
+                    return item.textValue
+                }else if (item.equalTo
+                        && docData.custom
+                        && getDescendantantProp(docData.custom, item.equalTo)) {
+                    return getDescendantantProp(docData.custom, item.equalTo)
+                }
+
+                return;
+            }
+        }
+
+        //渲染只读元素，包括Label
+        const renderReadOnlyItem = (item, index) => {
+            const value = valueToShow(item)
+
+            if (!value && value !== '') {
+                return null
+            }
+
+            return (
+                <span key={`readonly_${index}`}
+                    style={basicStyleOfItem(item)}>
+                    {value}
+                </span>
+            )
+        }
+
+        const renderReadOnly = () => {
+            const elementNodes = Object.values(config[0].elements).map((item, index) => {
+
+                switch (item.type) {
+                    case ELEMENT.LABEL:
+                        return renderReadOnlyItem(item, index)
+                        break;
+                }
+            });
+
+            return elementNodes;
+        }
+
         //渲染单据
         const renderDoc = () => {
 
@@ -519,6 +565,7 @@ class EditWeight extends Component {
                 >
                     {renderSelectedZone()}
                     {renderCompletedZone()}
+                    {renderReadOnly()}
                     {showSelectRect && <Rectangle rect={selectRect} />}
                 </div>
             )
