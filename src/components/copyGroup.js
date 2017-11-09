@@ -10,11 +10,15 @@ import isEmpty from 'validator/lib/isEmpty';
 
 const CopyGroup = ({ visibleSheet, onCopyChange, className, selectedClsName, currentCopy }) => {
 
-    const copyNodes = () => {
-        if (!visibleSheet) {
-            return null;
-        }
+    if (!visibleSheet) {
+        return null;
+    }
 
+    if (visibleSheet.split(',').length == 1) {
+        return null;
+    }
+
+    const copyNodes = () => {
         const copyNodes = visibleSheet.split(',')
         .map((copy, index) => {
             if (copy === '0'
