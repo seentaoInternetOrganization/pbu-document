@@ -105,6 +105,9 @@ class Demo extends Component {
                                     subjectsTree={mockSubjects.accountingSubjects}
                                     uploadProps={{...uploadProps}}
                                     totalPage={2}
+                                    onSubjectBlur={() => {
+                                        console.log('!!!!!!!onSubjectBlur');
+                                    }}
                                     onDocChange={ data => {
                                         this.setState({
                                             docData: data
@@ -128,6 +131,9 @@ class Demo extends Component {
                                             totalPage: this.state.totalPage + 1,
                                             currentPage: this.state.currentPage + 1,
                                         })
+                                    }}
+                                    onSubjectBlur={() => {
+                                        console.log('!!!!!!!onSubjectBlur');
                                     }}
                                     uploadProps={{...uploadProps}}
                                     totalPage={this.state.totalPage}
@@ -169,6 +175,9 @@ class Demo extends Component {
                             this.setState({
                                 docData: data
                             })
+                        }}
+                        onSubjectBlur={() => {
+                            console.log('!!!!!!!onSubjectBlur');
                         }}
                 />
             </div>

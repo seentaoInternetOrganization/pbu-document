@@ -25,6 +25,7 @@ const PBUDocumentEdit = ({
     onAccountDetailSubjectSelected,
     editable,
     onConfigLoaded,
+    onSubjectBlur,
 }) => {
 
     const docProps = {
@@ -43,6 +44,7 @@ const PBUDocumentEdit = ({
         onAccountTitleSubejctSelected,
         onAccountDetailSubjectSelected,
         editable,
+        onSubjectBlur,
     }
 
     return (
@@ -122,6 +124,10 @@ PBUDocumentEdit.propTypes = {
      * @param {Object} docConfig 单据配置文件信息
      */
     onConfigLoaded: PropTypes.func,
+    /**
+     * 记账凭证单据总账或明细账科目编辑完失去焦点的回调
+     */
+    onSubjectBlur: PropTypes.func,
 }
 
 PBUDocumentEdit.defaultProps = {
@@ -143,6 +149,9 @@ PBUDocumentEdit.defaultProps = {
     editable: true,
     onDocChange: data => {
         console.log('data = ', data);
+    },
+    onSubjectBlur: () => {
+
     }
 }
 

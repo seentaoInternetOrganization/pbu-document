@@ -16,7 +16,7 @@ const Option = AutoComplete.Option;
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 
-const DocValues = ({
+const DocEditor = ({
     config,
     docData,
     glas,
@@ -114,7 +114,7 @@ const DocValues = ({
 
         const glaSubjectId = () => {
             if (item.type === ELEMENT.SL) {
-                return all[item.gla].value
+                return all[item.gla].value || all[item.gla].data || all[item.gla].answer
             }
         }
 
@@ -195,11 +195,13 @@ const DocValues = ({
             return (
                 <div key={`${item.name}_${index}`}
                     style={basicStyleOfItem(item)}>
-                    <CheckboxGroup options={item.options}
-                                disabled={!canEdit(item)}
-                                value={valueToShow(item)}
-                            onChange={value => onElementChange(item, value)}
-                    />
+                    <div style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)' }}>
+                        <CheckboxGroup options={item.options}
+                                    disabled={!canEdit(item)}
+                                    value={valueToShow(item)}
+                                onChange={value => onElementChange(item, value)}
+                        />
+                    </div>
                 </div>
             )
         }
@@ -303,9 +305,9 @@ const DocValues = ({
     )
 }
 
-export default DocValues;
+export default DocEditor;
 
-DocValues.propTypes = {
+DocEditor.propTypes = {
     config: PropTypes.array,
     docData: PropTypes.object,
     glas: PropTypes.array,
@@ -325,7 +327,7 @@ DocValues.propTypes = {
     valueToShow: PropTypes.func,
 }
 
-DocValues.defaultProps = {
+DocEditor.defaultProps = {
     onItemChange: (item, value) => {
         console.log('value = ', value);
     },

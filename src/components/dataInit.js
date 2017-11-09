@@ -14,7 +14,7 @@ import isNumeric from 'validator/lib/isNumeric';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
 import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd } from './docUtils';
-import DocValues from './editValues';
+import DocEditor from './docEditor';
 import { getDescendantantProp } from '../utils';
 
 const Option = Select.Option;
@@ -142,6 +142,8 @@ class DataInit extends Component {
         if (selected) {
             this.onItemChange(item, { ...saveAs(selected.value, isDataInit), subjectName: value }, !isEmpty(value))
         }
+
+        this.props.onSubjectBlur()
     }
 
     onSave = () => {
@@ -155,7 +157,7 @@ class DataInit extends Component {
         }
 
         if (this.props.config[0].hasSubject) {
-            if (currentAccountDetail === null) {
+            if (!currentAccountDetail) {
                 message.warning('请先选择科目!');
                 return false
             }
@@ -214,13 +216,6 @@ class DataInit extends Component {
         const { docData } = this.state
         this.setState({
             currentAccountTitle: subject,
-            docData: {
-                ...docData,
-                custom: {
-                    ...docData.custom,
-                    subjectTitle: subject,
-                },
-            },
             subjectVisible: true,
         });
 
@@ -228,12 +223,18 @@ class DataInit extends Component {
     }
 
     onAccountDetailRowClicked = (record, index, e) => {
-        const { docData } = this.state
+        const { docData, currentAccountDetail, currentAccountTitle } = this.state
         const subject = {
             subjectId: record.subjectId,
             subjectName: record.subjectName,
             subjectCode: record.subjectCode ? record.subjectCode : record.childSubjectCode
         }
+
+        if (currentAccountDetail) {
+            this.onSave()
+        }
+
+        this.props.onAccountDetailSubjectSelected(subject)
 
         this.setState({
             currentAccountDetail: subject,
@@ -242,12 +243,11 @@ class DataInit extends Component {
                 custom: {
                     ...docData.custom,
                     subjectDetail: subject,
+                    subjectTitle: currentAccountTitle
                 },
             },
             subjectVisible: false
         })
-
-        this.onSave() && this.props.onAccountDetailSubjectSelected(subject)
     }
 
     onCopyChange = (copy) => {
@@ -372,7 +372,6 @@ class DataInit extends Component {
             onAccountDetailSubjectSelected,
         } = this.props;
 
-        // const { all, glas, sls, currentSubject, answerArea, currentAccountTitle, custom, subjectVisible } = this.state;
         const { docData, glas, sls, currentSubject, answerArea, currentAccountTitle, subjectVisible } = this.state;
 
         const docProps = {
@@ -469,7 +468,7 @@ class DataInit extends Component {
             const docNodes = () => {
                 return (
                     <div style={{ display: "inline-block", textAlign: 'left' }}>
-                        <DocValues {...docProps}/>
+                        <DocEditor {...docProps}/>
                         {renderPage()}
                     </div>
                 )
@@ -650,6 +649,10 @@ DataInit.propTypes = {
      * onChange
      */
     onDocChange: PropTypes.func,
+    /**
+     * [onSubjectBlur description]
+     */
+    onSubjectBlur: PropTypes.func,
 }
 
 

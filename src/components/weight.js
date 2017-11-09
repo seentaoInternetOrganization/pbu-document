@@ -8,7 +8,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import DocBG from './background';
 import bgStyles from './background.css';
-import { ELEMENT, EXAMINE, EXAMINE_COLOR } from '../constants';
+import { ELEMENT, EXAMINE, EXAMINE_COLOR, DOC_TYPE } from '../constants';
 import { copyToShow, basicStyleOfItem, testNumber, canChange } from './docUtils';
 import { excludePropertyOfObject } from '../utils';
 
@@ -20,7 +20,8 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
             /**
              * 忽略checkbox
              */
-            if (item.type === ELEMENT.CHECK_BOX) {
+            if (item.type === ELEMENT.CHECK_BOX
+                && !item.options) {
                 return (
                     <input key={`${item.name}_${index}`}
                                 type="checkbox"
@@ -41,7 +42,11 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
             if (data == null
                 || typeof data !== 'object'
                 || !data.all) {
-                return;
+                //如果没有数据且单据类型为默认即仿真单据，则不渲染
+                if (!config[0].docType
+                    || config[0].docType === DOC_TYPE.DEFAULT) {
+                    return
+                }
             }
 
             if (data.all[item.name]) {
@@ -59,7 +64,10 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
                 )
             }
 
-            return null;
+            return (
+                <div key={`${item.name}_${index}`}
+                    style={basicStyleOfItem(item)}/>
+            )
         });
 
         return elementNodes;

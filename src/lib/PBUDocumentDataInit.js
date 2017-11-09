@@ -35,7 +35,8 @@ const PBUDocumentDataInit = ({
      * 账单所属会计明细科目被选中时的回调
      */
     onAccountDetailSubjectSelected,
-    onDocChange
+    onDocChange,
+    onSubjectBlur,
 }) => {
 
     const docProps = {
@@ -66,6 +67,7 @@ const PBUDocumentDataInit = ({
          */
         onAccountDetailSubjectSelected,
         onDocChange,
+        onSubjectBlur,
     }
 
     return (
@@ -168,12 +170,19 @@ PBUDocumentDataInit.propTypes = {
      * onChange
      */
     onDocChange: PropTypes.func,
+    /**
+     * 记账凭证单据总账或明细账科目编辑完失去焦点的回调
+     */
+    onSubjectBlur: PropTypes.func,
 }
 
 PBUDocumentDataInit.defaultProps = {
     docConfigUrl: '',
     docCode: '',
     currentCopy: 0,
+    onSubjectBlur: () => {
+
+    }
 }
 
 export default PBUDocumentDataInit;

@@ -8,7 +8,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './editWeight.css';
 import { intersectRect, getDescendantantProp } from '../utils';
-import { EXAMINE, ELEMENT, ELEMENT_TYPE, EXAMINE_NAME, EXAMINE_COLOR, EXAMINE_TEXT } from '../constants';
+import { EXAMINE, ELEMENT, ELEMENT_TYPE, EXAMINE_NAME, EXAMINE_COLOR, EXAMINE_TEXT, DOC_TYPE } from '../constants';
 import stylesBG from './background.css';
 import isEmpty from 'validator/lib/isEmpty';
 import isInt from 'validator/lib/isInt';
@@ -525,6 +525,18 @@ class EditWeight extends Component {
             )
         }
 
+        const renderBorderIfNeeded = (item, index) => {
+            if (!config[0].docType
+                || config[0].docType === DOC_TYPE.DEFAULT) {
+                return null
+            }
+
+            return (
+                <div key={`${item.name}_${index}`}
+                    style={basicStyleOfItem(item)}/>
+            )
+        }
+
         const renderReadOnly = () => {
             const elementNodes = Object.values(config[0].elements).map((item, index) => {
 
@@ -532,6 +544,9 @@ class EditWeight extends Component {
                     case ELEMENT.LABEL:
                         return renderReadOnlyItem(item, index)
                         break;
+                    default:
+                        return renderBorderIfNeeded(item, index)
+                        break
                 }
             });
 
@@ -563,9 +578,9 @@ class EditWeight extends Component {
                     }}
                     {...mouseEventOpt}
                 >
+                    {renderReadOnly()}
                     {renderSelectedZone()}
                     {renderCompletedZone()}
-                    {renderReadOnly()}
                     {showSelectRect && <Rectangle rect={selectRect} />}
                 </div>
             )

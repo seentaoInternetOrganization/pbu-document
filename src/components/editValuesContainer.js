@@ -6,8 +6,8 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import DocValues from './editValues';
-import styles from './editValues.less'
+import DocEditor from './docEditor';
+import styles from './docEditor.less'
 import { ELEMENT } from '../constants';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
@@ -142,6 +142,8 @@ export default class EditValuesContainer extends Component {
         if (selected) {
             this.onItemChange(item, { value: selected.value, subjectName: value }, !isEmpty(value))
         }
+
+        this.props.onSubjectBlur()
     }
 
     onAccountTitleSelected = subject => {
@@ -320,7 +322,7 @@ export default class EditValuesContainer extends Component {
                             config={config}/>
                 {renderCopies()}
                 <div className={classnames(styles.doc, { [styles.showCopy] : config.length > 1})}>
-                    <DocValues bgClassName={styles.container}
+                    <DocEditor bgClassName={styles.container}
                             config={config}
                             docData={docData}
                             glas={glas}

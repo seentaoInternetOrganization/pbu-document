@@ -157,10 +157,12 @@ const ReadOnly = ({
             return (
                 <div key={`${item.name}_${index}`}
                     style={basicStyleOfItem(item)}>
-                    <CheckboxGroup options={item.options}
-                                disabled={true}
-                                value={valueToShow(item)}
-                    />
+                    <div style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)' }}>
+                        <CheckboxGroup options={item.options}
+                                    disabled={true}
+                                    value={valueToShow(item)}
+                        />
+                    </div>
                 </div>
             )
         }
