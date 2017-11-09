@@ -11,7 +11,7 @@ import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { AutoComplete, message, Tooltip, Checkbox, Radio, Select } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
-import { copyToShow, basicStyleOfItem, testNumber, canChange } from './docUtils';
+import { copyToShow, basicStyleOfItem, testNumber, canChange, filterValue } from './docUtils';
 const Option = AutoComplete.Option;
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -36,6 +36,7 @@ const DocEditor = ({
     disabledColor,
     valueToShow,
     canEdit,
+    currentPage,
 }) => {
 
     const { all } = docData;
@@ -43,7 +44,21 @@ const DocEditor = ({
     //元素onChange监听
     const onElementChange = (item, value) => {
         if (canChange(item, value)) {
-            onItemChange(item, value)
+            if (item.constraint
+                && item.constraint.padStart) {
+
+                if (isEmpty(filterValue(item, value))) {
+                    return onItemChange(item, value)
+                }
+
+                if (item.constraint.maxLength) {
+                    onItemChange(item, filterValue(item, value).padStart(item.constraint.maxLength, item.constraint.padStart))
+                }else {
+                    onItemChange(item, value.startsWith(item.constraint.padStart) ? value : `${item.constraint.padStart}${value}`)
+                }
+            }else {
+                onItemChange(item, value)
+            }
         }
     }
 
@@ -75,7 +90,7 @@ const DocEditor = ({
 
         if (item.type === ELEMENT.LABEL) {
             return (
-                <span key={`readonly_${index}`}
+                <span key={`readonly_${index}_${currentPage}`}
                     style={styleOfItem(item)}>
                     {value}
                 </span>
@@ -83,7 +98,7 @@ const DocEditor = ({
         }
 
         return (
-            <span key={`readonly_${index}`}
+            <span key={`readonly_${index}_${currentPage}`}
                 style={{...styleOfItem(item), ...disabledColor}}>
                 {value}
             </span>
@@ -93,7 +108,7 @@ const DocEditor = ({
     //渲染普通文本输入框
     const renderNormalItem = (item, index) => {
         return (
-            <input key={`${item.name}_${index}`}
+            <input key={`${item.name}_${index}_${currentPage}`}
                         name={item.name}
                         style={styleOfItem(item)}
                         value={valueToShow(item) ? valueToShow(item) : ''}
@@ -119,7 +134,7 @@ const DocEditor = ({
         }
 
         return (
-            <AutoComplete key={`${item.name}_${index}`}
+            <AutoComplete key={`${item.name}_${index}_${currentPage}`}
                 name={item.name}
                 value={valueToShow(item)}
                 style={styleOfSelect}
@@ -161,7 +176,7 @@ const DocEditor = ({
         return canEdit(item)
         ?
         (
-            <textarea key={`textarea_${index}`}
+            <textarea key={`textarea_${index}_${currentPage}`}
                     style={style}
                     value={value}
                     onChange={e => {
@@ -171,7 +186,7 @@ const DocEditor = ({
         )
         :
         (
-            <textarea key={`textarea_${index}`}
+            <textarea key={`textarea_${index}_${currentPage}`}
                     style={style}
                     value={value}
                     readOnly={'readonly'}
@@ -186,14 +201,14 @@ const DocEditor = ({
     const renderCheckBox = (item, index) => {
         if (!item.options) {
             return (
-                <input key={`${item.name}_${index}`}
+                <input key={`${item.name}_${index}_${currentPage}`}
                             type="checkbox"
                             style={basicStyleOfItem(item)}
                         />
             )
         }else {
             return (
-                <div key={`${item.name}_${index}`}
+                <div key={`${item.name}_${index}_${currentPage}`}
                     style={basicStyleOfItem(item)}>
                     <div style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)' }}>
                         <CheckboxGroup options={item.options}
@@ -210,7 +225,7 @@ const DocEditor = ({
     //单选框
     const renderRadio = (item, index) => {
         return (
-            <div key={`${item.name}_${index}`}
+            <div key={`${item.name}_${index}_${currentPage}`}
                 style={basicStyleOfItem(item)}>
                 <RadioGroup style={{
                     position: 'relative',
@@ -238,7 +253,7 @@ const DocEditor = ({
         }
 
         return (
-            <Select key={`${item.name}_${index}`}
+            <Select key={`${item.name}_${index}_${currentPage}`}
                     disabled={!canEdit(item)}
                     value={valueToShow(item)}
                     allowClear={true}
@@ -335,5 +350,6 @@ DocEditor.defaultProps = {
     hasErrorInfo: false,
     disabledColor: {},
     canEdit: () => {},
-    valueToShow: () => {}
+    valueToShow: () => {},
+    currentPage: 1,
 }

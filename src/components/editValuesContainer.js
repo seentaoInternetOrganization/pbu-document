@@ -13,6 +13,8 @@ import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
 import { getDescendantantProp } from '../utils';
 import { resetSelectHeightOfAntd } from './docUtils';
+import CopyGroup from './copyGroup'
+
 
 //处理总账科目和明细账科目
 function combineSubjects(subjects) {
@@ -275,40 +277,6 @@ export default class EditValuesContainer extends Component {
         const { config, ratioHeight, ratioWidth, activityId, hasErrorInfo, subjectsTopLevel, subjectsTree, editable } = this.props
         const { docData, glas, sls, subjectVisible, currentAccountTitle, currentCopy } = this.state
 
-        const renderCopies = () => {
-
-            if (config.length == 1) {
-                return;
-            }
-
-            const copyNodes = [];
-
-            for (let i = 0; i < config.length; i++) {
-
-                let className = '';
-                let title = `${i+1}`;
-
-                if (i === currentCopy) {
-                    className = styles.highlight
-                    title = `第${title}联`
-                }
-
-                copyNodes.push((
-                    <button key={i}
-                        className={className}
-                        type='ghost'
-                        onClick={e => this.onCopyChange(i)}
-                        >{title}</button>
-                ))
-            }
-
-            return (
-                <div className={styles.copy}>
-                    {copyNodes}
-                </div>
-            )
-        }
-
         return (
             <div ref={'docBG'} className={styles.main_container}>
                 <AccountSubjectPopover subjectsTopLevel={subjectsTopLevel}
@@ -320,8 +288,12 @@ export default class EditValuesContainer extends Component {
                             visible={subjectVisible}
                             hasErrorInfo={hasErrorInfo}
                             config={config}/>
-                {renderCopies()}
-                <div className={classnames(styles.doc, { [styles.showCopy] : config.length > 1})}>
+                <CopyGroup currentCopy={currentCopy}
+                            className={styles.copy}
+                            visibleSheet={Array.from(Array(config.length).keys()).fill('1').join(',')}
+                            selectedClsName={styles.highlight}
+                            onCopyChange={this.onCopyChange}/>
+                <div className={styles.doc}>
                     <DocEditor bgClassName={styles.container}
                             config={config}
                             docData={docData}

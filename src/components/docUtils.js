@@ -70,21 +70,37 @@ export function testNumber(item, value) {
     return !(tooBig || tooSmall)
 }
 
+/**
+ * 过滤掉value中的padStart信息
+ * @param  {Object} item  [description]
+ * @param  {String} value [description]
+ * @return {String}       [description]
+ */
+export function filterValue(item, value) {
+    if (item.constraint
+        && item.constraint.padStart) {
+        return value.replace(item.constraint.padStart, '')
+    }
+
+    return value
+}
+
 //判断输入的内容的合法性
 export function canChange(item, value) {
+    const _value = filterValue(item, value)
     //输入空，通过
-    if (typeof value === 'string'
-        && isEmpty(value)) {
+    if (typeof _value === 'string'
+        && isEmpty(_value)) {
         return true
     }
 
     switch (item.type) {
         case ELEMENT.INTEGER:
-            return isNumeric(value) && testNumber(item, value)
+            return isNumeric(_value) && testNumber(item, _value)
             break;
 
         case ELEMENT.FLOAT:
-            return isFloat(value) && testNumber(item, value)
+            return isFloat(_value) && testNumber(item, _value)
             break;
     }
 

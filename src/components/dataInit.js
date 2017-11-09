@@ -16,6 +16,7 @@ import AccountSubjectPopover from './accountSubject';
 import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd } from './docUtils';
 import DocEditor from './docEditor';
 import { getDescendantantProp } from '../utils';
+import CopyGroup from './copyGroup';
 
 const Option = Select.Option;
 const { CheckableTag } = Tag;
@@ -392,22 +393,17 @@ class DataInit extends Component {
             currentCopy,
             disabledColor: { color: 'lightgrey' },
             canEdit: this.canEdit,
-            valueToShow: this.valueToShow
+            valueToShow: this.valueToShow,
+            currentPage,
         }
 
         const renderTags = () => {
-            const tagNodes = [];
+            const tagNodes = Array.from(Array(totalPage).keys()).map(i => {
+                const highlightOpt = (currentPage == i + 1) ? {
+                    color: '#3DCC61'
+                } : {}
 
-            for (let i = 0; i < totalPage; i++) {
-                let highlightOpt = {};
-
-                if (currentPage == i + 1) {
-                    highlightOpt = {
-                        color: '#3DCC61'
-                    }
-                }
-
-                tagNodes.push(
+                return (
                     <Tag key={`tag_${i}`}
                         {...highlightOpt}
                         closable={totalPage > 1}
@@ -420,10 +416,10 @@ class DataInit extends Component {
                             e.stopPropagation();
                             onRemovePage(i + 1)
                         }}>
-                        {i+1}
+                        {i + 1}
                     </Tag>
                 )
-            }
+            })
 
             return tagNodes;
         }
@@ -485,40 +481,15 @@ class DataInit extends Component {
             }
         }
 
-        const renderCopies = () => {
-            if (config.length > 1) {
-                const copyNodes = [];
-
-                for (let i = 0; i < config.length; i++) {
-                    let className = '';
-                    let title = `${i+1}`;
-
-                    if (i === currentCopy) {
-                        className = styles.highlight
-                        title = `第${title}联`
-                    }
-
-                    copyNodes.push((
-                        <button key={i}
-                            className={className}
-                            type='ghost'
-                            onClick={e => onCopyChange(i)}>{title}</button>
-                    ))
-                }
-
-                return (
-                    <div style={{ textAlign: 'left' }}>
-                        <div className={styles.copy}>
-                            {copyNodes}
-                        </div>
-                    </div>
-                )
-            }
-        }
-
         return (
             <div className={styles.outter_container}>
-                {renderCopies()}
+                <div style={{ textAlign: 'left' }}>
+                    <CopyGroup currentCopy={currentCopy}
+                            className={styles.copy}
+                            visibleSheet={Array.from(Array(config.length).keys()).fill('1').join(',')}
+                            selectedClsName={styles.highlight}
+                            onCopyChange={this.onCopyChange}/>
+                </div>
                 <section className={styles.container} ref='docBG'>
     	            <div className={styles.sub_nav}>
                         <AccountSubjectPopover subjectsTopLevel={subjectsTopLevel}

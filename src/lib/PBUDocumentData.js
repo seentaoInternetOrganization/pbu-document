@@ -10,6 +10,7 @@ import ReadOnly from '../components/readonly';
 import { Button } from 'antd';
 import styles from '../main.less';
 import classnames from 'classnames';
+import CopyGroup from '../components/copyGroup'
 
 function firstCopy(visibleSheet) {
     if (!visibleSheet
@@ -53,45 +54,6 @@ class PBUDocumentData extends Component {
 
         const { currentCopy } = this.state;
 
-        const renderCopies = () => {
-
-            if (!visibleSheet) {
-                return null;
-            }
-
-            const copyNodes = [];
-            const visibleCopies = visibleSheet.split(',')
-
-            for (let i = 0; i < visibleCopies.length; i++) {
-
-                if (visibleCopies[i] !== '1') {
-                    continue
-                }
-
-                let className = '';
-                let title = `${i+1}`;
-
-                if (i === currentCopy) {
-                    className = styles.highlight
-                    title = `第${title}联`
-                }
-
-                copyNodes.push((
-                    <button key={i}
-                        className={className}
-                        type='ghost'
-                        onClick={e => this.onCopyChange(i)}
-                        >{title}</button>
-                ))
-            }
-
-            return (
-                <div className={styles.copy}>
-                    {copyNodes}
-                </div>
-            )
-        }
-
         const docProps = {
             docData,
             activityId,
@@ -99,7 +61,11 @@ class PBUDocumentData extends Component {
 
         return (
             <div className={styles.container}>
-                {renderCopies()}
+                <CopyGroup currentCopy={currentCopy}
+                            className={styles.copy}
+                            visibleSheet={visibleSheet}
+                            selectedClsName={styles.highlight}
+                            onCopyChange={this.onCopyChange}/>
                 <MainContainer className={styles.main_container}
                             docConfigUrl={docConfigUrl}>
                     <ReadOnly showAnswer={false}
