@@ -64,19 +64,33 @@ const DocEditor = ({
 
     //元素自身的样式
     const styleOfItem = item => {
-        if (!all[item.name]) {
-            return basicStyleOfItem(item)
+        const wrapperStyles = () => {
+            if (!all[item.name]) {
+                return basicStyleOfItem(item)
+            }
+
+            if (!hasErrorInfo) {
+                return basicStyleOfItem(item)
+            }
+
+            if (errors
+                && errors[item.name]) {
+                return basicStyleOfItem(item, true, '#FFFF80')
+            }else {
+                return basicStyleOfItem(item)
+            }
         }
 
-        if (!hasErrorInfo) {
-            return basicStyleOfItem(item)
+        if (item.type === ELEMENT.GLA
+            || item.type === ELEMENT.SL) {
+            return wrapperStyles()
         }
 
-        if (errors
-            && errors[item.name]) {
-            return basicStyleOfItem(item, true, '#FFFF80')
-        }else {
-            return basicStyleOfItem(item)
+        return {
+            ...wrapperStyles(),
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
         }
     }
 
@@ -142,6 +156,16 @@ const DocEditor = ({
             }
         }
 
+        const renderOption = item => {
+            return (
+                <Option key={item.value}>
+                    <Tooltip title={item.text}>
+                        {item.text}
+                    </Tooltip>
+                </Option>
+            )
+        }
+
         return (
             <AutoComplete key={`${item.name}_${index}_${currentPage}`}
                 name={item.name}
@@ -159,16 +183,13 @@ const DocEditor = ({
                 onBlur={value => {
                     onSubjectBlur(item, value, dataSource)
                 }}
+                dataSource={dataSource.map(renderOption)}
             >
-                {dataSource.map(item => {
-                    return (
-                        <Option key={item.value}>
-                            <Tooltip title={item.text}>
-                                {item.text}
-                            </Tooltip>
-                        </Option>
-                    )
-                })}
+                <input style={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                }}/>
             </AutoComplete>
         )
     }

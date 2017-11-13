@@ -219,8 +219,10 @@ export default class EditValuesContainer extends Component {
         if (!all[item.name]) {
             return;
         }
-
-        if (all[item.name].subjectName) {
+        //只能显示预置的科目或自己选择的科目
+        if (all[item.name].subjectName
+            && (all[item.name].data || all[item.name].value)
+        ) {
             return all[item.name].subjectName
         }
 
@@ -262,16 +264,6 @@ export default class EditValuesContainer extends Component {
             return all[item.gla]
                     && all[item.gla].value
                     && !isEmpty(all[item.gla].value)
-        }
-
-        if (!all[item.name]) {
-            return true
-        }
-
-        //如果此元素不属于本节点，则不允许编辑
-        if (all[item.name].activityId
-            && all[item.name].activityId !== activityId) {
-            return false
         }
 
         return true
