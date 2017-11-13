@@ -123,10 +123,10 @@ class DataInit extends Component {
         }
     }
 
-    onSubjectSearch = (item, value, subjectId) => {
+    onSubjectSearch = (item, value, subjectId, key) => {
         const { isDataInit } = this.props
         this.onItemChange(item, { ...saveAs(value, isDataInit), subjectName: value, }, !isEmpty(value))
-        this.props.onSearchSubjects(value, subjectId)
+        this.props.onSearchSubjects(value, subjectId, key)
     }
 
     onSubjectSelected = (item, value, option) => {
@@ -367,13 +367,12 @@ class DataInit extends Component {
             subjectsTree,
             onSubjectSelected,
             loading,
-            currentCopy,
             onCopyChange,
             onAccountTitleSubejctSelected,
             onAccountDetailSubjectSelected,
         } = this.props;
 
-        const { docData, glas, sls, currentSubject, answerArea, currentAccountTitle, subjectVisible } = this.state;
+        const { docData, glas, sls, currentSubject, answerArea, currentAccountTitle, subjectVisible, currentCopy } = this.state;
 
         const docProps = {
             config,
@@ -687,5 +686,6 @@ DataInit.defaultProps = {
     },
     onDocChange: data => {
         console.log('data = ', data);
-    }
+    },
+    currentCopy: 0
 }

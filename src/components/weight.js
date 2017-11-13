@@ -39,7 +39,7 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
                 )
             }
 
-            if (data == null
+            if (!data
                 || typeof data !== 'object'
                 || !data.all) {
                 //如果没有数据且单据类型为默认即仿真单据，则不渲染
@@ -49,7 +49,9 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
                 }
             }
 
-            if (data.all[item.name]) {
+            if (data
+                && data.all
+                && data.all[item.name]) {
                 return (
                     <span key={`readonly_${index}`}
                         style={{

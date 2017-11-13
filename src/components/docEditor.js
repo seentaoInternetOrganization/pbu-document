@@ -39,7 +39,7 @@ const DocEditor = ({
     currentPage,
 }) => {
 
-    const { all } = docData;
+    const { all, errors } = docData;
 
     //元素onChange监听
     const onElementChange = (item, value) => {
@@ -72,8 +72,8 @@ const DocEditor = ({
             return basicStyleOfItem(item)
         }
 
-        if (all[item.name].hasOwnProperty('correct')
-            && !all[item.name].correct) {
+        if (errors
+            && errors[item.name]) {
             return basicStyleOfItem(item, true, '#FFFF80')
         }else {
             return basicStyleOfItem(item)
@@ -96,13 +96,22 @@ const DocEditor = ({
                 </span>
             )
         }
-
-        return (
-            <span key={`readonly_${index}_${currentPage}`}
-                style={{...styleOfItem(item), ...disabledColor}}>
-                {value}
-            </span>
-        )
+        //非第一联展示原始颜色，第一联展示灰色
+        if (currentCopy > 0) {
+            return (
+                <span key={`readonly_${index}_${currentPage}`}
+                    style={{...styleOfItem(item)}}>
+                    {value}
+                </span>
+            )
+        }else {
+            return (
+                <span key={`readonly_${index}_${currentPage}`}
+                    style={{...styleOfItem(item), ...disabledColor}}>
+                    {value}
+                </span>
+            )
+        }
     }
 
     //渲染普通文本输入框
@@ -146,6 +155,10 @@ const DocEditor = ({
                         text: option.props.children.props.children,
                         value: value
                     })
+
+                    if (item.type === ELEMENT.GLA) {
+                        onSubjectSearch(item, value, value, item.name)
+                    }
                 }}
                 onBlur={value => {
                     onSubjectBlur(item, value, dataSource)

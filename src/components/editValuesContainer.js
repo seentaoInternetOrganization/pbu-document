@@ -127,9 +127,9 @@ export default class EditValuesContainer extends Component {
         }
     }
 
-    onSubjectSearch = (item, value, subjectId) => {
+    onSubjectSearch = (item, value, subjectId, key) => {
         this.onItemChange(item, { value: '', subjectName: value, }, !isEmpty(value))
-        this.props.onSearchSubjects(value, subjectId)
+        this.props.onSearchSubjects(value, subjectId, key)
     }
 
     onSubjectSelected = (item, value, option) => {
