@@ -13,8 +13,8 @@ import mockSubjects from './mock/mockSubject.json';
 import { Button, message } from 'antd';
 import { mapExaminesWithAll } from './components/docUtils'
 
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
@@ -49,8 +49,8 @@ class Demo extends Component {
         })
     }
 
-    onSearchSubjects = (value, subjectId) => {
-        console.log('value = ', value, ' subjectId = ', subjectId);
+    onSearchSubjects = (value, subjectId, name) => {
+        console.log('value = ', value, ' subjectId = ', subjectId, ' name = ', name);
 
         setTimeout(() => {
             this.setState({
@@ -177,11 +177,11 @@ class Demo extends Component {
                         }}
                         hasErrorInfo={true}
                         onDocChange={ data => {
-                            console.log('data = ', JSON.stringify({
-                                all: data.all,
-                                examines: data.examines,
-                                values: mapExaminesWithAll(data.examines, 'value', data.all)
-                            }));
+                            // console.log('data = ', JSON.stringify({
+                            //     all: data.all,
+                            //     examines: data.examines,
+                            //     values: mapExaminesWithAll(data.examines, 'value', data.all)
+                            // }));
                             this.setState({
                                 docData: data
                             })

@@ -123,15 +123,19 @@ class DataInit extends Component {
         }
     }
 
-    onSubjectSearch = (item, value, subjectId, key) => {
+    onSubjectSearch = (item, value, subjectId) => {
         const { isDataInit } = this.props
         this.onItemChange(item, { ...saveAs(value, isDataInit), subjectName: value, }, !isEmpty(value))
-        this.props.onSearchSubjects(value, subjectId, key)
+        this.props.onSearchSubjects(value, subjectId, item.gla && item.gla)
     }
 
     onSubjectSelected = (item, value, option) => {
         const { isDataInit } = this.props
         this.onItemChange(item, { ...saveAs(value, isDataInit), subjectName: option.text, }, !isEmpty(value))
+
+        if (item.type === ELEMENT.GLA) {
+            this.props.onSearchSubjects('', value, item.name)
+        }
     }
 
     onSubjectBlur = (item, value, dataSource) => {

@@ -155,10 +155,6 @@ const DocEditor = ({
                         text: option.props.children.props.children,
                         value: value
                     })
-
-                    if (item.type === ELEMENT.GLA) {
-                        onSubjectSearch(item, value, value, item.name)
-                    }
                 }}
                 onBlur={value => {
                     onSubjectBlur(item, value, dataSource)
