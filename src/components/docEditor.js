@@ -81,8 +81,12 @@ const DocEditor = ({
             }
         }
 
-        if (item.type === ELEMENT.GLA
-            || item.type === ELEMENT.SL) {
+        if ((item.type === ELEMENT.GLA
+            || item.type === ELEMENT.SL) && canEdit(item)) {
+            return wrapperStyles()
+        }
+
+        if (item.type === ELEMENT.TEXT_AREA) {
             return wrapperStyles()
         }
 
@@ -105,6 +109,7 @@ const DocEditor = ({
         if (item.type === ELEMENT.LABEL) {
             return (
                 <span key={`readonly_${index}_${currentPage}`}
+                    title={value}
                     style={styleOfItem(item)}>
                     {value}
                 </span>
@@ -114,6 +119,7 @@ const DocEditor = ({
         if (currentCopy > 0) {
             return (
                 <span key={`readonly_${index}_${currentPage}`}
+                    title={value}
                     style={{...styleOfItem(item)}}>
                     {value}
                 </span>
@@ -121,6 +127,7 @@ const DocEditor = ({
         }else {
             return (
                 <span key={`readonly_${index}_${currentPage}`}
+                    title={value}
                     style={{...styleOfItem(item), ...disabledColor}}>
                     {value}
                 </span>
@@ -134,6 +141,7 @@ const DocEditor = ({
             <input key={`${item.name}_${index}_${currentPage}`}
                         name={item.name}
                         style={styleOfItem(item)}
+                        title={valueToShow(item) ? valueToShow(item) : ''}
                         value={valueToShow(item) ? valueToShow(item) : ''}
                         onChange={e => {
                             onElementChange(item, e.target.value)
@@ -189,7 +197,7 @@ const DocEditor = ({
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
-                }}/>
+                }} title={valueToShow(item)}/>
             </AutoComplete>
         )
     }

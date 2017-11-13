@@ -220,9 +220,7 @@ export default class EditValuesContainer extends Component {
             return;
         }
         //只能显示预置的科目或自己选择的科目
-        if (all[item.name].subjectName
-            && (all[item.name].data || all[item.name].value)
-        ) {
+        if (all[item.name].subjectName) {
             return all[item.name].subjectName
         }
 

@@ -114,9 +114,17 @@ const ReadOnly = ({
             return null
         }
 
+        const style = {
+            ...basicStyleOfItem(item),
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+        }
+
         return (
             <span key={`readonly_${index}`}
-                style={basicStyleOfItem(item)}>
+                title={value}
+                style={style}>
                 {value}
             </span>
         )

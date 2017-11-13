@@ -151,13 +151,13 @@ class Demo extends Component {
                                     }}/>
                 <div>背景单据展示</div>
                 <PBUDocumentData docConfigUrl={docConfigUrl}
-                    docData={mockData.docData}
+                    docData={this.state.docData}
                     visibleSheet={'0,1,1,'}
                     activityId='18bcf3382fa8c93' />
                 <div>查看答案</div>
                 <div style={{ display: 'inline-block' }}>
                     <PBUDocumentAnswer docConfigUrl={docConfigUrl}
-                        docData={mockData.docData}
+                        docData={this.state.docData}
                         subjectsTopLevel={mockSubjects.accountingSubjects}
                         subjectsTree={mockSubjects.accountingSubjects}
                         activityId='18bcf3382fa8c93d' />
