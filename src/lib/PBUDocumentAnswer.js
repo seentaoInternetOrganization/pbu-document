@@ -59,6 +59,7 @@ class PBUDocumentAnswer extends Component {
             onAccountDetailSubjectSelected,
             subjectsTopLevel,
             subjectsTree,
+            onConfigLoaded,
         } = this.props;
 
         const docProps = {
@@ -71,7 +72,8 @@ class PBUDocumentAnswer extends Component {
         return (
             <div className={styles.container}>
                 <MainContainer className={styles.main_container}
-                            docConfigUrl={docConfigUrl}>
+                            docConfigUrl={docConfigUrl}
+                            onConfigLoaded={onConfigLoaded}>
                     <AccountSubjectPopover subjectsTopLevel={subjectsTopLevel}
                                 subjectsTree={subjectsTree}
                                 currentAccountTitle={currentAccountTitle}
@@ -127,6 +129,11 @@ PBUDocumentAnswer.propTypes = {
      * 第0级科目分类对应的子分类
      */
     subjectsTree: PropTypes.any,
+    /**
+     * 当单据配置文件加载完毕时的回调
+     * @param {Object} docConfig 单据配置文件信息
+     */
+    onConfigLoaded: PropTypes.func,
 }
 
 PBUDocumentAnswer.defaultProps = {
