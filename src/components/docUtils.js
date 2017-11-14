@@ -223,3 +223,29 @@ export function resetSelectHeightOfAntd(config, dom) {
         selectNodes[i].style.backgroundColor = 'transparent';
     }
 }
+
+/**
+ * 将value转换成item.type类型的value
+ * @param  {Object} item  [description]
+ * @param  {String} value [description]
+ * @return {[type]}       [description]
+ */
+export function formatValueOfItem(item, value) {
+    //输入空，原样返回
+    if (typeof value === 'string'
+        && isEmpty(value)) {
+        return value
+    }
+
+    if (!item) {
+        return value
+    }
+
+    switch (item.type) {
+        case ELEMENT.INTEGER:
+            return parseInt(value).toString()
+            break;
+    }
+
+    return value
+}

@@ -149,9 +149,7 @@ export default class EditValuesContainer extends Component {
         })
 
         if (selected) {
-            this.onItemChange(item, { value: selected.value, subjectName: value }, !isEmpty(value), () => {
-                this.props.onSubjectBlur()
-            })
+            this.onItemChange(item, { value: selected.value, subjectName: value }, !isEmpty(value))
         }
     }
 

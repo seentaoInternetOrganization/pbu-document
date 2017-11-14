@@ -11,7 +11,7 @@ import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
 import { AutoComplete, message, Tooltip, Checkbox, Radio, Select } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
-import { copyToShow, basicStyleOfItem, testNumber, canChange, filterValue } from './docUtils';
+import { copyToShow, basicStyleOfItem, testNumber, canChange, filterValue, formatValueOfItem } from './docUtils';
 const Option = AutoComplete.Option;
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -54,10 +54,29 @@ const DocEditor = ({
                 if (item.constraint.maxLength) {
                     onItemChange(item, filterValue(item, value).padStart(item.constraint.maxLength, item.constraint.padStart))
                 }else {
-                    onItemChange(item, value.startsWith(item.constraint.padStart) ? value : `${item.constraint.padStart}${value}`)
+                    const _value = formatValueOfItem(item, filterValue(item, value))
+                    onItemChange(item, `${item.constraint.padStart}${_value}`)
                 }
             }else {
-                onItemChange(item, value)
+                const _value = formatValueOfItem(item, value)
+                onItemChange(item, _value)
+            }
+        }
+    }
+
+    const onElementBlur = (item, value) => {
+        if (isEmpty(value)) {
+            return
+        }
+        //只处理浮点型
+        if (item.type === ELEMENT.FLOAT) {
+            const _value = parseFloat(filterValue(item, value)).toString()
+
+            if (item.constraint
+                && item.constraint.padStart) {
+                onItemChange(item, `${item.constraint.padStart}${_value}`)
+            }else {
+                onItemChange(item, _value)
             }
         }
     }
@@ -146,6 +165,9 @@ const DocEditor = ({
                         onChange={e => {
                             onElementChange(item, e.target.value)
                         }}
+                        onBlur={e => {
+                            onElementBlur(item, e.target.value)
+                        }}
                     />
         )
     }
@@ -155,7 +177,8 @@ const DocEditor = ({
 
         const styleOfSelect = {
             ...styleOfItem(item),
-            top: styleOfItem(item).top - 4
+            top: styleOfItem(item).top - 4,
+            fontSize: 'inherit',
         }
 
         const glaSubjectId = () => {
@@ -197,7 +220,12 @@ const DocEditor = ({
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
-                }} title={valueToShow(item)}/>
+                }}
+                    onFocus={e => {
+                        onSubjectSearch(item, '', glaSubjectId())
+                    }}
+                    name={item.name}
+                    title={valueToShow(item)}/>
             </AutoComplete>
         )
     }
