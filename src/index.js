@@ -13,9 +13,9 @@ import mockSubjects from './mock/mockSubject.json';
 import { Button, message } from 'antd';
 import { mapExaminesWithAll } from './components/docUtils'
 
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
 // const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
@@ -31,7 +31,8 @@ function onCopyChange(copy) {
 class Demo extends Component {
     state = {
         currentCopy: 0,
-        subjectTotals: [],
+        subjectTotals: mockSubjects.accountingSubjects,
+        // subjectTotals: [],
         // docData: {
         //     examines: []
         // },
@@ -51,12 +52,14 @@ class Demo extends Component {
 
     onSearchSubjects = (value, subjectId, name) => {
         console.log('value = ', value, ' subjectId = ', subjectId, ' name = ', name);
-
-        setTimeout(() => {
-            this.setState({
-                subjectTotals: mockSubjects.accountingSubjects
-            })
-        }, 500);
+        this.setState({
+            subjectTotals: mockSubjects.accountingSubjects,
+        })
+        // setTimeout(() => {
+        //     this.setState({
+        //         subjectTotals: mockSubjects.accountingSubjects
+        //     })
+        // }, 500);
     }
 
     render() {
@@ -93,8 +96,7 @@ class Demo extends Component {
                                         docData={mockData.docData}/>
                 <div>权重及甄别方式预览</div>
                 <div style={{ display: 'inline-block'}}>
-                    <PBUDocumentPreview docConfigUrl={docConfigUrl}
-                        />
+                    <PBUDocumentPreview docConfigUrl={docConfigUrl} docData={mockData.docData}/>
                 </div>
                 <div>预置数据</div>
                 <PBUDocumentDataInit docConfigUrl={docConfigUrl}
@@ -110,6 +112,9 @@ class Demo extends Component {
                                     totalPage={2}
                                     onSubjectBlur={() => {
                                         console.log('!!!!!!!onSubjectBlur');
+                                        this.setState({
+                                            subjectTotals: [],
+                                        })
                                     }}
                                     onDocChange={ data => {
                                         this.setState({
@@ -177,11 +182,6 @@ class Demo extends Component {
                         }}
                         hasErrorInfo={true}
                         onDocChange={ data => {
-                            // console.log('data = ', JSON.stringify({
-                            //     all: data.all,
-                            //     examines: data.examines,
-                            //     values: mapExaminesWithAll(data.examines, 'value', data.all)
-                            // }));
                             this.setState({
                                 docData: data
                             })

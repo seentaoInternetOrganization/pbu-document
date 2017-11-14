@@ -91,10 +91,10 @@ const DocEditor = ({
         }
 
         return {
-            ...wrapperStyles(),
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
+            ...wrapperStyles(),
         }
     }
 
@@ -164,11 +164,11 @@ const DocEditor = ({
             }
         }
 
-        const renderOption = item => {
+        const renderOption = option => {
             return (
-                <Option key={item.value}>
-                    <Tooltip title={item.text}>
-                        {item.text}
+                <Option key={option.value}>
+                    <Tooltip title={option.text}>
+                        {option.text}
                     </Tooltip>
                 </Option>
             )

@@ -73,7 +73,7 @@ class DataInit extends Component {
         resetSelectHeightOfAntd(this.props.config, this.refs.docBG)
     }
 
-    onItemChange = (item, valueProps, addActivityId) => {
+    onItemChange = (item, valueProps, addActivityId, cb) => {
         const { activityId } = this.props
 
         const activityOpt = () => {
@@ -104,12 +104,14 @@ class DataInit extends Component {
                 ...docData,
                 all: newAll
             }
-        })
+        }, () => {
+            this.props.onDocChange({
+                ...docData,
+                all: newAll
+            }, this.state.answerArea)
 
-        this.props.onDocChange({
-            ...docData,
-            all: newAll
-        }, this.state.answerArea)
+            cb && cb()
+        })
     }
 
 
@@ -125,17 +127,18 @@ class DataInit extends Component {
 
     onSubjectSearch = (item, value, subjectId) => {
         const { isDataInit } = this.props
-        this.onItemChange(item, { ...saveAs(value, isDataInit), subjectName: value, }, !isEmpty(value))
-        this.props.onSearchSubjects(value, subjectId, item.gla && item.gla)
+        this.onItemChange(item, { ...saveAs(value, isDataInit), subjectName: value, }, !isEmpty(value), () => {
+            this.props.onSearchSubjects(value, subjectId, item.gla && item.gla)
+        })
     }
 
     onSubjectSelected = (item, value, option) => {
         const { isDataInit } = this.props
-        this.onItemChange(item, { ...saveAs(value, isDataInit), subjectName: option.text, }, !isEmpty(value))
-
-        if (item.type === ELEMENT.GLA) {
-            this.props.onSearchSubjects('', value, item.name)
-        }
+        this.onItemChange(item, { ...saveAs(value, isDataInit), subjectName: option.text, }, !isEmpty(value), () => {
+            if (item.type === ELEMENT.GLA) {
+                this.props.onSearchSubjects('', value, item.name)
+            }
+        })
     }
 
     onSubjectBlur = (item, value, dataSource) => {
@@ -145,10 +148,10 @@ class DataInit extends Component {
         })
 
         if (selected) {
-            this.onItemChange(item, { ...saveAs(selected.value, isDataInit), subjectName: value }, !isEmpty(value))
+            this.onItemChange(item, { ...saveAs(selected.value, isDataInit), subjectName: value }, !isEmpty(value), () => {
+                this.props.onSubjectBlur()
+            })
         }
-
-        this.props.onSubjectBlur()
     }
 
     onSave = () => {
@@ -466,7 +469,7 @@ class DataInit extends Component {
 
             const docNodes = () => {
                 return (
-                    <div style={{ display: "inline-block", textAlign: 'left' }}>
+                    <div style={{ display: "inline-block", textAlign: 'left', width: config[0].width }}>
                         <DocEditor {...docProps}/>
                         {renderPage()}
                     </div>

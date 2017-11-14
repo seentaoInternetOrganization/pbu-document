@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DocBG from './background';
 import bgStyles from './background.css';
-import { ELEMENT } from '../constants';
+import { ELEMENT, DOC_TYPE } from '../constants';
 import { getDescendantantProp } from '../utils';
 import { copyToShow } from './docUtils';
 import { Checkbox, Radio, Select } from 'antd';
@@ -110,7 +110,7 @@ const ReadOnly = ({
     const renderNormalItem = (item, index) => {
         const value = valueToShow(item)
 
-        if (!value && value !== '') {
+        if (!value && value !== '' && config[0].docType === DOC_TYPE.DEFAULT) {
             return null
         }
 
@@ -134,7 +134,7 @@ const ReadOnly = ({
     const renderTextareaItem = (item, index) => {
         const value = valueToShow(item);
 
-        if (!value) {
+        if (!value && config[0].docType === DOC_TYPE.DEFAULT) {
             return null
         }
 

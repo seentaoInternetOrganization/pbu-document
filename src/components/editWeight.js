@@ -456,7 +456,7 @@ class EditWeight extends Component {
                                         this.onRemoveCompleted(item.element.name)
                                     }}
                                     style={{
-                                        top: (pos.height * ratioHeight - 14)/2-4,
+                                        // top: (pos.height * ratioHeight - 14)/2-4,
                                         color: EXAMINE_COLOR[item.examineType]
                                 }}/>
                         </div>
