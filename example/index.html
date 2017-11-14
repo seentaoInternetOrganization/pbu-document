@@ -45,6 +45,24 @@
                   }
               });
           };
+          // https://github.com/uxitten/polyfill/blob/master/string.polyfill.js
+          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
+          if (!String.prototype.padStart) {
+              String.prototype.padStart = function padStart(targetLength,padString) {
+                  targetLength = targetLength>>0; //floor if number or convert non-number to 0;
+                  padString = String(padString || ' ');
+                  if (this.length > targetLength) {
+                      return String(this);
+                  }
+                  else {
+                      targetLength = targetLength-this.length;
+                      if (targetLength > padString.length) {
+                          padString += padString.repeat(targetLength/padString.length); //append to original to ensure we are longer than needed
+                      }
+                      return padString.slice(0,targetLength) + String(this);
+                  }
+              };
+          }
         })();
     </script>
     <script src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,es5-shim/4.5.7/es5-shim.min.js,es5-shim/4.5.7/es5-sham.min.js,html5shiv/3.7.2/html5shiv.min.js,media-match/2.0.2/media.match.min.js"></script>

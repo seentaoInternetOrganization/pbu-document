@@ -149,7 +149,7 @@ PBUDocumentDataInit.propTypes = {
     /**
      * 第0级科目分类对应的子分类
      */
-    subjectsTree: PropTypes.array,
+    subjectsTree: PropTypes.any,
     /**
      * 加载中效果
      */

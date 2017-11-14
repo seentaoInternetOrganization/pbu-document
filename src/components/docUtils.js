@@ -249,3 +249,20 @@ export function formatValueOfItem(item, value) {
 
     return value
 }
+
+/**
+ * 过滤出docData中的custom中的信息
+ * @param  {Object} props [description]
+ * @param  {String} key   要取的属性
+ * @return {String}       [description]
+ */
+export function subjectOfPropsInCustom(props, key) {
+
+    if (key
+        && props
+        && props.docData
+        && props.docData.custom
+        && props.docData.custom[key]) {
+        return props.docData.custom[key]
+    }
+}

@@ -138,6 +138,7 @@ const DocEditor = ({
         if (currentCopy > 0) {
             return (
                 <span key={`readonly_${index}_${currentPage}`}
+                    name={item.name}
                     title={value}
                     style={{...styleOfItem(item)}}>
                     {value}
@@ -146,6 +147,7 @@ const DocEditor = ({
         }else {
             return (
                 <span key={`readonly_${index}_${currentPage}`}
+                    name={item.name}
                     title={value}
                     style={{...styleOfItem(item), ...disabledColor}}>
                     {value}
@@ -243,6 +245,7 @@ const DocEditor = ({
         ?
         (
             <textarea key={`textarea_${index}_${currentPage}`}
+                    name={item.name}
                     style={style}
                     value={value}
                     onChange={e => {
@@ -253,6 +256,7 @@ const DocEditor = ({
         :
         (
             <textarea key={`textarea_${index}_${currentPage}`}
+                    name={item.name}
                     style={style}
                     value={value}
                     readOnly={'readonly'}
@@ -268,6 +272,7 @@ const DocEditor = ({
         if (!item.options) {
             return (
                 <input key={`${item.name}_${index}_${currentPage}`}
+                            name={item.name}
                             type="checkbox"
                             style={basicStyleOfItem(item)}
                         />
@@ -275,6 +280,7 @@ const DocEditor = ({
         }else {
             return (
                 <div key={`${item.name}_${index}_${currentPage}`}
+                    name={item.name}
                     style={basicStyleOfItem(item)}>
                     <div style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)' }}>
                         <CheckboxGroup options={item.options}
@@ -292,6 +298,7 @@ const DocEditor = ({
     const renderRadio = (item, index) => {
         return (
             <div key={`${item.name}_${index}_${currentPage}`}
+                name={item.name}
                 style={basicStyleOfItem(item)}>
                 <RadioGroup style={{
                     position: 'relative',

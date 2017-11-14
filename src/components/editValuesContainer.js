@@ -12,7 +12,7 @@ import { ELEMENT } from '../constants';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
 import { getDescendantantProp } from '../utils';
-import { resetSelectHeightOfAntd } from './docUtils';
+import { resetSelectHeightOfAntd, subjectOfPropsInCustom } from './docUtils';
 import CopyGroup from './copyGroup'
 
 
@@ -53,7 +53,8 @@ export default class EditValuesContainer extends Component {
         glas: [],
         sls: [],
         subjectVisible: false,
-        currentAccountTitle: null,
+        currentAccountTitle: subjectOfPropsInCustom(this.props, 'subjectTitle'),
+        currentAccountDetail: subjectOfPropsInCustom(this.props, 'subjectDetail'),
         currentCopy: this.props.currentCopy,
     }
 
@@ -63,6 +64,8 @@ export default class EditValuesContainer extends Component {
             glas: combineSubjects(this.props.subjectTotals),
             sls: combineSubjects(this.props.subjectDetails),
             docData: combineDataToState(this.props),
+            currentAccountTitle: subjectOfPropsInCustom(this.props, 'subjectTitle'),
+            currentAccountDetail: subjectOfPropsInCustom(this.props, 'subjectDetail'),
             currentCopy: this.props.currentCopy,
         })
     }
@@ -73,6 +76,8 @@ export default class EditValuesContainer extends Component {
             sls: combineSubjects(nextProps.subjectDetails),
             docData: combineDataToState(nextProps),
             currentCopy: nextProps.currentCopy,
+            currentAccountTitle: subjectOfPropsInCustom(nextProps, 'subjectTitle'),
+            currentAccountDetail: subjectOfPropsInCustom(nextProps, 'subjectDetail')
         })
     }
 
@@ -155,15 +160,8 @@ export default class EditValuesContainer extends Component {
 
     onAccountTitleSelected = subject => {
         const { docData } = this.state
+
         this.setState({
-            currentAccountTitle: subject,
-            docData: {
-                ...docData,
-                custom: {
-                    ...docData.custom,
-                    subjectTitle: subject,
-                },
-            },
             subjectVisible: true,
         });
 
@@ -172,6 +170,7 @@ export default class EditValuesContainer extends Component {
 
     onAccountDetailRowClicked = (record, index, e) => {
         const { docData } = this.state
+
         const subject = {
             subjectId: record.subjectId,
             subjectName: record.subjectName,
@@ -179,14 +178,6 @@ export default class EditValuesContainer extends Component {
         }
 
         this.setState({
-            currentAccountDetail: subject,
-            docData: {
-                ...docData,
-                custom: {
-                    ...docData.custom,
-                    subjectDetail: subject,
-                },
-            },
             subjectVisible: false
         })
 

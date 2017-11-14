@@ -13,7 +13,7 @@ import { Button , Select, Tag, AutoComplete, Icon, Upload, message, Popover, Tab
 import isNumeric from 'validator/lib/isNumeric';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
-import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd } from './docUtils';
+import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd, subjectOfPropsInCustom } from './docUtils';
 import DocEditor from './docEditor';
 import { getDescendantantProp } from '../utils';
 import CopyGroup from './copyGroup';
@@ -43,7 +43,8 @@ class DataInit extends Component {
         glas: [],
         sls: [],
         subjectVisible: false,
-        currentAccountTitle: null,
+        currentAccountTitle: subjectOfPropsInCustom(this.props, 'subjectTitle'),
+        currentAccountDetail: subjectOfPropsInCustom(this.props, 'subjectDetail'),
         currentCopy: this.props.currentCopy,
         answerArea: this.props.answerDesc,
     }
@@ -55,7 +56,9 @@ class DataInit extends Component {
             sls: combineSubjects(this.props.subjectDetails),
             docData: combineDataToState(this.props),
             currentCopy: this.props.currentCopy,
-            answerArea: this.props.answerDesc
+            answerArea: this.props.answerDesc,
+            currentAccountTitle: subjectOfPropsInCustom(this.props, 'subjectTitle'),
+            currentAccountDetail: subjectOfPropsInCustom(this.props, 'subjectDetail')
         })
     }
 
@@ -65,7 +68,9 @@ class DataInit extends Component {
             sls: combineSubjects(nextProps.subjectDetails),
             docData: combineDataToState(nextProps),
             currentCopy: nextProps.currentCopy,
-            answerArea: nextProps.answerDesc
+            answerArea: nextProps.answerDesc,
+            currentAccountTitle: subjectOfPropsInCustom(nextProps, 'subjectTitle'),
+            currentAccountDetail: subjectOfPropsInCustom(nextProps, 'subjectDetail')
         })
     }
 
@@ -221,7 +226,6 @@ class DataInit extends Component {
     onAccountTitleSelected = subject => {
         const { docData } = this.state
         this.setState({
-            currentAccountTitle: subject,
             subjectVisible: true,
         });
 
@@ -230,6 +234,7 @@ class DataInit extends Component {
 
     onAccountDetailRowClicked = (record, index, e) => {
         const { docData, currentAccountDetail, currentAccountTitle } = this.state
+
         const subject = {
             subjectId: record.subjectId,
             subjectName: record.subjectName,
@@ -243,15 +248,6 @@ class DataInit extends Component {
         this.props.onAccountDetailSubjectSelected(subject)
 
         this.setState({
-            currentAccountDetail: subject,
-            docData: {
-                ...docData,
-                custom: {
-                    ...docData.custom,
-                    subjectDetail: subject,
-                    subjectTitle: currentAccountTitle
-                },
-            },
             subjectVisible: false
         })
     }
@@ -590,7 +586,7 @@ DataInit.propTypes = {
     /**
      * 第0级科目分类对应的子分类
      */
-    subjectsTree: PropTypes.array,
+    subjectsTree: PropTypes.any,
     /**
      * 会计科目分类被选中时的回调
      */
