@@ -224,7 +224,7 @@ const EditWeightHeader = ({
 
     return (
         <div className={styles.sub_nav}>
-            <h2>{config.title}</h2>
+            <h2 title={config.title}>{config.title}</h2>
                 {renderTags()}
             <div className={styles.btn_group}>
                 <Button type='ghost' className={styles.clear} onClick={onClearAll}>清除</Button>

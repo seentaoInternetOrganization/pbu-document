@@ -12,12 +12,33 @@ import MainContainer from '../main';
 import ReadOnly from '../components/readonly';
 import AccountSubjectPopover from '../components/accountSubject';
 import styles from '../main.less';
+import CopyGroup from '../components/copyGroup'
+import { firstCopy } from '../components/docUtils'
 
 class PBUDocumentAnswer extends Component {
 
     state = {
         currentAccountTitle: null,
         subjectVisible: false,
+        currentCopy: firstCopy(this.props.visibleSheet)
+    }
+
+    componentDidMount() {
+        this.setState({
+            currentCopy: firstCopy(this.props.visibleSheet)
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            currentCopy: firstCopy(nextProps.visibleSheet)
+        })
+    }
+
+    onCopyChange = (copy) => {
+        this.setState({
+            currentCopy: copy
+        })
     }
 
     onAccountTitleSelected = subject => {
@@ -67,10 +88,15 @@ class PBUDocumentAnswer extends Component {
             activityId,
         }
 
-        const { currentAccountTitle, subjectVisible } = this.state
+        const { currentAccountTitle, subjectVisible, currentCopy } = this.state
 
         return (
             <div className={styles.container}>
+                <CopyGroup currentCopy={currentCopy}
+                            className={styles.copy}
+                            visibleSheet={visibleSheet}
+                            selectedClsName={styles.highlight}
+                            onCopyChange={this.onCopyChange}/>
                 <MainContainer className={styles.main_container}
                             docConfigUrl={docConfigUrl}
                             onConfigLoaded={onConfigLoaded}>
@@ -83,6 +109,7 @@ class PBUDocumentAnswer extends Component {
                                 visible={subjectVisible}/>
                     <ReadOnly showAnswer={true}
                             highlightAnswer={true}
+                            currentCopy={this.state.currentCopy}
                         {...docProps} />
                 </MainContainer>
             </div>

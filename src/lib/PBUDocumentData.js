@@ -11,15 +11,7 @@ import { Button } from 'antd';
 import styles from '../main.less';
 import classnames from 'classnames';
 import CopyGroup from '../components/copyGroup'
-
-function firstCopy(visibleSheet) {
-    if (!visibleSheet
-        || visibleSheet.split(',').indexOf('1') == -1) {
-        return 0
-    }
-
-    return visibleSheet.split(',').indexOf('1')
-}
+import { firstCopy } from '../components/docUtils'
 
 class PBUDocumentData extends Component {
     state = {

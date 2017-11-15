@@ -19,7 +19,8 @@ const CopyGroup = ({ visibleSheet, onCopyChange, className, selectedClsName, cur
     }
 
     const copyNodes = () => {
-        const copyNodes = visibleSheet.split(',')
+        const copyNodes =
+        visibleSheet.split(',')
         .map((copy, index) => {
             if (copy === '0'
                 || !copy
@@ -37,15 +38,26 @@ const CopyGroup = ({ visibleSheet, onCopyChange, className, selectedClsName, cur
                     >{isCurrentCopy ? `第${index+1}联` : `${index+1}`}</button>
             )
         })
+        .filter(copy => {
+            return !!copy
+        })
+
+        if (copyNodes.length === 1) {
+            return
+        }
 
         return copyNodes
     }
 
-    return (
-        <div className={className}>
-            {copyNodes()}
-        </div>
-    )
+    if (copyNodes()) {
+        return (
+            <div className={className}>
+                {copyNodes()}
+            </div>
+        )
+    }
+
+    return null
 }
 
 export default CopyGroup

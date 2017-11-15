@@ -155,6 +155,8 @@ export default class EditValuesContainer extends Component {
 
         if (selected) {
             this.onItemChange(item, { value: selected.value, subjectName: value }, !isEmpty(value))
+        }else {
+            this.onItemChange(item, { value: '', subjectName: '' }, false)
         }
     }
 
@@ -252,8 +254,8 @@ export default class EditValuesContainer extends Component {
         if (item.type === ELEMENT.SL) {
             //没有设置对应的总账科目时不可编辑明细
             return all[item.gla]
-                    && all[item.gla].value
-                    && !isEmpty(all[item.gla].value)
+                    && ((all[item.gla].value && !isEmpty(all[item.gla].value) )
+                     || (all[item.gla].data && !isEmpty(all[item.gla].data)))
         }
 
         return true

@@ -154,6 +154,8 @@ class DataInit extends Component {
 
         if (selected) {
             this.onItemChange(item, { ...saveAs(selected.value, isDataInit), subjectName: value }, !isEmpty(value))
+        }else {
+            this.onItemChange(item, { ...saveAs('', isDataInit), subjectName: '' }, false)
         }
     }
 

@@ -266,3 +266,17 @@ export function subjectOfPropsInCustom(props, key) {
         return props.docData.custom[key]
     }
 }
+
+/**
+ * 根据visibleSheet来展示第一联
+ * @param  {[type]} visibleSheet [description]
+ * @return {[type]}              [description]
+ */
+export function firstCopy(visibleSheet) {
+    if (!visibleSheet
+        || visibleSheet.split(',').indexOf('1') == -1) {
+        return 0
+    }
+
+    return visibleSheet.split(',').indexOf('1')
+}
