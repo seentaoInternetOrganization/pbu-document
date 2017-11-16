@@ -219,7 +219,7 @@ class Demo extends Component {
                     visibleSheet={'0,1,1,'}
                     activityId='18bcf3382fa8c93' />
                 <div>查看答案</div>
-                <div style={{ display: 'inline-block' }}>
+                {/* <div style={{ display: 'inline-block' }}> */}
                     <PBUDocumentAnswer docConfigUrl={docConfigUrl}
                         docData={this.state.docData}
                         visibleSheet={'0,1,1,'}
@@ -235,7 +235,7 @@ class Demo extends Component {
                         subjectsTopLevel={mockSubjects.accountingSubjects}
                         subjectsTree={mockSubjects.accountingSubjects}
                         activityId='18bcf3382fa8c93d' />
-                </div>
+                {/* </div> */}
                 <div>编辑内容</div>
                 <PBUDocumentEdit
                     docConfigUrl={docConfigUrl}
