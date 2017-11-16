@@ -70,7 +70,9 @@ const DocEditor = ({
         }
         //只处理浮点型
         if (item.type === ELEMENT.FLOAT) {
-            const _value = parseFloat(filterValue(item, value)).toString()
+            const _value = parseFloat(filterValue(item, value))
+                            .toFixed(item.constraint && item.constraint.toFixed)
+                            .toString()
 
             if (item.constraint
                 && item.constraint.padStart) {

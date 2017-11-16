@@ -4,7 +4,8 @@
   {
   "subjectId":"000001",
   "subjectName":"资产类",
-  "subjectCode":"1"
+  "subjectCode":"1",
+  "isAnswerSetted": 1
   },
   {
   "subjectId":"000002",
@@ -14,11 +15,13 @@
   {
   "subjectId":"000003",
   "subjectName":"共同类",
-  "subjectCode":"3"
+  "subjectCode":"3",
+  "isAnswerSetted": 1
   },{
   "subjectId":"000004",
   "subjectName":"000004-所有者权益类",
   "subjectCode":"4",
+  "isAnswerSetted": 1,
   "children": [
   {
   "subjectId":"000001",
@@ -39,7 +42,8 @@
   "subjectId":"000004",
   "subjectName":"000004-科目4",
   "subjectCode":"4",
-  "isInitDataSetted": 1
+  "isInitDataSetted": 1,
+  "isAnswerSetted": 1
   }]
   },{
   "subjectId":"000005",

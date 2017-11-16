@@ -179,8 +179,10 @@ const AccountSubjectPopover = ({
                         // visible={true}
                         {...visibleOpt()}
                         content={content}>
-                    <Button type="ghost" className={classnames({ [styles.highlightBtn]: currentAccountTitle
-                    && subject.subjectId === currentAccountTitle.subjectId })}>
+                    <Button type="ghost" className={classnames({
+                        [styles.highlightBtn]: currentAccountTitle && subject.subjectId === currentAccountTitle.subjectId,
+                        [styles.markError]: normalEdit && hasErrorInfo && subject.isAnswerSetted && !subject.isAnswered
+                    })}>
                         {subject.subjectName}
                         <span className={styles.arrow}></span>
                     </Button>
