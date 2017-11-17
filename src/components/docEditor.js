@@ -85,37 +85,42 @@ const DocEditor = ({
 
     //元素自身的样式
     const styleOfItem = item => {
-        const wrapperStyles = () => {
-            if (!all[item.name]) {
-                return basicStyleOfItem(item)
+        const wrapperStyles = (_item) => {
+
+            if (hasErrorInfo
+                && errors
+                && errors.indexOf(_item.name) !== -1) {
+                return basicStyleOfItem(_item, true, '#FFFF80')
+            }
+
+            if (!all[_item.name]) {
+                return basicStyleOfItem(_item)
             }
 
             if (!hasErrorInfo) {
-                return basicStyleOfItem(item)
+                return basicStyleOfItem(_item)
             }
 
-            if (errors
-                && errors[item.name]) {
-                return basicStyleOfItem(item, true, '#FFFF80')
-            }else {
-                return basicStyleOfItem(item)
-            }
+            return basicStyleOfItem(_item)
         }
 
+        /**
+         * 可编辑状态的下拉搜索选择和TEXT_AREA不需要overflow, textOverflow和whiteSpace属性
+         */
         if ((item.type === ELEMENT.GLA
             || item.type === ELEMENT.SL) && canEdit(item)) {
-            return wrapperStyles()
+            return wrapperStyles(item)
         }
 
         if (item.type === ELEMENT.TEXT_AREA) {
-            return wrapperStyles()
+            return wrapperStyles(item)
         }
 
         return {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-            ...wrapperStyles(),
+            ...wrapperStyles(item),
         }
     }
 

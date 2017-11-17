@@ -196,7 +196,7 @@ export default class EditValuesContainer extends Component {
     valueToShow = item => {
         const { editable, hasErrorInfo, activityId } = this.props
         const { docData } = this.state
-        const { all } = docData
+        const { all, errors } = docData
 
         if (item.type === ELEMENT.LABEL) {
             if (item.textValue) {
@@ -229,8 +229,8 @@ export default class EditValuesContainer extends Component {
         }
 
         if (hasErrorInfo
-            && all[item.name].hasOwnProperty('correct')
-            && !all[item.name].correct) {
+            && errors
+            && errors.indexOf(item.name) !== -1) {
             return ''
         }
     }
