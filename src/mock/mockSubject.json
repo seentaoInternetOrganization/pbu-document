@@ -21,7 +21,7 @@
   "subjectId":"000004",
   "subjectName":"000004-所有者权益类",
   "subjectCode":"4",
-  "isAnswerSetted": 1,
+  "isAnswerSetted": 0,
   "children": [
   {
   "subjectId":"000001",

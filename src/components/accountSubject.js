@@ -80,9 +80,9 @@ const AccountSubjectPopover = ({
 
             const renderCell = (text, record, index) => {
 
-                if (record.children) {
-                    return text;
-                }
+                // if (record.children) {
+                //     return text;
+                // }
 
                 if (normalEdit) {
 

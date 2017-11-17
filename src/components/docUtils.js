@@ -77,9 +77,12 @@ export function testNumber(item, value) {
  * @return {String}       [description]
  */
 export function filterValue(item, value) {
-    if (item.constraint
-        && item.constraint.padStart) {
-        return value.replace(item.constraint.padStart, '')
+    if (item.constraint) {
+        if (item.constraint.padStart) {
+            return value.replace(item.constraint.padStart, '')
+        }else if (item.constraint.localeFormatWith) {
+            return Number(value.replace(/[^0-9\.-]+/g,"")).toString()
+        }
     }
 
     return value

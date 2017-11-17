@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import DocBG from './background';
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
-import { AutoComplete, message, Tooltip, Checkbox, Radio, Select } from 'antd';
+import { AutoComplete, message, Tooltip, Checkbox, Radio, Select, Input } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
 import { copyToShow, basicStyleOfItem, testNumber, canChange, filterValue, formatValueOfItem } from './docUtils';
@@ -44,23 +44,25 @@ const DocEditor = ({
     //元素onChange监听
     const onElementChange = (item, value) => {
         if (canChange(item, value)) {
-            if (item.constraint
-                && item.constraint.padStart) {
-
+            if (item.constraint) {
                 if (isEmpty(filterValue(item, value))) {
                     return onItemChange(item, value)
                 }
 
-                if (item.constraint.maxLength) {
-                    onItemChange(item, filterValue(item, value).padStart(item.constraint.maxLength, item.constraint.padStart))
-                }else {
-                    const _value = formatValueOfItem(item, filterValue(item, value))
-                    onItemChange(item, `${item.constraint.padStart}${_value}`)
+                if (item.constraint.padStart) {
+                    if (item.constraint.maxLength) {
+                        onItemChange(item, filterValue(item, value).padStart(item.constraint.maxLength, item.constraint.padStart))
+                        return
+                    }else {
+                        const _value = formatValueOfItem(item, filterValue(item, value))
+                        onItemChange(item, `${item.constraint.padStart}${_value}`)
+                        return
+                    }
                 }
-            }else {
-                const _value = formatValueOfItem(item, value)
-                onItemChange(item, _value)
             }
+
+            const _value = formatValueOfItem(item, value)
+            onItemChange(item, _value)
         }
     }
 
@@ -70,16 +72,24 @@ const DocEditor = ({
         }
         //只处理浮点型
         if (item.type === ELEMENT.FLOAT) {
+            if (item.constraint) {
+                if (item.constraint.padStart) {
+                    const _value = parseFloat(filterValue(item, value))
+                                    .toFixed(item.constraint && item.constraint.toFixed)
+                                    .toString()
+                    onItemChange(item, `${item.constraint.padStart}${_value}`)
+                    return
+                }else if (item.constraint.localeFormatWith) {
+                    const _value = Number(value.replace(/[^0-9\.-]+/g,""));
+                    onItemChange(item, _value.toLocaleString(item.constraint.localeFormatWith.locales, item.constraint.localeFormatWith.options))
+                    return
+                }
+            }
+
             const _value = parseFloat(filterValue(item, value))
                             .toFixed(item.constraint && item.constraint.toFixed)
                             .toString()
-
-            if (item.constraint
-                && item.constraint.padStart) {
-                onItemChange(item, `${item.constraint.padStart}${_value}`)
-            }else {
-                onItemChange(item, _value)
-            }
+            onItemChange(item, _value)
         }
     }
 
