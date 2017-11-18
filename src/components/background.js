@@ -39,16 +39,21 @@ class DocBG extends Component {
         }
 
         const style = {
-                background: `#FFFFFF url(${config[copyToRender()].backgroundImage}) no-repeat center center`,
+                backgroundImage: `url(${config[copyToRender()].backgroundImage})`,
+                backgroundColor: '#FFFFFF',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
                 width: config[copyToRender()].width * ratioWidth,
                 height: config[copyToRender()].height * ratioHeight,
                 ...config[copyToRender()].style
             }
+        const bgKey = config[copyToRender()].backgroundImage
 
         return (
-            <div key={`${loading}_${copyToRender()}`}
+            <div key={`${loading}_${bgKey}`}
                 className={className}
                 style={style}>
+                <span style={{ display: 'none' }}>{config[copyToRender()].backgroundImage}</span>
                 {children}
             </div>
         )
