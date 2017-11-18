@@ -208,13 +208,14 @@ export function resetSelectHeightOfAntd(config, dom) {
         || !Array.isArray(config)
         || config.length == 0
         || !config[0].elements) {
-
+        return
     }
     const selectHeight = [];
 
     Object.values(config[0].elements).forEach(item => {
         if (item.type === ELEMENT.GLA
-            || item.type === ELEMENT.SL) {
+            || item.type === ELEMENT.SL
+            || item.type === ELEMENT.SELECT) {
             selectHeight.push(`${item.pos.height}px`);
         }
     })

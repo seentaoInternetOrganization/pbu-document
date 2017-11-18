@@ -513,7 +513,9 @@ class EditWeight extends Component {
         const renderReadOnlyItem = (item, index) => {
             const value = valueToShow(item)
 
-            if (!value && value !== '') {
+            if (!value
+                && value !== ''
+                && (!config[0].docType || config[0].docType === DOC_TYPE.DEFAULT)) {
                 return null
             }
 

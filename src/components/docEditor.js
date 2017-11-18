@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import DocBG from './background';
-import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE } from '../constants';
+import { ELEMENT, EXAMINE, EXAMINE_COLOR, MODE, DOC_TYPE } from '../constants';
 import { AutoComplete, message, Tooltip, Checkbox, Radio, Select, Input } from 'antd';
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
@@ -87,7 +87,7 @@ const DocEditor = ({
             }
 
             const _value = parseFloat(filterValue(item, value))
-            
+
             if (item.constraint && item.constraint.toFixed) {
                 onItemChange(item, _value.toFixed(item.constraint && item.constraint.toFixed).toString())
                 return
@@ -141,11 +141,14 @@ const DocEditor = ({
     const renderReadOnlyItem = (item, index) => {
         const value = valueToShow(item)
 
-        if (!value && value !== '') {
-            return null
-        }
-
         if (item.type === ELEMENT.LABEL) {
+
+            if (!value
+                && value !== ''
+                && (!config[0].docType || config[0].docType === DOC_TYPE.DEFAULT)) {
+                return null
+            }
+
             return (
                 <span key={`readonly_${index}_${currentPage}`}
                     title={value}
