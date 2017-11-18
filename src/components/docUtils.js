@@ -50,6 +50,7 @@ export function basicStyleOfItem(item, highlightItem, highlightColor, ratioWidth
         top: pos.top * ratioHeight,
         width: pos.width * ratioWidth,
         height: pos.height * ratioHeight,
+        lineHeight: `${pos.height * ratioHeight}px`,
         ...backgroundStyle,
         ...item.style
     }
