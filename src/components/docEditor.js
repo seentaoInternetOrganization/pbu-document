@@ -87,9 +87,12 @@ const DocEditor = ({
             }
 
             const _value = parseFloat(filterValue(item, value))
-                            .toFixed(item.constraint && item.constraint.toFixed)
-                            .toString()
-            onItemChange(item, _value)
+            
+            if (item.constraint && item.constraint.toFixed) {
+                onItemChange(item, _value.toFixed(item.constraint && item.constraint.toFixed).toString())
+                return
+            }
+            onItemChange(item, _value.toString())
         }
     }
 
