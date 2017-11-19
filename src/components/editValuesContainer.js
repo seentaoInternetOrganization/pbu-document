@@ -181,6 +181,10 @@ export default class EditValuesContainer extends Component {
 
         this.setState({
             subjectVisible: false
+        }, () => {
+            this.setState({
+                subjectVisible: true
+            })
         })
 
         this.props.onAccountDetailSubjectSelected(subject)

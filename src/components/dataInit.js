@@ -247,11 +247,15 @@ class DataInit extends Component {
             this.onSave()
         }
 
-        this.props.onAccountDetailSubjectSelected(subject)
-
         this.setState({
             subjectVisible: false
+        }, () => {
+            this.setState({
+                subjectVisible: true
+            })
         })
+
+        this.props.onAccountDetailSubjectSelected(subject)
     }
 
     onCopyChange = (copy) => {
