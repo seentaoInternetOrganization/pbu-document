@@ -141,23 +141,14 @@ export function mapExaminesWithAll(examines, keyOfAll, all) {
     function excludeStaticProperty(key) {
         return !staticItems.includes(key)
     }
-    //先排除掉未填过值，然后拼装
-    return examines.filter(item => {
+
+    return examines.map(item => {
         return Object.keys(item)
         .filter(excludeStaticProperty)
-        .filter(key => {
-            return all[key] && all[key][keyOfAll]
-        }).length > 0
-    }).map(item => {
-        return Object.keys(item)
-        .filter(excludeStaticProperty)
-        .filter(key => {
-            return all[key] && all[key][keyOfAll]
-        })
         .reduce((sum, key) => {
             return {
                 ...sum,
-                [key]: all[key][keyOfAll],
+                [key]: all[key] && all[key][keyOfAll] ? all[key][keyOfAll]: '',
                 ...sortOrder(item)
             }
         }, {
@@ -166,6 +157,32 @@ export function mapExaminesWithAll(examines, keyOfAll, all) {
             examineName: item.examineName
         })
     })
+
+    //先排除掉未填过值，然后拼装
+    // return examines.filter(item => {
+    //     return Object.keys(item)
+    //     .filter(excludeStaticProperty)
+    //     .filter(key => {
+    //         return all[key] && all[key][keyOfAll]
+    //     }).length > 0
+    // }).map(item => {
+    //     return Object.keys(item)
+    //     .filter(excludeStaticProperty)
+    //     .filter(key => {
+    //         return all[key] && all[key][keyOfAll]
+    //     })
+    //     .reduce((sum, key) => {
+    //         return {
+    //             ...sum,
+    //             [key]: all[key][keyOfAll],
+    //             ...sortOrder(item)
+    //         }
+    //     }, {
+    //         examineId: item.examineId,
+    //         examineType: item.examineType,
+    //         examineName: item.examineName
+    //     })
+    // })
 }
 
 //处理总账科目和明细账科目
