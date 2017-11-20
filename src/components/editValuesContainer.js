@@ -252,7 +252,13 @@ export default class EditValuesContainer extends Component {
 
         if (all[item.name]
             && all[item.name].data) {
-            return false;
+            return false
+        }
+
+        if (all[item.name]
+            && all[item.name].answer
+            && all[item.name].activityId !== activityId) {
+            return false
         }
 
         if (item.type === ELEMENT.SL) {
