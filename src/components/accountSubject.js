@@ -169,7 +169,7 @@ const AccountSubjectPopover = ({
             return (
                 <Popover key={`${subject.subjectId}_${index}`}
                         title={title}
-                        placement={'bottom'}
+                        placement={'bottomRight'}
                         style={{ height:256, width:370 }}
                         onVisibleChange={visible => {
                             //为了动画的完整展示
