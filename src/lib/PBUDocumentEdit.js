@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MainContainer from '../main';
 import EditValuesContainer from '../components/editValuesContainer';
+import { mapExaminesWithAll } from '../components/docUtils'
 
 const PBUDocumentEdit = ({
     docConfigUrl,
@@ -156,3 +157,5 @@ PBUDocumentEdit.defaultProps = {
 }
 
 export default PBUDocumentEdit;
+
+PBUDocumentEdit.mapExaminesWithAll = mapExaminesWithAll 

@@ -161,6 +161,7 @@ class DataInit extends Component {
 
     onSave = () => {
         const { docData, answerArea, currentAccountDetail } = this.state;
+        const { activityId } = this.props
 
         let examines = [];
 
@@ -182,11 +183,11 @@ class DataInit extends Component {
 
         if (isDataInit) {
             valueOpt = {
-                data: mapExaminesWithAll(examines, 'data', docData.all)
+                data: mapExaminesWithAll(examines, 'data', docData.all, activityId)
             }
         }else {
             valueOpt = {
-                answers: mapExaminesWithAll(examines, 'answer', docData.all)
+                answers: mapExaminesWithAll(examines, 'answer', docData.all, activityId)
             }
         }
 

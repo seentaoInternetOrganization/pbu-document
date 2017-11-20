@@ -116,12 +116,16 @@ export function canChange(item, value) {
  * @param  {Array} examines 甄别信息数组
  * @param  {String} keyOfAll all中要取的key, 可取值`data`,`answer`, `value`
  * @param  {Object} all      documentBody中的all
+ * @param {String} activityId 活动id,只处理activityId的数据
  * @return {Array}          新生成的数组
  */
-export function mapExaminesWithAll(examines, keyOfAll, all) {
-    if (examines.length == 0
-        || !all
-        || !keyOfAll
+export function mapExaminesWithAll(examines, keyOfAll, all, activityId) {
+
+    if(!examines || !keyOfAll || !all){
+        return [];
+    }
+
+    if (examines.length === 0
         || isEmpty(keyOfAll)) {
         return []
     }
@@ -142,13 +146,25 @@ export function mapExaminesWithAll(examines, keyOfAll, all) {
         return !staticItems.includes(key)
     }
 
+    function valueOfKey(key) {
+        if (all[key]
+            && all[key][keyOfAll]
+            && all[key].activityId
+            && activityId === all[key].activityId) {
+            return all[key][keyOfAll]
+        }
+
+        return ''
+    }
+
     return examines.map(item => {
         return Object.keys(item)
         .filter(excludeStaticProperty)
         .reduce((sum, key) => {
+
             return {
                 ...sum,
-                [key]: all[key] && all[key][keyOfAll] ? all[key][keyOfAll]: '',
+                [key]: valueOfKey(key),
                 ...sortOrder(item)
             }
         }, {
