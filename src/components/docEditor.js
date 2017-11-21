@@ -241,7 +241,8 @@ const DocEditor = ({
                 }}
                 dataSource={dataSource.map(renderOption)}
             >
-                <input style={{
+                <input key={`${item.name}_${index}_${currentPage}`}
+                    style={{
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',

@@ -172,7 +172,9 @@
             "examineType":"SINGLE",
             "examineId":"SINGLE_b6c6b16fe28818f639ebedf3c5a07b52",
             "examineName":"单编辑框",
-            "weight":1
+            "weight":1,
+            "value": "393",
+            "activityId": "393"
          },
          "docName":{
             "examineType":"SINGLE",

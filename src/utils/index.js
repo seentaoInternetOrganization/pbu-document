@@ -98,3 +98,34 @@ exports.excludePropertyOfObject = function(obj, key) {
         }
     }, {})
 }
+
+/**
+ * 过滤掉obj的keys属性，并生成一个新的对象
+ * @param  {Object} obj  [description]
+ * @param  {String|Array} keys [description]
+ * @return {Object|undefined}      [description]
+ */
+exports.excludePropertiesOfObject = function(obj, keys) {
+    if (!obj
+        || typeof obj !== 'object'
+        || !keys
+        || (typeof keys !== 'string' && !Array.isArray(keys))
+    ) {
+        return
+    }
+
+    return Object.keys(obj)
+    .filter(_key => {
+        if (typeof keys === 'string') {
+            return _key !== keys
+        }else {
+            return keys.indexOf(_key) === -1
+        }
+    })
+    .reduce((sum, _key) => {
+        return {
+            ...sum,
+            [_key]: obj[_key]
+        }
+    }, {})
+}

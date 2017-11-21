@@ -13,28 +13,14 @@ import { Button , Select, Tag, AutoComplete, Icon, Upload, message, Popover, Tab
 import isNumeric from 'validator/lib/isNumeric';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
-import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd, subjectOfPropsInCustom } from './docUtils';
+import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd, subjectOfPropsInCustom, saveAs, isCurrentActivityEmpty } from './docUtils';
 import DocEditor from './docEditor';
-import { getDescendantantProp } from '../utils';
+import { getDescendantantProp, excludePropertiesOfObject } from '../utils';
 import CopyGroup from './copyGroup';
 
 const Option = Select.Option;
 const { CheckableTag } = Tag;
 
-/**
- * 保存为
- */
-function saveAs(value, isDataInit) {
-    if (isDataInit) {
-        return {
-            data: value,
-        }
-    }else {
-        return {
-            answer: value
-        }
-    }
-}
 
 class DataInit extends Component {
 
@@ -80,6 +66,7 @@ class DataInit extends Component {
 
     onItemChange = (item, valueProps, addActivityId, cb) => {
         const { activityId } = this.props
+        const { docData } = this.state
 
         const activityOpt = () => {
             if (addActivityId) {
@@ -87,42 +74,51 @@ class DataInit extends Component {
                     activityId
                 }
             }else {
-                return {
-                    activityId: ''
-                }
+                return { }
             }
         }
 
-        const { docData } = this.state
+        const newItemInAll = excludePropertiesOfObject({
+            ...docData.all[item.name]
+        }, ['answer', 'activityId', 'data', 'subjectName'])
 
-        const newAll = {
-            ...docData.all,
-            [item.name]: {
-                ...docData.all[item.name],
-                ...valueProps,
-                ...activityOpt()
+        const genNewAll = () => {
+            if (Object.keys(newItemInAll).length === 0
+                && Object.keys(valueProps).length === 0
+                && Object.keys(activityOpt()).length === 0) {
+
+                return excludePropertiesOfObject(docData.all, item.name)
+            }else {
+                return {
+                    ...docData.all,
+                    [item.name]: {
+                        ...newItemInAll,
+                        ...valueProps,
+                        ...activityOpt()
+                    }
+                }
             }
         }
 
         this.setState({
             docData: {
                 ...docData,
-                all: newAll
+                all: genNewAll()
             }
         }, () => {
             this.props.onDocChange({
                 ...docData,
-                all: newAll
+                all: genNewAll()
             }, this.state.answerArea)
 
             cb && cb()
         })
     }
 
-
-
     onNormalItemChange = (item, value) => {
         const { isDataInit } = this.props
+
+        //自定义单据中的Checkbox的value为数组
         if (Array.isArray(value)) {
             this.onItemChange(item, saveAs(value, isDataInit), value.length > 0)
         }else {
@@ -155,7 +151,8 @@ class DataInit extends Component {
         if (selected) {
             this.onItemChange(item, { ...saveAs(selected.value, isDataInit), subjectName: value }, !isEmpty(value))
         }else {
-            this.onItemChange(item, { ...saveAs('', isDataInit), subjectName: '' }, false)
+            // this.onItemChange(item, { ...saveAs('', isDataInit), subjectName: '' }, false)
+            this.onItemChange(item, { ...saveAs('', isDataInit) }, false)
         }
     }
 
@@ -198,11 +195,12 @@ class DataInit extends Component {
             ...valueOpt
         }
 
-        if (this.props.isDataInit
-            || isEmpty(answerArea)) {
-            this.props.onSave(currentPage, JSON.stringify(dataFinal));
+        const isBodyEmpty = isCurrentActivityEmpty(activityId, docData.all, isDataInit ? 'data' : 'answer')
+
+        if (this.props.isDataInit) {
+            this.props.onSave(currentPage, JSON.stringify(dataFinal), isBodyEmpty);
         }else {
-            this.props.onSave(currentPage, JSON.stringify(dataFinal), answerArea);
+            this.props.onSave(currentPage, JSON.stringify(dataFinal), answerArea, isBodyEmpty);
         }
 
         return true
@@ -315,35 +313,19 @@ class DataInit extends Component {
 
             if (isDataInit
                 && all[item.name].answer) {
-                    if ((typeof all[item.name].answer === 'string'
-                        && !isEmpty(all[item.name].answer))
-                        || (Array.isArray(all[item.name].answer)
-                        && all[item.name].answer.length > 0)) {
-                        return false
-                    }
-
+                    return false
             }else if (!isDataInit
                         && all[item.name].data) {
-                    if ((typeof all[item.name].data === 'string'
-                        && !isEmpty(all[item.name].data))
-                        || (Array.isArray(all[item.name].data)
-                        && all[item.name].data.length > 0)) {
-                        return false
-                    }
+                    return false
             }
         }
 
         if (item.type === ELEMENT.SL) {
             //没有设置对应的总账科目时不可编辑明细
-            if (isDataInit) {
-                return all[item.gla]
-                        && all[item.gla].data
-                        && !isEmpty(all[item.gla].data)
-            }else {
-                return all[item.gla]
-                        && all[item.gla].answer
-                        && !isEmpty(all[item.gla].answer)
-            }
+            return all[item.gla]
+                    && ((all[item.gla].answer && !isEmpty(all[item.gla].answer))
+                      || (all[item.gla].data && !isEmpty(all[item.gla].data)))
+                    && (!all[item.name].activityId || all[item.name].activityId === activityId)
         }
 
         if (!all[item.name]) {
@@ -663,10 +645,11 @@ DataInit.defaultProps = {
     onPageChange: page => {
         console.log(`page ${page}`);
     },
-    onSave: (page, data, answer) => {
+    onSave: (page, data, answer, isBodyEmpty) => {
         console.log('page = ', page);
         console.log(`data = ${data}`);
         console.log('answer = ', answer);
+        console.log('isBodyEmpty = ', isBodyEmpty);
     },
     isDataInit: true,
     uploadProps: {

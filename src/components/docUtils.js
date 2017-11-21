@@ -318,3 +318,78 @@ export function firstCopy(visibleSheet) {
 
     return visibleSheet.split(',').indexOf('1')
 }
+
+/**
+ * 保存为
+ */
+export function saveAs(value, isDataInit) {
+
+    if (!value) {
+        return { }
+    }
+
+    if (Array.isArray(value) && value.length === 0) {
+        return { }
+    }
+
+    if (typeof value === 'string' && isEmpty(value)) {
+        return { }
+    }
+
+    if (isDataInit) {
+        return {
+            data: value,
+        }
+    }else {
+        return {
+            answer: value
+        }
+    }
+}
+
+/**
+ * 当前活动节点是否为空
+ * @param  {String}  activityId [description]
+ * @param  {Object}  all        [description]
+ * @param  {String}  keyOfAll   [description]
+ * @return {Boolean}            [description]
+ */
+export function isCurrentActivityEmpty(activityId, all, keyOfAll) {
+
+    if (!all || Object.keys(all).length === 0) {
+        return true
+    }
+
+    const found = Object.keys(all).find(key => {
+        return all[key].activityId === activityId
+                && all[key][keyOfAll]
+                && all[key][keyOfAll].length > 0
+    })
+
+    if (found) {
+        return false
+    }
+
+    return true
+}
+
+/**
+ * 过滤学生端value
+ * @param  {[type]} value [description]
+ * @return {[type]}       [description]
+ */
+export function genValue(value) {
+    if (!value) {
+        return {}
+    }
+
+    if (typeof value === 'string' && isEmpty(value)) {
+        return {}
+    }
+
+    if (Array.isArray(value) && value.length === 0) {
+        return {}
+    }
+
+    return { value }
+}

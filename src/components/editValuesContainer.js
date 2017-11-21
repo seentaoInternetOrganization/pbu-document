@@ -11,8 +11,8 @@ import styles from './docEditor.less'
 import { ELEMENT } from '../constants';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
-import { getDescendantantProp } from '../utils';
-import { resetSelectHeightOfAntd, subjectOfPropsInCustom } from './docUtils';
+import { getDescendantantProp, excludePropertiesOfObject } from '../utils';
+import { resetSelectHeightOfAntd, subjectOfPropsInCustom, genValue } from './docUtils';
 import CopyGroup from './copyGroup'
 
 
@@ -87,6 +87,7 @@ export default class EditValuesContainer extends Component {
 
     onItemChange = (item, valueProps, addActivityId, cb) => {
         const { activityId } = this.props
+        const { docData } = this.state
 
         const activityOpt = () => {
             if (addActivityId) {
@@ -94,32 +95,41 @@ export default class EditValuesContainer extends Component {
                     activityId
                 }
             }else {
-                return {
-                    activityId: ''
-                }
+                return { }
             }
         }
 
-        const { docData } = this.state
+        const newItemInAll = excludePropertiesOfObject({
+            ...docData.all[item.name]
+        }, ['activityId', 'value', 'subjectName'])
 
-        const newAll = {
-            ...docData.all,
-            [item.name]: {
-                ...docData.all[item.name],
-                ...valueProps,
-                ...activityOpt()
+        const genNewAll = () => {
+            if (Object.keys(newItemInAll).length === 0
+                && Object.keys(valueProps).length === 0
+                && Object.keys(activityOpt()).length === 0) {
+
+                return excludePropertiesOfObject(docData.all, item.name)
+            }else {
+                return {
+                    ...docData.all,
+                    [item.name]: {
+                        ...newItemInAll,
+                        ...valueProps,
+                        ...activityOpt()
+                    }
+                }
             }
         }
 
         this.setState({
             docData: {
                 ...docData,
-                all: newAll
+                all: genNewAll()
             }
         }, () => {
             this.props.onDocChange({
                 ...docData,
-                all: newAll
+                all: genNewAll()
             })
 
             cb && cb()
@@ -128,20 +138,20 @@ export default class EditValuesContainer extends Component {
 
     onNormalItemChange = (item, value) => {
         if (Array.isArray(value)) {
-            this.onItemChange(item, { value }, value.length > 0)
+            this.onItemChange(item, genValue(value), value.length > 0)
         }else {
-            this.onItemChange(item, { value }, !isEmpty(value))
+            this.onItemChange(item, genValue(value), !isEmpty(value))
         }
     }
 
     onSubjectSearch = (item, value, subjectId) => {
-        this.onItemChange(item, { value: '', subjectName: value, }, !isEmpty(value), () => {
+        this.onItemChange(item, { subjectName: value, }, !isEmpty(value), () => {
             this.props.onSearchSubjects(value, subjectId, item.gla && item.gla)
         })
     }
 
     onSubjectSelected = (item, value, option) => {
-        this.onItemChange(item, { value, subjectName: option.text, }, !isEmpty(value), () => {
+        this.onItemChange(item, { ...genValue(value), subjectName: option.text, }, !isEmpty(value), () => {
             if (item.type === ELEMENT.GLA) {
                 this.props.onSearchSubjects('', value, item.name)
             }
@@ -156,7 +166,8 @@ export default class EditValuesContainer extends Component {
         if (selected) {
             this.onItemChange(item, { value: selected.value, subjectName: value }, !isEmpty(value))
         }else {
-            this.onItemChange(item, { value: '', subjectName: '' }, false)
+            // this.onItemChange(item, { value: '', subjectName: '' }, false)
+            this.onItemChange(item, { }, false)
         }
     }
 
@@ -250,20 +261,39 @@ export default class EditValuesContainer extends Component {
             return false
         }
 
+        if (!all[item.name]) {
+            return true
+        }
+
+        //预置数据不可编辑
         if (all[item.name]
             && all[item.name].data) {
             return false
         }
-
+        //碎片任务流转过来的之前节点的答案也只是作为背景数据不可编辑
         if (all[item.name]
             && all[item.name].answer
+            && all[item.name].activityId !== activityId) {
+            return false
+        }
+        //流程任务流转过来的之前节点的学生填写的内容也不可编辑
+        if (all[item.name]
+            && all[item.name].value
             && all[item.name].activityId !== activityId) {
             return false
         }
 
         if (item.type === ELEMENT.SL) {
             //没有设置对应的总账科目时不可编辑明细
+            if (all[item.gla].activityId !== activityId) {
+                //碎片任务的答案
+                return all[item.gla].answer && !isEmpty(all[item.gla].answer)
+            }
+
+            //流程任务的预置数据和学生流转数据
             return all[item.gla]
+                    && all[item.gla].activityId
+                    && all[item.gla].activityId === activityId
                     && ((all[item.gla].value && !isEmpty(all[item.gla].value) )
                      || (all[item.gla].data && !isEmpty(all[item.gla].data)))
         }
