@@ -261,10 +261,6 @@ export default class EditValuesContainer extends Component {
             return false
         }
 
-        if (!all[item.name]) {
-            return true
-        }
-
         //预置数据不可编辑
         if (all[item.name]
             && all[item.name].data) {
@@ -284,8 +280,11 @@ export default class EditValuesContainer extends Component {
         }
 
         if (item.type === ELEMENT.SL) {
+            if (!all[item.gla]) {
+                return false
+            }
             //没有设置对应的总账科目时不可编辑明细
-            if (all[item.gla].activityId !== activityId) {
+            if (all[item.gla] && all[item.gla].activityId !== activityId) {
                 //碎片任务的答案
                 return all[item.gla].answer && !isEmpty(all[item.gla].answer)
             }
@@ -296,6 +295,10 @@ export default class EditValuesContainer extends Component {
                     && all[item.gla].activityId === activityId
                     && ((all[item.gla].value && !isEmpty(all[item.gla].value) )
                      || (all[item.gla].data && !isEmpty(all[item.gla].data)))
+        }
+
+        if (!all[item.name]) {
+            return true
         }
 
         return true

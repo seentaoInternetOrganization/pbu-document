@@ -323,9 +323,19 @@ class DataInit extends Component {
         if (item.type === ELEMENT.SL) {
             //没有设置对应的总账科目时不可编辑明细
             return all[item.gla]
-                    && ((all[item.gla].answer && !isEmpty(all[item.gla].answer))
-                      || (all[item.gla].data && !isEmpty(all[item.gla].data)))
-                    && (!all[item.name].activityId || all[item.name].activityId === activityId)
+                    && (
+                        (
+                            all[item.gla].answer && !isEmpty(all[item.gla].answer)
+                        )
+                        ||
+                        (
+                            all[item.gla].data && !isEmpty(all[item.gla].data)
+                        )
+                    )
+                    &&
+                    (
+                        !all[item.name] || !all[item.name].activityId || all[item.name].activityId === activityId
+                    )
         }
 
         if (!all[item.name]) {

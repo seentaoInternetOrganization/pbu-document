@@ -21,15 +21,15 @@ const config = {
                 NODE_ENV: JSON.stringify("production")
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: false,
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new BundleAnalyzerPlugin()
+        // new webpack.optimize.UglifyJsPlugin({
+        //     sourceMap: false,
+        //     compress: {
+        //         warnings: false
+        //     }
+        // }),
+        // new webpack.optimize.DedupePlugin(),
+        // new webpack.optimize.OccurrenceOrderPlugin(),
+        // new BundleAnalyzerPlugin()
     ],
     resolve: {
         extensions: ['', '.js', '.jsx']
