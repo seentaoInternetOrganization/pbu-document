@@ -93,6 +93,10 @@ const DocEditor = ({
                 return
             }
             onItemChange(item, _value.toString())
+            return
+        }else if (item.type === ELEMENT.INPUT
+            || item.type === ELEMENT.TEXT_AREA) {
+            onItemChange(item, value.trim())
         }
     }
 

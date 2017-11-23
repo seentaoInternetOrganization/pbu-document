@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --content-base example",
+    "dev": "webpack-dev-server  --inline --content-base example",
     "build": "webpack --progress --colors --watch --config webpack.config.js",
     "buildprod": "webpack --progress --colors --config webpack.prepublish.config.js"
   },
