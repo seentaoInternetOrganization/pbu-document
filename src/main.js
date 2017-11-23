@@ -20,18 +20,19 @@ export default class MainContainer extends Component {
         this.setState({
             docConfig: [],
             errMsg: '加载中...',
-        })
-        loadConfig(docConfigUrl, docConfig => {
-            if (!docConfig || docConfig.length < 1) {
-                this.setState({
-                    errMsg: '.'
-                })
-            }else {
-                this.setState({
-                    docConfig: docConfig,
-                })
-                this.props.onConfigLoaded(docConfig)
-            }
+        }, () => {
+            loadConfig(docConfigUrl, docConfig => {
+                if (!docConfig || docConfig.length < 1) {
+                    this.setState({
+                        errMsg: '.'
+                    })
+                }else {
+                    this.setState({
+                        docConfig: docConfig,
+                    })
+                    this.props.onConfigLoaded(docConfig)
+                }
+            })
         })
     }
 

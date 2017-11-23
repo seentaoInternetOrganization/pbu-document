@@ -42,6 +42,7 @@ class PBUDocumentData extends Component {
             docData,
             visibleSheet,
             activityId,
+            currentPage,
         } = this.props;
 
         const { currentCopy } = this.state;
@@ -49,6 +50,7 @@ class PBUDocumentData extends Component {
         const docProps = {
             docData,
             activityId,
+            currentPage,
         }
 
         return (
@@ -93,4 +95,8 @@ PBUDocumentData.propTypes = {
      * 当前活动节点id
      */
     activityId: PropTypes.string.isRequired,
+    /**
+     * 当前页
+     */
+    currentPage: PropTypes.number,
 }

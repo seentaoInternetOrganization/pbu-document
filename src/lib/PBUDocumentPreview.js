@@ -36,7 +36,7 @@ PBUDocumentPreview.propTypes = {
     /**
      * 单据编码
      */
-    docCode: PropTypes.string.isRequired,
+    docCode: PropTypes.string,
     /**
      * 数据集合
      */

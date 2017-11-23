@@ -305,7 +305,7 @@ export default class EditValuesContainer extends Component {
     }
 
     render() {
-        const { config, ratioHeight, ratioWidth, activityId, hasErrorInfo, subjectsTopLevel, subjectsTree, editable } = this.props
+        const { config, ratioHeight, ratioWidth, activityId, hasErrorInfo, subjectsTopLevel, subjectsTree, editable, currentPage } = this.props
         const { docData, glas, sls, subjectVisible, currentAccountTitle, currentCopy } = this.state
 
         return (
@@ -341,6 +341,7 @@ export default class EditValuesContainer extends Component {
                             hasErrorInfo={hasErrorInfo}
                             canEdit={this.canEdit}
                             valueToShow={this.valueToShow}
+                            currentPage={currentPage}
                             editable={editable}/>
                 </div>
             </div>

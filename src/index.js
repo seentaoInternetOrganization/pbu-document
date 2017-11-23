@@ -10,8 +10,10 @@ import PBUDocumentAnswer from './lib/PBUDocumentAnswer';
 import PBUDocumentData from './lib/PBUDocumentData';
 import PBUDocumentEdit from './lib/PBUDocumentEdit';
 import mockSubjects from './mock/mockSubject.json';
-import { Button, message } from 'antd';
+import { Button, message, Select } from 'antd';
 import { mapExaminesWithAll } from './components/docUtils'
+
+const Option = Select.Option
 
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
@@ -49,6 +51,7 @@ class Demo extends Component {
         answerDesc: '哈哈哈哈',
         totalPage: 1,
         currentPage: 1,
+        docConfigUrl: 'https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json',
     }
 
     onCopyChange = (copy) => {
@@ -70,6 +73,14 @@ class Demo extends Component {
         //     })
         // }, 500);
     }
+
+    handleChange = value => {
+        // console.log(`selected ${value}`);
+        this.setState({
+            docConfigUrl: value,
+        })
+    }
+
 
     render() {
 
@@ -238,8 +249,13 @@ class Demo extends Component {
                         activityId='3623069429530624' />
                 {/* </div> */}
                 <div>编辑内容</div>
+                <Select style={{ width: 120 }} defaultValue={'https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json'} onChange={this.handleChange}>
+                    <Option value="https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json">记账凭证</Option>
+                    <Option value="https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json">三栏式明细账</Option>
+                    <Option value="https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json">增值税发票</Option>
+                </Select>
                 <PBUDocumentEdit
-                    docConfigUrl={docConfigUrl}
+                    docConfigUrl={this.state.docConfigUrl}
                         docCode='DJY0066'
                         docData={this.state.docData}
                         activityId='18bcf3382fa8c93d'
@@ -290,73 +306,3 @@ class Demo extends Component {
 }
 
 ReactDOM.render((<Demo />), document.getElementById('app'));
-//
-//
-// console.log('mockSubjects.accountingSubjects = ', mockSubjects.accountingSubjects);
-//
-// /**
-//  * 根据obj生成一个新的obj对象副本，新的对象中不包括obj中的key属性，此函数不会修改旧的obj对象
-//  * @param  {Object} obj
-//  * @param  {String} key 要排除掉的属性
-//  * @return {Object}     不包括key的新对象
-//  */
-// function excludePropertyOfObject(obj, key) {
-//     if (!obj
-//         || typeof obj !== 'object'
-//         || !key
-//         || typeof key !== 'string') {
-//         return
-//     }
-//
-//     return Object.keys(obj)
-//     .filter(_key => {
-//         return _key !== key
-//     })
-//     .reduce((sum, _key) => {
-//         return {
-//             ...sum,
-//             [_key]: obj[_key]
-//         }
-//     }, {})
-// }
-//
-// /**
-//  * 如果科目设置了答案，但是children里面并未设置答案则将children过滤掉
-//  * @param  {Array}  _children 科目的children
-//  * @return {Object}
-//  */
-// function hasChildren(_children) {
-//     const children = excludeSubjectsOfNoAnswer(_children)
-//
-//     if (!children || children.length === 0) {
-//         return {}
-//     }else {
-//         return {
-//             children
-//         }
-//     }
-// }
-// /**
-//  * 过滤掉没有设置过答案的科目
-//  * @param  {Array} _subjects 科目数组
-//  * @return {Array}           过滤后的结果
-//  */
-// function excludeSubjectsOfNoAnswer(_subjects) {
-//     if (!_subjects
-//         || _subjects.length === 0) {
-//         return _subjects
-//     }
-//
-//     const subjects = _subjects.filter(subject => {
-//         return subject.isAnswerSetted === 1
-//     }).map(subject => {
-//         return {
-//             ...excludePropertyOfObject(subject, 'children'),
-//             ...hasChildren(subject.children)
-//         }
-//     })
-//
-//     return subjects
-// }
-//
-// console.log('after excludeSubjectsOfNoAnswer = ',excludeSubjectsOfNoAnswer(mockSubjects.accountingSubjects));

@@ -27,6 +27,7 @@ const PBUDocumentEdit = ({
     editable,
     onConfigLoaded,
     onSubjectBlur,
+    currentPage,
 }) => {
 
     const docProps = {
@@ -46,6 +47,7 @@ const PBUDocumentEdit = ({
         onAccountDetailSubjectSelected,
         editable,
         onSubjectBlur,
+        currentPage,
     }
 
     return (
@@ -67,7 +69,7 @@ PBUDocumentEdit.propTypes = {
     /**
      * 单据编码
      */
-    docCode: PropTypes.string.isRequired,
+    docCode: PropTypes.string,
     /**
      * 数据集合
      */
@@ -129,6 +131,10 @@ PBUDocumentEdit.propTypes = {
      * 记账凭证单据总账或明细账科目编辑完失去焦点的回调
      */
     onSubjectBlur: PropTypes.func,
+    /**
+     * 当前页
+     */
+    currentPage: PropTypes.number,
 }
 
 PBUDocumentEdit.defaultProps = {
@@ -153,9 +159,10 @@ PBUDocumentEdit.defaultProps = {
     },
     onSubjectBlur: () => {
 
-    }
+    },
+    currentPage: 1,
 }
 
 export default PBUDocumentEdit;
 
-PBUDocumentEdit.mapExaminesWithAll = mapExaminesWithAll 
+PBUDocumentEdit.mapExaminesWithAll = mapExaminesWithAll

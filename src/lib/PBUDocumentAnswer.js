@@ -81,11 +81,13 @@ class PBUDocumentAnswer extends Component {
             subjectsTopLevel,
             subjectsTree,
             onConfigLoaded,
+            currentPage,
         } = this.props;
 
         const docProps = {
             docData,
             activityId,
+            currentPage,
         }
 
         const { currentAccountTitle, subjectVisible, currentCopy } = this.state
@@ -161,6 +163,10 @@ PBUDocumentAnswer.propTypes = {
      * @param {Object} docConfig 单据配置文件信息
      */
     onConfigLoaded: PropTypes.func,
+    /**
+     * 当前页
+     */
+    currentPage: PropTypes.number,
 }
 
 PBUDocumentAnswer.defaultProps = {
@@ -170,4 +176,5 @@ PBUDocumentAnswer.defaultProps = {
     onAccountDetailSubjectSelected: subject => {
         console.log('subject = ', subject);
     },
+    currentPage: 1,
 }
