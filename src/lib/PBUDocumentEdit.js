@@ -53,7 +53,8 @@ const PBUDocumentEdit = ({
     return (
         <MainContainer docConfigUrl={docConfigUrl}
                     onConfigLoaded={onConfigLoaded}>
-            <EditValuesContainer ratioHeight={1}
+            <EditValuesContainer key={docConfigUrl}
+                        ratioHeight={1}
                         ratioWidth={1}
                         {...docProps}
                     />

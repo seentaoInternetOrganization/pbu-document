@@ -521,7 +521,13 @@ class EditWeight extends Component {
 
             return (
                 <span key={`readonly_${index}`}
-                    style={basicStyleOfItem(item)}>
+                    title={value}
+                    style={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        ...basicStyleOfItem(item),
+                    }}>
                     {value}
                 </span>
             )
