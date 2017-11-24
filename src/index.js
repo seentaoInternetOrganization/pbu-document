@@ -15,12 +15,12 @@ import { mapExaminesWithAll } from './components/docUtils'
 
 const Option = Select.Option
 
-// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
-const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
+// const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 // const docConfigUrl = "https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/q4qhej/q4qhej.json"
 
 let currentCopy = 0;
@@ -39,14 +39,14 @@ class Demo extends Component {
         // docData: {
         //     examines: []
         // },
-        // docData: mockData.docData,
-        docData: { all: { }, custom: {
-            enterprise: {
-                provinceName: '黑龙江',
-                documentRegionCode: '11000153130'
-            },
-            serialNum: '12345869'
-        } },
+        docData: mockData.docData,
+        // docData: { all: { }, custom: {
+        //     enterprise: {
+        //         provinceName: '黑龙江',
+        //         documentRegionCode: '11000153130'
+        //     },
+        //     serialNum: '12345869'
+        // } },
         empty: true,
         answerDesc: '哈哈哈哈',
         totalPage: 1,

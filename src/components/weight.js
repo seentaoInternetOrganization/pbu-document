@@ -33,7 +33,13 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
             if (item.type === ELEMENT.LABEL) {
                 return (
                     <span key={`readonly_${index}`}
-                        style={basicStyleOfItem(item)}>
+                        title={item.textValue && item.textValue}
+                        style={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            ...basicStyleOfItem(item)
+                        }}>
                         {item.textValue && item.textValue}
                     </span>
                 )
