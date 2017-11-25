@@ -87,8 +87,7 @@ const AccountSubjectPopover = ({
                 if (normalEdit) {
 
                     if (hasErrorInfo
-                        && record.isAnswerSetted
-                        && !record.isAnswered) {
+                        && !(record.isAnswerSetted === record.isAnswered) ) {
                         return <span style={{ background: '#FFFF80' }}>{text}</span>
                     }
 
