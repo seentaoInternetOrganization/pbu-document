@@ -226,6 +226,14 @@ class Demo extends Component {
 
                                         })
                                     }}
+                                    onSave={(page, data, answer, isBodyEmpty) => {
+                                        return new Promise(function(resolve, reject) {
+                                            setTimeout(() => {
+                                                console.log('保存成功!!!');
+                                                resolve()
+                                            }, 3000)
+                                        });
+                                    }}
                                     uploadProps={{...uploadProps}}
                                     totalPage={this.state.totalPage}
                                     onDocChange={ (data, answerDesc) => {

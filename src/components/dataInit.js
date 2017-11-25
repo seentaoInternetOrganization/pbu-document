@@ -15,7 +15,7 @@ import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
 import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd, subjectOfPropsInCustom, saveAs, isCurrentActivityEmpty, isAllEmpty } from './docUtils';
 import DocEditor from './docEditor';
-import { getDescendantantProp, excludePropertiesOfObject } from '../utils';
+import { getDescendantantProp, excludePropertiesOfObject, isPromise } from '../utils';
 import CopyGroup from './copyGroup';
 import md5 from 'blueimp-md5'
 
@@ -34,6 +34,7 @@ class DataInit extends Component {
         currentAccountDetail: subjectOfPropsInCustom(this.props, 'subjectDetail'),
         currentCopy: this.props.currentCopy,
         answerArea: this.props.answerDesc,
+        saving: false,
     }
 
     componentDidMount() {
@@ -207,9 +208,9 @@ class DataInit extends Component {
         }
 
         if (this.props.isDataInit) {
-            this.props.onSave(currentPage, JSON.stringify(dataFinal), isBodyEmpty);
+            return this.props.onSave(currentPage, JSON.stringify(dataFinal), isBodyEmpty);
         }else {
-            this.props.onSave(currentPage, JSON.stringify(dataFinal), answerArea, isBodyEmpty);
+            return this.props.onSave(currentPage, JSON.stringify(dataFinal), answerArea, isBodyEmpty);
         }
 
         return true
@@ -223,7 +224,24 @@ class DataInit extends Component {
             return
         }
 
-        return this.onSave() && this.props.onAppendPage();
+        // return this.onSave() && this.props.onAppendPage();
+        const result = this.onSave()
+
+        if (isPromise(result)) {
+            this.setState({
+                saving: true
+            })
+            result
+            .then(() => {
+                this.setState({
+                    saving: false
+                })
+                this.props.onAppendPage();
+            })
+        }else if (typeof result === 'boolean'
+            && result) {
+            this.props.onAppendPage();
+        }
     }
 
     onAnswerChange = (value) => {
@@ -367,6 +385,29 @@ class DataInit extends Component {
         return true
     }
 
+    onPageClick = (e, i) => {
+        const { onPageChange } = this.props
+
+        e.preventDefault()
+        const result = this.onSave()
+
+        if (isPromise(result)) {
+            this.setState({
+                saving: true
+            })
+            result
+            .then(() => {
+                this.setState({
+                    saving: false
+                })
+                onPageChange(i + 1)
+            })
+        }else if (typeof result === 'boolean'
+            && result) {
+            onPageChange(i + 1)
+        }
+    }
+
     render() {
         const {
             config,
@@ -388,7 +429,7 @@ class DataInit extends Component {
             onAccountDetailSubjectSelected,
         } = this.props;
 
-        const { docData, glas, sls, currentSubject, answerArea, currentAccountTitle, subjectVisible, currentCopy } = this.state;
+        const { docData, glas, sls, currentSubject, answerArea, currentAccountTitle, subjectVisible, currentCopy, saving } = this.state;
 
         const docProps = {
             config,
@@ -423,8 +464,7 @@ class DataInit extends Component {
                         {...highlightOpt}
                         closable={totalPage > 1}
                         onClick={e => {
-                            e.preventDefault();
-                            this.onSave() && onPageChange(i + 1)
+                            this.onPageClick(e, i)
                         }}
                         onClose={e => {
                             e.preventDefault();
@@ -515,7 +555,7 @@ class DataInit extends Component {
                                     isDataInit={isDataInit}
                                     visible={subjectVisible}
                                     config={config}/>
-                        <Button className={styles.btn_save} type="primary" loading={loading} onClick={this.onSave}>保存</Button>
+                        <Button className={styles.btn_save} type="primary" loading={saving} onClick={this.onSave}>保存</Button>
                     </div>
                     {renderAnswerArea()}
                     {renderDoc()}
