@@ -374,6 +374,25 @@ export function isCurrentActivityEmpty(activityId, all, keyOfAll) {
 }
 
 /**
+ * 是否有数据
+ * @param  {Object}  all [description]
+ * @return {Boolean}     [description]
+ */
+export function isAllEmpty(all) {
+    if (!all || Object.keys(all).length === 0) {
+        return true
+    }
+
+    return false
+
+    // const found = Object.keys(all).find(key => {
+    //     return Object.keys(all[key]).length > 0
+    // })
+    //
+    // return !!!found
+}
+
+/**
  * 过滤学生端value
  * @param  {[type]} value [description]
  * @return {[type]}       [description]

@@ -40,6 +40,7 @@ const PBUDocumentAnswerSet = ({
     answerDesc,
     onDocChange,
     onSubjectBlur,
+    originalDocData,
 }) => {
     const docProps = {
         docConfigUrl,
@@ -72,6 +73,7 @@ const PBUDocumentAnswerSet = ({
         answerDesc,
         onDocChange,
         onSubjectBlur,
+        originalDocData,
     }
 
     return (
@@ -185,6 +187,10 @@ PBUDocumentAnswerSet.propTypes = {
      * 记账凭证单据总账或明细账科目编辑完失去焦点的回调
      */
     onSubjectBlur: PropTypes.func,
+    /**
+     * 原始数据集合，用于比对
+     */
+    originalDocData: PropTypes.object.isRequired,
 }
 
 PBUDocumentAnswerSet.defaultProps = {
@@ -193,7 +199,8 @@ PBUDocumentAnswerSet.defaultProps = {
     answerDesc: '',
     onSubjectBlur: () => {
 
-    }
+    },
+    originalDocData: { all: {} }
 }
 
 export default PBUDocumentAnswerSet;

@@ -130,6 +130,7 @@ class Demo extends Component {
                                     subjectsTopLevel={mockSubjects.accountingSubjects}
                                     subjectsTree={mockSubjects.accountingSubjects}
                                     uploadProps={{...uploadProps}}
+                                    originalDocData={mockData.docData}
                                     totalPage={2}
                                     onSubjectBlur={() => {
                                         console.log('!!!!!!!onSubjectBlur');
@@ -171,7 +172,7 @@ class Demo extends Component {
                 <PBUDocumentAnswerSet docConfigUrl={docConfigUrl}
                                     docCode='DJY0066'
                                     docData={this.state.docData}
-                                    activityId='18bcf3382fa8c93d___'
+                                    activityId='18bcf3382fa8c93d'
                                     currentPage={this.state.currentPage}
                                     currentCopy={currentCopy}
                                     onCopyChange={this.onCopyChange}
@@ -180,13 +181,21 @@ class Demo extends Component {
                                     subjectsTopLevel={mockSubjects.accountingSubjects}
                                     subjectsTree={mockSubjects.accountingSubjects}
                                     answerDesc={this.state.answerDesc}
+                                    originalDocData={mockData.docData}
                                     onAppendPage={() => {
                                         this.setState({
                                             totalPage: this.state.totalPage + 1,
                                             currentPage: this.state.currentPage + 1,
-                                            docData: {
-                                                all: {}
-                                            }
+                                            docData: mockData.docData
+                                            // docData: {
+                                            //     all: {}
+                                            // }
+                                        })
+                                    }}
+                                    onPageChange={page => {
+                                        this.setState({
+                                            currentPage: page,
+                                            docData: mockData.docData
                                         })
                                     }}
                                     onSubjectBlur={() => {

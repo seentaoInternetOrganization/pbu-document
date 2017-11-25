@@ -13,10 +13,11 @@ import { Button , Select, Tag, AutoComplete, Icon, Upload, message, Popover, Tab
 import isNumeric from 'validator/lib/isNumeric';
 import isEmpty from 'validator/lib/isEmpty';
 import AccountSubjectPopover from './accountSubject';
-import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd, subjectOfPropsInCustom, saveAs, isCurrentActivityEmpty } from './docUtils';
+import { mapExaminesWithAll, combineDataToState, combineSubjects, resetSelectHeightOfAntd, subjectOfPropsInCustom, saveAs, isCurrentActivityEmpty, isAllEmpty } from './docUtils';
 import DocEditor from './docEditor';
 import { getDescendantantProp, excludePropertiesOfObject } from '../utils';
 import CopyGroup from './copyGroup';
+import md5 from 'blueimp-md5'
 
 const Option = Select.Option;
 const { CheckableTag } = Tag;
@@ -158,7 +159,7 @@ class DataInit extends Component {
 
     onSave = () => {
         const { docData, answerArea, currentAccountDetail } = this.state;
-        const { activityId } = this.props
+        const { activityId, originalDocData } = this.props
 
         let examines = [];
 
@@ -196,6 +197,14 @@ class DataInit extends Component {
         }
 
         const isBodyEmpty = isCurrentActivityEmpty(activityId, docData.all, isDataInit ? 'data' : 'answer')
+        //当前数据hash
+        const currentHash = md5(JSON.stringify(docData.all))
+        //原始数据hash
+        const originalHash = originalDocData.all ? md5(JSON.stringify(originalDocData.all)) : md5(JSON.stringify({}))
+
+        if (originalHash === currentHash) {
+            return true
+        }
 
         if (this.props.isDataInit) {
             this.props.onSave(currentPage, JSON.stringify(dataFinal), isBodyEmpty);
@@ -207,6 +216,13 @@ class DataInit extends Component {
     }
 
     appendPage = () => {
+        const { docData } = this.state
+
+        if (isAllEmpty(docData.all)) {
+            message.warning('本页单据无数据，无法续页')
+            return
+        }
+
         return this.onSave() && this.props.onAppendPage();
     }
 
@@ -452,7 +468,7 @@ class DataInit extends Component {
             return (
                 <div className={classnames(styles.tags, {[styles.tags_mid]: isDataInit, [styles.tags_left]: !isDataInit})}>
                     {renderTags()}
-                    <Button size="small" type="dashed" onClick={this.appendPage}>+ 续页</Button>
+                    {currentPage === totalPage && <Button size="small" type="dashed" onClick={this.appendPage}>+ 续页</Button>}
                 </div>
             )
         }

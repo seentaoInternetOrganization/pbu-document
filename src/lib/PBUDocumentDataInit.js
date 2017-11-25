@@ -37,6 +37,7 @@ const PBUDocumentDataInit = ({
     onAccountDetailSubjectSelected,
     onDocChange,
     onSubjectBlur,
+    originalDocData,
 }) => {
 
     const docProps = {
@@ -68,6 +69,7 @@ const PBUDocumentDataInit = ({
         onAccountDetailSubjectSelected,
         onDocChange,
         onSubjectBlur,
+        originalDocData,
     }
 
     return (
@@ -174,6 +176,10 @@ PBUDocumentDataInit.propTypes = {
      * 记账凭证单据总账或明细账科目编辑完失去焦点的回调
      */
     onSubjectBlur: PropTypes.func,
+    /**
+     * 原始数据集合，用于比对
+     */
+    originalDocData: PropTypes.object.isRequired,
 }
 
 PBUDocumentDataInit.defaultProps = {
@@ -182,7 +188,8 @@ PBUDocumentDataInit.defaultProps = {
     currentCopy: 0,
     onSubjectBlur: () => {
 
-    }
+    },
+    originalDocData: { all: {} }
 }
 
 export default PBUDocumentDataInit;
