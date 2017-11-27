@@ -285,7 +285,7 @@ const DocEditor = ({
         (
             <textarea key={`textarea_${item.name}_${index}_${currentPage}`}
                     name={item.name}
-                    style={style}
+                    style={{...style, ...disabledColor}}
                     value={value}
                     readOnly={'readonly'}
                     onChange={e => {

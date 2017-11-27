@@ -46,17 +46,6 @@ export default class MainContainer extends Component {
         this.loadDocConfig(this.props);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.docConfigUrl
-            && typeof this.props.docConfigUrl === 'string'
-            && !isEmpty(this.props.docConfigUrl)
-            && nextProps.docConfigUrl === this.props.docConfigUrl) {
-            return
-        }
-
-        this.loadDocConfig(nextProps);
-    }
-
     render() {
         const { docConfig, errMsg } = this.state;
 
