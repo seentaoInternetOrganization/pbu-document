@@ -272,7 +272,7 @@ const DocEditor = ({
         return canEdit(item)
         ?
         (
-            <textarea key={`textarea_${index}_${currentPage}`}
+            <textarea key={`textarea_${item.name}_${index}_${currentPage}`}
                     name={item.name}
                     style={style}
                     value={value}
@@ -283,7 +283,7 @@ const DocEditor = ({
         )
         :
         (
-            <textarea key={`textarea_${index}_${currentPage}`}
+            <textarea key={`textarea_${item.name}_${index}_${currentPage}`}
                     name={item.name}
                     style={style}
                     value={value}
