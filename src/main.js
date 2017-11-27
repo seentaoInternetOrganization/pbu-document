@@ -17,6 +17,12 @@ export default class MainContainer extends Component {
 
     loadDocConfig(props) {
         const { docConfigUrl } = props;
+
+        if (!docConfigUrl
+            || isEmpty(docConfigUrl)) {
+            return
+        }
+
         this.setState({
             docConfig: [],
             errMsg: '加载中...',

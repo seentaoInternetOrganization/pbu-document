@@ -231,7 +231,7 @@ class Demo extends Component {
                                             setTimeout(() => {
                                                 console.log('保存成功!!!');
                                                 resolve()
-                                            }, 3000)
+                                            }, 300)
                                         });
                                     }}
                                     uploadProps={{...uploadProps}}

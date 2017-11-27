@@ -26,6 +26,11 @@ exports.intersectRect = function(r1, r2) {
  * @param  {Function} callback 加载后的回调
  */
 exports.loadConfig = function(url, callback) {
+    if (!url
+        || (typeof url === 'string' && url.trim().length === 0)) {
+        callback()
+    }
+    
     fetch(url)
     .then(response => response.json())
     .then(data => {

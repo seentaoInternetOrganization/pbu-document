@@ -262,7 +262,7 @@ const DocEditor = ({
 
     //渲染多行文本元素
     const renderTextareaItem = (item, index) => {
-        const value = valueToShow(item);
+        const value = valueToShow(item) ? valueToShow(item) : '';
 
         const style = {
             ...styleOfItem(item),
