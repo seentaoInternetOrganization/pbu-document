@@ -1,6 +1,6 @@
 {
   "name": "pbu-document",
-  "version": "1.0.67",
+  "version": "1.0.68",
   "description": "pbu-document component",
   "main": "index.js",
   "scripts": {
