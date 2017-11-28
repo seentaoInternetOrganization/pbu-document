@@ -41,6 +41,7 @@ const PBUDocumentAnswerSet = ({
     onDocChange,
     onSubjectBlur,
     originalDocData,
+    originalAnswerDesc,
 }) => {
     const docProps = {
         docConfigUrl,
@@ -74,6 +75,7 @@ const PBUDocumentAnswerSet = ({
         onDocChange,
         onSubjectBlur,
         originalDocData,
+        originalAnswerDesc,
     }
 
     return (
@@ -191,6 +193,10 @@ PBUDocumentAnswerSet.propTypes = {
      * 原始数据集合，用于比对
      */
     originalDocData: PropTypes.object.isRequired,
+    /**
+     * 原始描述性答案
+     */
+    originalAnswerDesc: PropTypes.string.isRequired,
 }
 
 PBUDocumentAnswerSet.defaultProps = {
@@ -200,7 +206,8 @@ PBUDocumentAnswerSet.defaultProps = {
     onSubjectBlur: () => {
 
     },
-    originalDocData: { all: {} }
+    originalDocData: { all: {} },
+    originalAnswerDesc: '',
 }
 
 export default PBUDocumentAnswerSet;

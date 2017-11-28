@@ -160,7 +160,7 @@ class DataInit extends Component {
 
     onSave = () => {
         const { docData, answerArea, currentAccountDetail } = this.state;
-        const { activityId, originalDocData } = this.props
+        const { activityId, originalDocData, originalAnswerDesc } = this.props
 
         let examines = [];
 
@@ -203,13 +203,20 @@ class DataInit extends Component {
         //原始数据hash
         const originalHash = originalDocData.all ? md5(JSON.stringify(originalDocData.all)) : md5(JSON.stringify({}))
 
-        if (originalHash === currentHash) {
-            return true
-        }
-
         if (this.props.isDataInit) {
+
+            if (originalHash === currentHash) {
+                return true
+            }
+
             return this.props.onSave(currentPage, JSON.stringify(dataFinal), isBodyEmpty);
         }else {
+            //描述性答案和单据数据同时相同时才不保存
+            if (originalHash === currentHash
+                && originalAnswerDesc === answerArea) {
+                return true
+            }
+
             return this.props.onSave(currentPage, JSON.stringify(dataFinal), answerArea, isBodyEmpty);
         }
 

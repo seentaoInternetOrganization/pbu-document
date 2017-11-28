@@ -343,6 +343,10 @@ const DocEditor = ({
     //下拉选择框
     const renderSelect = (item, index) => {
         const renderOptions = options => {
+            if (!options) {
+                return null
+            }
+
             return options.map(option => {
                 return (
                     <Option key={option}
