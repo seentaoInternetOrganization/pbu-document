@@ -206,11 +206,30 @@ class EditWeight extends Component {
 
         const { currentExamineType, completedElement } = this.state;
 
-        const newCompletedElement = {
+        let newCompletedElement = {
             ...completedElement
         }
 
-        newCompletedElement[name].weight = value;
+        //如果是多行编辑则权重值影响的是整列
+        if (newCompletedElement[name].examineType === EXAMINE.MULTI_LINE) {
+            const tempObj = {
+                ...newCompletedElement
+            }
+
+            //多行编辑情况下一定存在table.col
+            Object.values(newCompletedElement).forEach((item, index) => {
+                if (item.examineType === newCompletedElement[name].examineType
+                    && item.element.table.col === newCompletedElement[name].element.table.col) {
+                    tempObj[item.element.name].weight = value;
+                }
+            });
+
+            newCompletedElement = {
+                ...tempObj
+            }
+        }else {
+            newCompletedElement[name].weight = value;
+        }
 
         this.setState({
             completedElement: newCompletedElement
