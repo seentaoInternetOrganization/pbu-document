@@ -595,21 +595,23 @@ class EditWeight extends Component {
             }
 
             return (
-                <div ref={'docContainer'}
-                    key={config[0].backgroundImage}
-                    className={classnames(styles.detail, styles.left)}
-                    style={{
-                        background: `#FFFFFF url(${config[0].backgroundImage}) no-repeat center center`,
-                        width: config[0].width * ratioWidth,
-                        height: config[0].height * ratioHeight,
-                        ...config[0].style
-                    }}
-                    {...mouseEventOpt}
-                >
-                    {renderReadOnly()}
-                    {renderSelectedZone()}
-                    {renderCompletedZone()}
-                    {showSelectRect && <Rectangle rect={selectRect} />}
+                <div className={classnames(styles.outter, styles.left)}>
+                    <div ref={'docContainer'}
+                        key={config[0].backgroundImage}
+                        className={classnames(styles.detail, styles.left)}
+                        style={{
+                            background: `#FFFFFF url(${config[0].backgroundImage}) no-repeat center center`,
+                            width: config[0].width * ratioWidth,
+                            height: config[0].height * ratioHeight,
+                            ...config[0].style
+                        }}
+                        {...mouseEventOpt}
+                    >
+                        {renderReadOnly()}
+                        {renderSelectedZone()}
+                        {renderCompletedZone()}
+                        {showSelectRect && <Rectangle rect={selectRect} />}
+                    </div>
                 </div>
             )
         }

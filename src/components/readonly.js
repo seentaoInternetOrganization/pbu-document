@@ -11,6 +11,8 @@ import { ELEMENT, DOC_TYPE } from '../constants';
 import { getDescendantantProp } from '../utils';
 import { copyToShow, resetSelectHeightOfAntd } from './docUtils';
 import { Checkbox, Radio, Select } from 'antd';
+import commonStyles from './common.css'
+
 const Option = Select.Option;
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -271,7 +273,7 @@ class ReadOnly extends Component {
         }
 
         return (
-            <div ref='docBG'>
+            <div className={commonStyles.outter} ref='docBG'>
                 <DocBG className={bgStyles.container}
                         ratioWidth={ratioWidth}
                         ratioHeight={ratioHeight}

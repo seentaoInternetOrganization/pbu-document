@@ -15,12 +15,12 @@ import { mapExaminesWithAll } from './components/docUtils'
 
 const Option = Select.Option
 
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json"
-// const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
+const docConfigUrl = "http://47.93.23.65:8080/stest/document.sales";
 // const docConfigUrl = "https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/q4qhej/q4qhej.json"
 // const docConfigUrl = "https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/ep001e/ep001e.json"
 
@@ -52,7 +52,7 @@ class Demo extends Component {
         answerDesc: '哈哈哈哈',
         totalPage: 1,
         currentPage: 1,
-        docConfigUrl: 'https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json',
+        docConfigUrl: 'http://47.93.23.65:8080/stest/document.sales',
     }
 
     onCopyChange = (copy) => {
@@ -268,8 +268,8 @@ class Demo extends Component {
                         activityId='3623069429530624' />
                 {/* </div> */}
                 <div>编辑内容</div>
-                <Select style={{ width: 120 }} defaultValue={'https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json'} onChange={this.handleChange}>
-                    <Option value="https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json">记账凭证</Option>
+                <Select style={{ width: 120 }} defaultValue={'http://47.93.23.65:8080/stest/document.sales'} onChange={this.handleChange}>
+                    <Option value="http://47.93.23.65:8080/stest/document.sales">记账凭证</Option>
                     <Option value="https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json">三栏式明细账</Option>
                     <Option value="https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json">增值税发票</Option>
                 </Select>

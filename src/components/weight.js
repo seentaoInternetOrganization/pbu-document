@@ -8,6 +8,8 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import DocBG from './background';
 import bgStyles from './background.css';
+import commonStyles from './common.css';
+
 import { ELEMENT, EXAMINE, EXAMINE_COLOR, DOC_TYPE } from '../constants';
 import { copyToShow, basicStyleOfItem, testNumber, canChange } from './docUtils';
 import { excludePropertyOfObject } from '../utils';
@@ -82,12 +84,14 @@ const DocWeight = ({ config, ratioWidth, ratioHeight, data }) => {
     }
 
     return (
-        <DocBG className={bgStyles.container}
-                ratioWidth={ratioWidth}
-                ratioHeight={ratioHeight}
-                config={config}>
-            {renderElements()}
-        </DocBG>
+        <div className={commonStyles.outter}>
+            <DocBG className={bgStyles.container}
+                    ratioWidth={ratioWidth}
+                    ratioHeight={ratioHeight}
+                    config={config}>
+                {renderElements()}
+            </DocBG>
+        </div>
     );
 }
 

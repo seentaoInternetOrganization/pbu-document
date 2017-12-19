@@ -12,6 +12,8 @@ import { AutoComplete, message, Tooltip, Checkbox, Radio, Select, Input } from '
 import isEmpty from 'validator/lib/isEmpty';
 import isNumeric from 'validator/lib/isNumeric';
 import { copyToShow, basicStyleOfItem, testNumber, canChange, filterValue, formatValueOfItem } from './docUtils';
+import commonStyles from './common.css'
+
 const Option = AutoComplete.Option;
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -415,13 +417,15 @@ const DocEditor = ({
     }
 
     return (
-        <DocBG className={bgClassName}
-              ratioWidth={ratioWidth}
-              ratioHeight={ratioHeight}
-              currentCopy={currentCopy}
-              config={config}>
-            {renderElements()}
-        </DocBG>
+        <div className={commonStyles.outter} >
+            <DocBG className={bgClassName}
+                  ratioWidth={ratioWidth}
+                  ratioHeight={ratioHeight}
+                  currentCopy={currentCopy}
+                  config={config}>
+                {renderElements()}
+            </DocBG>
+        </div>
     )
 }
 
