@@ -12,7 +12,7 @@ const config = {
     },
     devServer: {
         historyApiFallback: true,
-        host: "10.12.1.97",
+        // host: "10.12.1.54",
     },
     resolve: {
         extensions: ['', '.js', '.jsx']

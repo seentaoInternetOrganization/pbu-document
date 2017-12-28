@@ -52,10 +52,6 @@ class PBUDocumentAnswer extends Component {
     }
 
     onAccountDetailRowClicked = (record, index, e) => {
-        if (record.children) {
-            return;
-        }
-
         const subject = {
             subjectId: record.subjectId,
             subjectName: record.subjectName,
