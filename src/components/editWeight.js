@@ -219,6 +219,7 @@ class EditWeight extends Component {
             //多行编辑情况下一定存在table.col
             Object.values(newCompletedElement).forEach((item, index) => {
                 if (item.examineType === newCompletedElement[name].examineType
+                    && item.examineId === newCompletedElement[name].examineId
                     && item.element.table.col === newCompletedElement[name].element.table.col) {
                     tempObj[item.element.name].weight = value;
                 }
@@ -252,6 +253,7 @@ class EditWeight extends Component {
             //多行编辑情况下一定存在table.col
             Object.values(newCompletedElement).forEach((item, index) => {
                 if (item.examineType === newCompletedElement[name].examineType
+                    && item.examineId === newCompletedElement[name].examineId
                     && item.element.table.col === newCompletedElement[name].element.table.col) {
                     delete tempObj[item.element.name];
                 }
