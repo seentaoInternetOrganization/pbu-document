@@ -41,14 +41,14 @@ class Demo extends Component {
         // docData: {
         //     examines: []
         // },
-        // docData: mockData.docData,
-        docData: { all: { }, custom: {
-            enterprise: {
-                provinceName: '黑龙江',
-                documentRegionCode: '11000153130'
-            },
-            serialNum: '12345869'
-        } },
+        docData: mockData.docData,
+        // docData: { all: { }, custom: {
+        //     enterprise: {
+        //         provinceName: '黑龙江',
+        //         documentRegionCode: '11000153130'
+        //     },
+        //     serialNum: '12345869'
+        // } },
         empty: true,
         answerDesc: '哈哈哈哈',
         totalPage: 1,

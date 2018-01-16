@@ -185,12 +185,12 @@ export function mapExaminesWithAll(examines, keyOfAll, all, activityId) {
         return Object.keys(item)
         .filter(excludeStaticProperty)
         .filter(key => {
-            return all[key] && all[key][keyOfAll]
+            return all[key] && all[key][keyOfAll] || item.examineType === 'MULTI_ELM'
         })
         .reduce((sum, key) => {
             return {
                 ...sum,
-                [key]: all[key][keyOfAll],
+                [key]: all[key][keyOfAll] ? all[key][keyOfAll] : '',
                 ...sortOrder(item)
             }
         }, {
