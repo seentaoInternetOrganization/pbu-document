@@ -190,7 +190,7 @@ export function mapExaminesWithAll(examines, keyOfAll, all, activityId) {
         .reduce((sum, key) => {
             return {
                 ...sum,
-                [key]: all[key][keyOfAll] ? all[key][keyOfAll] : '',
+                [key]: (all[key] && all[key][keyOfAll]) ? all[key][keyOfAll] : '',
                 ...sortOrder(item)
             }
         }, {
