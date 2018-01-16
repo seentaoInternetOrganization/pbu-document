@@ -179,18 +179,18 @@ export function mapExaminesWithAll(examines, keyOfAll, all, activityId) {
         return Object.keys(item)
         .filter(excludeStaticProperty)
         .filter(key => {
-            return all[key] && all[key][keyOfAll]
+            return valueOfKey(key) != ''
         }).length > 0
     }).map(item => {
         return Object.keys(item)
         .filter(excludeStaticProperty)
         .filter(key => {
-            return all[key] && all[key][keyOfAll] || item.examineType === 'MULTI_ELM'
+            return valueOfKey(key) != '' || item.examineType === 'MULTI_ELM'
         })
         .reduce((sum, key) => {
             return {
                 ...sum,
-                [key]: (all[key] && all[key][keyOfAll]) ? all[key][keyOfAll] : '',
+                [key]: valueOfKey(key),
                 ...sortOrder(item)
             }
         }, {
