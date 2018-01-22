@@ -16,7 +16,7 @@ import { mapExaminesWithAll } from './components/docUtils'
 const Option = Select.Option
 
 // const docConfigUrl = "https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/vdy08h/vdy08h.json"
-const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
+// const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json";
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json"
 // const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json"
@@ -24,6 +24,45 @@ const docConfigUrl = "https://oss-public.seentao.com/webapps/pbu_document/DJY006
 // const docConfigUrl = "http://39.107.8.110:8080/stest/document.sales";
 // const docConfigUrl = "https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/q4qhej/q4qhej.json"
 // const docConfigUrl = "https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/ep001e/ep001e.json"
+
+const configUrls = [
+    {
+        title: '记账凭证',
+        url: 'https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json'
+    },
+    {
+        title: '增值税发票',
+        url: 'https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json'
+    },
+    {
+        title: '三栏式明细账',
+        url: 'https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json'
+    },
+    {
+        title: '现金日记账',
+        url: 'https://oss-public.seentao.com/webapps/pbu_document/DJY0067/config/DJY0067.json'
+    },
+    {
+        title: '支票登记薄',
+        url: 'https://oss-public.seentao.com/webapps/pbu_document/DJY0071/config/DJY0071.json'
+    },
+    {
+        title: '自定义1',
+        url: 'https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/q4qhej/q4qhej.json'
+    },
+    {
+        title: '自定义2',
+        url: 'https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/ep001e/ep001e.json'
+    },
+    {
+        title: '自定义3',
+        url: 'https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/kmx2ph/kmx2ph.json'
+    },
+    {
+        title: '假接口',
+        url: 'http://39.107.8.110:8080/stest/document.sales'
+    }
+]
 
 let currentCopy = 0;
 
@@ -53,7 +92,7 @@ class Demo extends Component {
         answerDesc: '哈哈哈哈',
         totalPage: 1,
         currentPage: 1,
-        docConfigUrl,
+        docConfigUrl: 'https://oss-public.seentao.com/webapps/pbu_document/DJY0066/config/djy0066.json',
     }
 
     onCopyChange = (copy) => {
@@ -101,6 +140,17 @@ class Demo extends Component {
                 }
             },
         }
+
+        const renderOptions = () => {
+            const optionNodes = configUrls.map(item => {
+                return <Option key={item.url} value={item.url}>{item.title}</Option>
+            })
+
+            return optionNodes
+        }
+
+        const { docConfigUrl } = this.state
+
         // console.log('this.state.docData = ', this.state.docData);
         // console.log('empty = ', this.state.empty);
         return (
@@ -112,6 +162,12 @@ class Demo extends Component {
                         docData: this.state.empty ? { all: {}, data: []} : mockData.docData
                     })
                 }}>切换</Button> */}
+
+                <div>
+                    <Select style={{ width: 120 }} defaultValue={configUrls[0].url} onChange={this.handleChange}>
+                        {renderOptions()}
+                    </Select>
+                </div>
                 <span>设置权重及甄别方式</span>
                 <PBUDocumentExamineSet docConfigUrl={docConfigUrl}
                                         docCode='DJY0066'
@@ -269,11 +325,6 @@ class Demo extends Component {
                         activityId='3623069429530624' />
                 {/* </div> */}
                 <div>编辑内容</div>
-                <Select style={{ width: 120 }} defaultValue={docConfigUrl} onChange={this.handleChange}>
-                    <Option value={docConfigUrl}>记账凭证</Option>
-                    <Option value="https://oss-public.seentao.com/webapps/pbu_document/DJY0064/config/DJY0064.json">三栏式明细账</Option>
-                    <Option value="https://oss-public.seentao.com/webapps/pbu_document/DJY0089/config/DJY0089.json">增值税发票</Option>
-                </Select>
                 <PBUDocumentEdit
                     docConfigUrl={this.state.docConfigUrl}
                         docCode='DJY0066'
