@@ -90,7 +90,7 @@ const AccountSubjectPopover = ({
 
                     if (hasErrorInfo
                         // && !(record.isAnswerSetted === record.isAnswered)
-                        && record.isError === '1'
+                        && record.isError == 1
                     ) {
                         return <span style={{ background: '#FFFF80' }}>{text}</span>
                     }
@@ -185,7 +185,7 @@ const AccountSubjectPopover = ({
                         content={content}>
                     <Button type="ghost" className={classnames({
                         [styles.highlightBtn]: currentAccountTitle && subject.subjectId === currentAccountTitle.subjectId,
-                        [styles.markError]: normalEdit && hasErrorInfo && subject.isError === '1'
+                        [styles.markError]: normalEdit && hasErrorInfo && subject.isError == 1
                         // [styles.markError]: normalEdit && hasErrorInfo && subject.isAnswerSetted && !subject.isAnswered
                     })}>
                         {subject.subjectName}
