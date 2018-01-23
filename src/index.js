@@ -48,7 +48,7 @@ const configUrls = [
     },
     {
         title: '自定义1',
-        url: 'https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/q4qhej/q4qhej.json'
+        url: 'https://pbu-public.oss-cn-beijing.aliyuncs.com/webapps/excel_document/document/47u19j/47u19j.json'
     },
     {
         title: '自定义2',
@@ -70,6 +70,8 @@ function onCopyChange(copy) {
     console.log('copy = !!! ', copy);
     currentCopy = copy;
 }
+
+console.log('mockData.docData = ', mockData.docData);
 
 class Demo extends Component {
     state = {
@@ -329,7 +331,7 @@ class Demo extends Component {
                     docConfigUrl={this.state.docConfigUrl}
                         docCode='DJY0066'
                         docData={this.state.docData}
-                        activityId='18bcf3382fa8c93d'
+                        activityId='6111693284311040'
                         subjectTotals={this.state.subjectTotals}
                         subjectDetails={this.state.subjectDetails}
                         onSearchSubjects={this.onSearchSubjects}

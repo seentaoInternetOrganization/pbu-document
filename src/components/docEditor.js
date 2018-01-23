@@ -311,7 +311,7 @@ const DocEditor = ({
             return (
                 <div key={`${item.name}_${index}_${currentPage}`}
                     name={item.name}
-                    style={basicStyleOfItem(item)}>
+                    style={styleOfItem(item)}>
                     <div style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)' }}>
                         <CheckboxGroup options={item.options}
                                     disabled={!canEdit(item)}
@@ -329,7 +329,7 @@ const DocEditor = ({
         return (
             <div key={`${item.name}_${index}_${currentPage}`}
                 name={item.name}
-                style={basicStyleOfItem(item)}>
+                style={styleOfItem(item)}>
                 <RadioGroup style={{
                     position: 'relative',
                     top: '50%',
@@ -365,7 +365,7 @@ const DocEditor = ({
                     value={valueToShow(item)}
                     allowClear={true}
                     onChange={value => onElementChange(item, value ? value : '')}
-                    style={basicStyleOfItem(item)}>
+                    style={styleOfItem(item)}>
                 {renderOptions(item.options)}
             </Select>
         )
