@@ -275,6 +275,10 @@ export function formatValueOfItem(item, value) {
         return value
     }
 
+    if (Array.isArray(value)) {
+        return value.sort((a, b) => a.localeCompare(b, 'zh-Hans-CN'))
+    }
+
     if (!item) {
         return value
     }
